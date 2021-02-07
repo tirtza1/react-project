@@ -1,0 +1,17 @@
+.NavigationItems{
+  margin:0;
+  padding:0; 
+  list-style: none;
+  display: flex;
+  flex-flow: column;
+  align-items: center;
+  height: 100%;
+ font-style: unset;
+  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+}
+
+@media (min-width: 500px){
+    .NavigationItems{
+        flex-flow: row; 
+      }
+}
