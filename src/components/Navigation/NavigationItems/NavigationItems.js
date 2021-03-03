@@ -4,7 +4,7 @@ import classes from './NavigationItems.module.css';
 
 const navigationItems = (props) => (
   <ul className={classes.NavigationItems}>
-    <NavigationItem link='/'>בית</NavigationItem>
+    <NavigationItem link='/'>גלריה</NavigationItem>
     <NavigationItem link='/Calendar'>לוח שנה</NavigationItem>
      <NavigationItem link='/AddConection'>אילן יוחסין</NavigationItem>
      <NavigationItem link='/LogIn'>התחברות</NavigationItem>
