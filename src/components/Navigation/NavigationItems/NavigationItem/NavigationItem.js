@@ -6,7 +6,7 @@ const navigationItem = (props) => (
   <li className={classes.NavigationItem}>
     <Link 
        to={props.link}
-       activeClassName={classes.active}>
+       activeclassname={classes.active}>
       {props.children}
       </Link>
   </li>

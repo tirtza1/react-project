@@ -93,19 +93,15 @@ export default class Calendar extends Component {
 
    //מוסיף אירוע ומעדכן אותו בלוח השנה
    AddEventHandle=()=>{
-     console.log('guyvg')
-     
-    this.setState(prevState => 
-      ({CalendarEvent:[...prevState.CalendarEvent,this.state.CalendarEvent.push(
-          {
-          title: this.state.eventName,
-          start: this.state.fromDate,
-          end: this.state.toDate,
-          } 
-        ) 
-       ]
-  }))
-  
+    this.setState(prevState => ({
+      CalendarEvent: [...prevState.CalendarEvent, {
+        title: this.state.eventName,
+        start: this.state.fromDate,
+        end: this.state.toDate
+      }]
+    }))
+
+    this.toggle();
    }
   
   /*
@@ -196,13 +192,13 @@ inputChangedHandler = (event1, evtName) => {
                {
                   <form>
                     
-                          <label for="fromDate">Event Name:</label>
+                          <label htmlFor="fromDate">Event Name:</label>
                           <input type="text" placeholder="Enter event" name="eventName"/>
                     
-                          <label for="fromDate">From:</label>
+                          <label htmlFor="fromDate">From:</label>
                           <input type="date" placeholder="Enter from date" name="fromDate"/>
                         
-                          <label for="toDate">To:</label>
+                          <label htmlFor="toDate">To:</label>
                           <input type="date" name="toDate"/>
                 
                          
