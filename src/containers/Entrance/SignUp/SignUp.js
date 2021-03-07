@@ -135,6 +135,25 @@ class SignUp extends Component {
         this.setState({controls: updatedControls});
     }
 
+    onSubmit = () => {
+        fetch('http://localhost:3003/register', {
+            method: 'post',
+            headers: { 'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                firstName: this.state.controls.firstname.value,
+                lastName: this.state.controls.lastname.value,
+                id: this.state.controls.ID.value,
+                birthday: this.state.controls.birthdate.value,
+                email: this.state.controls.email.value,
+                password: this.state.controls.password.value
+            })
+        })
+        .then(response => response.text())
+        .then(data => {
+            window.alert(data)
+            //redirect to home page
+        })
+    }
     
     render () {
         const formElementsArray = [];
@@ -161,9 +180,9 @@ class SignUp extends Component {
 
         return (
             <div className={classes.SignUp}>
-                <form onSubmit={this.submitHandler}>
+                <form>
                     {form}
-                    <Button btnType="Success">הירשם</Button>
+                    <Button btnType="Success" clicked={this.onSubmit}>הירשם</Button>
                 </form>
             </div>
         );
