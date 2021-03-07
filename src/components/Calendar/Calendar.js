@@ -91,21 +91,20 @@ export default class Calendar extends Component {
         }
    }
 
+   inputChange = (event) => {
+      this.setState({[`${event.target.id}`]: event.target.value})
+   }
+
    //מוסיף אירוע ומעדכן אותו בלוח השנה
    AddEventHandle=()=>{
-     console.log('guyvg')
-     
-    this.setState(prevState => 
-      ({CalendarEvent:[...prevState.CalendarEvent,this.state.CalendarEvent.push(
-          {
-          title: this.state.eventName,
-          start: this.state.fromDate,
-          end: this.state.toDate,
-          } 
-        ) 
-       ]
-  }))
-  
+    this.setState(prevState => ({
+      CalendarEvent: [...prevState.CalendarEvent, {
+        title: this.state.eventName,
+        start: this.state.fromDate,
+        end: this.state.toDate
+      }]
+    }))
+    this.toggle();
    }
   
   /*
@@ -196,14 +195,14 @@ inputChangedHandler = (event1, evtName) => {
                {
                   <form>
                     
-                          <label for="fromDate">Event Name:</label>
-                          <input type="text" placeholder="Enter event" name="eventName"/>
+                          <label htmlFor="eventName">Event Name:</label>
+                          <input type="text" placeholder="Enter event" name="eventName" onChange={this.inputChange} id="eventName"/>
                     
-                          <label for="fromDate">From:</label>
-                          <input type="date" placeholder="Enter from date" name="fromDate"/>
+                          <label htmlFor="fromDate">From:</label>
+                          <input type="date" placeholder="Enter from date" name="fromDate" onChange={this.inputChange} id="fromDate"/>
                         
-                          <label for="toDate">To:</label>
-                          <input type="date" name="toDate"/>
+                          <label htmlFor="toDate">To:</label>
+                          <input type="date" name="toDate" onChange={this.inputChange} id="toDate"/>
                 
                          
                 </form> }
