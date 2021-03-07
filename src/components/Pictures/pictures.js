@@ -1,5 +1,4 @@
 import React ,{Component}from 'react'
-import axios from 'axios'
 //import classes from './pictures.css'
 
 export default class Pictures extends Component {
