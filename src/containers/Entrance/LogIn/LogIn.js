@@ -87,11 +87,20 @@ export default class LogIn extends Component {
     //    event.preventDefault();
     //    this.props.onAuth(this.state.controls.email.value, this.state.controls.password.value);
    // }
-   handleClick= (event) => 
-   {
-    
-        
-      
+   handleClick= (event) => {
+    fetch('http://localhost:3003/login', {
+        method: 'post',
+        headers: { 'Content-Type': 'application/json'},
+        body: JSON.stringify({
+            email: this.state.controls.email.value,
+            password: this.state.controls.password.value
+        })
+    })
+    .then(response => response.text())
+    .then(data => {
+        window.alert(data)
+        //redirect to home page
+    })
    }
     render () {
         const formElementsArray = [];
@@ -120,7 +129,7 @@ export default class LogIn extends Component {
             <div className={classes.LogIn}>
                 <form onSubmit={this.submitHandler}>
                     {form}
-                    <Button btnType="Success">התחבר</Button>
+                    <Button btnType="Success" clicked={this.handleClick}>התחבר</Button>
                     <Link to='/SignUp'>
                        <Button btnType="Success">הירשם</Button>
                     </Link>

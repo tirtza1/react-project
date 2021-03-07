@@ -8,6 +8,7 @@ const navigationItems = (props) => (
     <NavigationItem link='/Calendar'>לוח שנה</NavigationItem>
      <NavigationItem link='/AddConection'>אילן יוחסין</NavigationItem>
      <NavigationItem link='/LogIn'>התחברות</NavigationItem>
+     <NavigationItem link='/pictures'>תמונות</NavigationItem>
     {/*<NavigationItem link="/Logout">התנתק</NavigationItem>*/}
     
   </ul>
