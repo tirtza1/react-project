@@ -8,6 +8,7 @@ import Layout from './components/Layout/Layout';
 import ForgetPassword from './containers/Entrance/LogIn/ForgetPassword/ForgetPassword';
 import AddConection from './containers/FamilyTree/AddConection/AddConection';
 import Calendar from './components/Calendar/Calendar'
+import Pictures from './components/Pictures/pictures'
 
 class App extends Component {
   render() {
@@ -23,7 +24,11 @@ class App extends Component {
                 <Route path='/ForgetPassword'  exact component={ForgetPassword}/>
                 <Route path='/AddConection'  exact component={AddConection}/>
                 <Route path='/Calendar'  exact component={Calendar}/>
+<<<<<<< HEAD
                 <Route path='/Gallery'  exact component={Gallery}/>
+=======
+                <Route path='/pictures' exact component={Pictures}/>
+>>>>>>> b6222de28ed6d46697938444bd89649897e44a64
               </Switch>
             </Layout>
         </BrowserRouter>
