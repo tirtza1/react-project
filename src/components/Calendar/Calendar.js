@@ -104,10 +104,7 @@ export default class Calendar extends Component {
         end: this.state.toDate
       }]
     }))
-<<<<<<< HEAD
 
-=======
->>>>>>> b6222de28ed6d46697938444bd89649897e44a64
     this.toggle();
    }
   
@@ -199,7 +196,7 @@ inputChangedHandler = (event1, evtName) => {
                {
                   <form>
                     
-<<<<<<< HEAD
+
                           <label htmlFor="fromDate">Event Name:</label>
                           <input type="text" placeholder="Enter event" name="eventName"/>
                     
@@ -208,7 +205,7 @@ inputChangedHandler = (event1, evtName) => {
                         
                           <label htmlFor="toDate">To:</label>
                           <input type="date" name="toDate"/>
-=======
+
                           <label htmlFor="eventName">Event Name:</label>
                           <input type="text" placeholder="Enter event" name="eventName" onChange={this.inputChange} id="eventName"/>
                     
@@ -217,7 +214,7 @@ inputChangedHandler = (event1, evtName) => {
                         
                           <label htmlFor="toDate">To:</label>
                           <input type="date" name="toDate" onChange={this.inputChange} id="toDate"/>
->>>>>>> b6222de28ed6d46697938444bd89649897e44a64
+
                 
                          
                 </form> }
