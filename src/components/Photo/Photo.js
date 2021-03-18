@@ -1,7 +1,8 @@
 import React from 'react'
-import './gallery.css'
+import './Photo.css'
+import { Gallery, Item } from 'react-photoswipe-gallery'
 
-class Gallery extends React.Component{
+class Photo extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
@@ -68,16 +69,23 @@ class Gallery extends React.Component{
                     onChange={this.handleNewImage}
                 />
                 <button onClick={this.handleFileInputClick}>העלאת תמונה</button>
-                <div>
+                <Gallery>
                     {
-                        this.state.images.map((img, i) => {
-                            return <img src={`http://localhost:3003/${img}`} alt={'img' + i} key={i}/>
+                        this.state.images.map(({ img, i }) => {
+                            return <Item
+                              key={i}
+                              original={`http://localhost:3003/${img}`}
+                              width="1024"
+                              height="768"
+                            />
                         })
                     }
-                </div>
+                </Gallery>
+    
+                
             </div>
         )
     }
 }
 
-export default Gallery
+export default Photo
