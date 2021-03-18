@@ -1,6 +1,7 @@
 import React from 'react'
 import './Photo.css'
-import { Gallery, Item } from 'react-photoswipe-gallery'
+import Gallery from 'react-grid-gallery'
+import photo from '../../assets/images/photo.png';
 
 class Photo extends React.Component{
     constructor(props) {
@@ -8,6 +9,7 @@ class Photo extends React.Component{
         this.state = {
             group: 1,
             images: [],
+            images_for_gallery: [],
             count: 0
         }
     }
@@ -20,6 +22,16 @@ class Photo extends React.Component{
             const images = Object.values(data).map((value) => value.ImageName);
             const count = Object.keys(data).length;
             this.setState({ images, count});
+            const images_for_gallery = images.map((img) => {
+                return {
+                    src: `http://localhost:3003/${img}`,
+                    thumbnail: `http://localhost:3003/${img}`,
+                    thumbnailWidth: 320,
+                    thumbnailHeight: 174
+            }
+            })
+            console.log(images_for_gallery);
+            this.setState({images_for_gallery})
         })
         .catch(err => console.log(err))
     }
@@ -61,28 +73,17 @@ class Photo extends React.Component{
     render() {
         return(
             <div id="gallery">
-                <h1>גלריה</h1>
                 <input 
                     type="file" 
                     id="inputFile" 
                     accept="image/x-png,image/gif,image/jpeg" 
                     onChange={this.handleNewImage}
                 />
-                <button onClick={this.handleFileInputClick}>העלאת תמונה</button>
-                <Gallery>
-                    {
-                        this.state.images.map(({ img, i }) => {
-                            return <Item
-                              key={i}
-                              original={`http://localhost:3003/${img}`}
-                              width="1024"
-                              height="768"
-                            />
-                        })
-                    }
-                </Gallery>
-    
-                
+                <button onClick={this.handleFileInputClick} id="button-plus">
+                    <img src={photo} alt="plus" id="plus"/>
+                </button>
+                <h1>גלריה</h1>
+                <Gallery images={this.state.images_for_gallery}/>
             </div>
         )
     }
