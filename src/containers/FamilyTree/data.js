@@ -1,4 +1,5 @@
 export const data = {
+  id:1,
   name: 'מיכאל כהן',
   attributes: {
     wife: 'דינה כהן',
@@ -7,6 +8,7 @@ export const data = {
   },
   children: [
     {
+      id:2,
       name: 'ישראל כהן',
       attributes: {
         wife: 'חדוה כהן',
@@ -15,6 +17,7 @@ export const data = {
       },
       children: [
         {
+          id:3,
           name: 'יהונתן כהן',
           attributes: {
             dateOfBirth: '',
@@ -22,6 +25,7 @@ export const data = {
           },
         },
         {
+          id:4,
           name: 'אהרון כהן',
           attributes: {
             dateOfBirth: '',
@@ -29,6 +33,7 @@ export const data = {
           },
         },
         {
+          id:5,
           name: 'שירה כהן',
           attributes: {
             dateOfBirth: '',
@@ -36,6 +41,7 @@ export const data = {
           },
         },
         {
+          id:5,
           name: 'רבקה כהן',
           attributes: {
             dateOfBirth: '',
@@ -45,12 +51,14 @@ export const data = {
       ],
     },
     {
+      id:6,
       name: 'שחר לוינסון',
       attributes: {
         wife: 'חנה לוינסון',
       },
       children: [
         {
+          id:7,
           name: 'משה לוינסון',
           attributes: {
             dateOfBirth: '',
@@ -58,6 +66,7 @@ export const data = {
           },
         },
         {
+          id:8,
           name: 'יאיר לוינסון',
           attributes: {
             dateOfBirth: '',
@@ -67,9 +76,11 @@ export const data = {
       ],
     },
     {
+      id:9,
       name: 'דוד כהן',
       attributes: {
       },
     },
   ],
 };
+export default data
