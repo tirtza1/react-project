@@ -18,46 +18,9 @@ export default class Calendar extends Component {
       eventName:'',
       fromDate:'',
       toDate:'',
-      CalendarEvent:[]
+      CalendarEvent:[],
+     
 
-      /*events:{
-          EventName: {
-              elementType: 'input',
-              elementConfig: {
-                  type: 'text',
-                  placeholder: 'שם אירוע'
-              },
-              value: '',
-              validation: {
-                  required: true,
-              },
-              valid: false,
-              touched: false
-          },
-          EventDate: {
-            elementType: 'input',
-            elementConfig: {
-                type: 'datetime-local',
-                placeholder:'תאריך'
-            },
-            value: '',
-            validation: {
-                required: true,
-            },
-            valid: false,
-            touched: false
-          },
-          EventDescription: {
-            elementType: 'textarea',
-             elementConfig: {
-                type: 'text',
-                placeholder:'תיאור...'
-             },
-             value: '',
-             valid: false,
-             touched: false
-          }
-        },*/
      };
   
  
@@ -75,10 +38,16 @@ export default class Calendar extends Component {
   
 
   handleEventClick= ({event}) => {
-    // openAppointment is a function I wrote to open a form to edit that appointment
-    this.props.openAppointment(event.extendedProps)
-   }
+    console.log( this.state.CalendarEvent[event])
+    console.log(event.id)
 
+    if(window.confirm("Are you sure you want to remove the event date?")){
+      this.state.CalendarEvent[event].remove()
+      console.log('event remove!')
+
+   
+   }
+  }
     handleEventDrop = (info) => {
         if(window.confirm("Are you sure you want to change the event date?")){
             console.log('change confirmed')
@@ -91,14 +60,18 @@ export default class Calendar extends Component {
         }
    }
 
+   //כאשר משנים את האינפוט
    inputChange = (event) => {
       this.setState({[`${event.target.id}`]: event.target.value})
    }
 
+
+
    //מוסיף אירוע ומעדכן אותו בלוח השנה
-   AddEventHandle=()=>{
+   AddEventHandle=(count)=>{
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
+        id:count+1,
         title: this.state.eventName,
         start: this.state.fromDate,
         end: this.state.toDate
@@ -108,57 +81,10 @@ export default class Calendar extends Component {
     this.toggle();
    }
   
-  /*
-  checkValidity(value, rules) {
-    let isValid = true;
-    if (!rules) {
-        return true;
-    }
-    
-    if (rules.required) {
-        isValid = value.trim() !== '' && isValid;
-    }
 
-    return isValid;
-}
-
-inputChangedHandler = (event1, evtName) => {
-    const updatedEvent = {
-        ...this.state.events,
-        [ evtName]: {
-            ...this.state.events[evtName],
-            value: event1.target.value,
-            valid: this.checkValidity(event1.target.value, this.state.events[ evtName].validation),
-            touched: true
-        }
-    };
-    this.setState({events: updatedEvent});
-}
-*/
   
   render() {
-    /*
-    const formElementsArray = [];
-        for ( let key in this.state.events ) {
-            formElementsArray.push( {
-                id: key,
-                config: this.state.events[key]
-            } );
-        }
-         
-        const form = formElementsArray.map( formElement => (
-            <Input
-                key={formElement.id}
-                elementType={formElement.config.elementType}
-                elementConfig={formElement.config.elementConfig}
-                value={formElement.config.value}
-                invalid={!formElement.config.valid}
-                shouldValidate={formElement.config.validation}
-                touched={formElement.config.touched}
-                changed={( event1 ) => this.inputChangedHandler( event1, formElement.id )} />
-               
-        ) );
-        */
+   let count=0;
     return (
       <div className={classes.calendarContent}>
        
@@ -189,41 +115,29 @@ inputChangedHandler = (event1, evtName) => {
               size='lg'
               centered
             >
-              <ModalHeader toggle={this.toggle} style={{textAlign:"center"}}>
+              <ModalHeader toggle={this.toggle} style={{ fontWeight:'bold', fontSize:'large'}} >
                 :הוסף אירוע 
               </ModalHeader>
               <ModalBody>
                {
-                  <form>
-                    
-
-                          <label htmlFor="fromDate">Event Name:</label>
-                          <input type="text" placeholder="Enter event" name="eventName"/>
-                    
-                          <label htmlFor="fromDate">From:</label>
-                          <input type="date" placeholder="Enter from date" name="fromDate"/>
-                        
-                          <label htmlFor="toDate">To:</label>
-                          <input type="date" name="toDate"/>
-
-                          <label htmlFor="eventName">Event Name:</label>
-                          <input type="text" placeholder="Enter event" name="eventName" onChange={this.inputChange} id="eventName"/>
-                    
-                          <label htmlFor="fromDate">From:</label>
-                          <input type="date" placeholder="Enter from date" name="fromDate" onChange={this.inputChange} id="fromDate"/>
-                        
-                          <label htmlFor="toDate">To:</label>
-                          <input type="date" name="toDate" onChange={this.inputChange} id="toDate"/>
-
-                
-                         
+                  <form style={{marginLeft:'300px'}}>
+                          <label className={classes.LableCalendar} style={{marginLeft:'365px'}} htmlFor="eventName">:שם אירוע</label>
+                           <br/>
+                          <input className={classes.InputCalendar} type="text"  placeholder="שם אירוע"  name="eventName"  onChange={this.inputChange}  id="eventName"/>
+                          <br/>
+                          <label className={classes.LableCalendar} style={{marginLeft:'330px'}} htmlFor="fromDate">:תאריך התחלה</label>
+                          <br/>
+                          <input className={classes.InputCalendar} type="date" placeholder="Enter from date" name="fromDate" onChange={this.inputChange} id="fromDate"/>
+                          <br/>
+                          <label className={classes.LableCalendar} style={{marginLeft:'355px'}} htmlFor="toDate"> :תאריך סיום</label>
+                          <br/>
+                          <input className={classes.InputCalendar} type="date" name="toDate" onChange={this.inputChange} id="toDate"/>
                 </form> }
   
               </ModalBody>
-              <ModalFooter>
+              <ModalFooter style={{marginRight:'630px'}}>
           
-                <Button color="primary" onClick={this.AddEventHandle}
-                  >
+                <Button  color="primary" onClick={this.AddEventHandle}>
                    הוסף
                 </Button>
                 <Button color="secondary" onClick={this.toggle}>

@@ -9,3 +9,30 @@
     margin-top: 120px;
     left: 10px;
 }
+
+.InputCalendar{
+    
+    padding: 12px 20px;
+    margin: 8px 0;
+    box-sizing: border-box;
+    border: none;
+    border-bottom: 2px solid rgb(0, 0, 0);
+    width: 100%;
+    text-align: right;
+    direction: rtl;
+}
+
+.LableCalendar{
+   font-weight: bold;
+   font-family:'Segoe UI';
+   font-size: large;
+}
+
+.InputCalendar:focus {
+    border: 3px solid #555;
+  }
+  
+  .Invalid {
+    border: 1px solid red;
+    background-color: #FDA49A;
+}

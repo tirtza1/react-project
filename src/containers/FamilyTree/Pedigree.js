@@ -1,4 +1,4 @@
-import React from 'react';
+import React, {Component } from 'react';
 import Tree from 'react-d3-tree';
 import { TreeProps } from "react-d3-tree/lib/Tree/types";
 import { RawNodeDatum } from "react-d3-tree/lib/types/common";
