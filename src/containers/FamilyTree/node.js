@@ -1,10 +1,11 @@
 import React from 'react';
 import './node.css';
+import clone from 'clone'
+import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
 function Node({nodeDatum, toggleNode, onNodeClick}) {
   onNodeClick = () => {
     console.log('abc');
-    //write here the code
   }
   return (
     <g id="con">

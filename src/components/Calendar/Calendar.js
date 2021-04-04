@@ -37,12 +37,12 @@ export default class Calendar extends Component {
   };
   
 
-  handleEventClick= ({event}) => {
-    console.log( this.state.CalendarEvent[event])
-    console.log(event.id)
+  handleEventClick= ({id}) => {
+    console.log( this.state.CalendarEvent[id])
+    //console.log(event.id)
 
     if(window.confirm("Are you sure you want to remove the event date?")){
-      this.state.CalendarEvent[event].remove()
+      //this.state.CalendarEvent[event].remove()
       console.log('event remove!')
 
    
@@ -114,6 +114,7 @@ export default class Calendar extends Component {
               toggle={this.toggle}
               size='lg'
               centered
+             
             >
               <ModalHeader toggle={this.toggle} style={{ fontWeight:'bold', fontSize:'large'}} >
                 :הוסף אירוע 
