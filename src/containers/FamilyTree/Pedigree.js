@@ -14,20 +14,51 @@ function Pedigree(props) {
   const [birth, setBirth] = React.useState('birth');
   const [death, setDeath] = React.useState('death');
   const [email, setEmail] = React.useState('email');
-  const [alive, seAlive] = React.useState(false);
+  const [alive, setAlive] = React.useState(false);
   const [newPerson, setNewPerson] = React.useState('newPerson');
   const [showList, setShowList] = React.useState(false);
   const [dataListValue, setDataListValue] = React.useState('');
 
   const addNewNode = (event) => {
     setFirstName('');
-    //set all of the states to empty
+    setLastName('');
+    setBirth('');
+    setDeath('');
+    setEmail('');
+    setAlive(false);
+
     setShowList(!showList);
+
+    //do this just on submit
     switch(dataListValue) {
       case 'father': 
+        //create the instance and then put what there is as a child
         setTreeData();
         break;
       case 'mother': 
+        setTreeData();
+        break;
+      case 'wife': 
+      //set in the attributes the wife
+        setTreeData();
+        break;
+      case 'husband': 
+        setTreeData();
+        break;
+      case 'son': 
+        //create a child
+        setTreeData();
+        break;
+      case 'daughter': 
+        setTreeData();
+        break;
+      case 'brother': 
+        //create a sibling
+        setTreeData();
+        break;
+      case 'sister': 
+        setTreeData();
+        break;
     }
   }
 
@@ -47,7 +78,7 @@ function Pedigree(props) {
       />
 
     <Modal
-      isOpen={true}
+      isOpen={false}
       //toggle={this.toggle}
       size='lg'
       centered

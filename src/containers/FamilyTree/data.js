@@ -1,19 +1,19 @@
 export const data = {
-  id:1,
+  id: 1,
   name: 'מיכאל כהן',
   attributes: {
-    wife: 'דינה כהן',
-    dateOfBirth: '',
-    dateOfDeath: ''
+    spouse: 'דינה כהן',
+    gender: 'male',
+    birth: '',
+    death: '',
+    email: ''
   },
   children: [
     {
       id:2,
       name: 'ישראל כהן',
       attributes: {
-        wife: 'חדוה כהן',
-        dateOfBirth: '',
-        dateOfDeath: ''
+        wife: 'חדוה כהן'
       },
       children: [
         {
@@ -83,4 +83,4 @@ export const data = {
     },
   ],
 };
-export default data
+export default data;
