@@ -1,13 +1,23 @@
+//check you, spouse, 
 export const data = {
   id: 1,
   name: 'מיכאל כהן',
   attributes: {
-    spouse: 'דינה כהן',
+    spouse: {
+      id: 19,
+      name: 'דינה כהן',
+      attributes: {
+        gender: 'female',
+        birth: '',
+        death: '',
+        email: ''
+      }
+      },
     gender: 'male',
     birth: '',
     death: '',
     email: ''
-  },
+},
   children: [
     {
       id:2,
@@ -41,7 +51,7 @@ export const data = {
           },
         },
         {
-          id:5,
+          id:10,
           name: 'רבקה כהן',
           attributes: {
             dateOfBirth: '',

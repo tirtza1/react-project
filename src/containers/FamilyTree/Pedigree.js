@@ -20,24 +20,31 @@ function Pedigree(props) {
   const [newPerson, setNewPerson] = React.useState('newPerson');
   const [showList, setShowList] = React.useState(false);
   const [dataListValue, setDataListValue] = React.useState('');
+  const [count, setCount] = React.useState(0);
 
-  const addNewNode = (event) => {
-    setFirstName('');
-    setLastName('');
-    setBirth('');
-    setDeath('');
-    setEmail('');
-    setAlive(false);
+  const addPerson = () => {
+    const node = {
+      id: count,
+      name: firstName + " " + lastName,
+      attributes: {
+        gender: '',
+        birth: birth,
+        death: death,
+        email: email
+      }
+    }
 
-    setShowList(!showList);
+    setCount(count + 1);
 
     //do this just on submit
     switch(dataListValue) {
       case 'father': 
-        //create the instance and then put what there is as a child
-        setTreeData();
+        node["children"] = data;
+        setTreeData(node);
         break;
       case 'mother': 
+        node["children"] = data;
+        setTreeData(node);
         setTreeData();
         break;
       case 'wife': 
@@ -64,6 +71,17 @@ function Pedigree(props) {
     }
   }
 
+  const addNewNode = (event) => {
+    setFirstName('');
+    setLastName('');
+    setBirth('');
+    setDeath('');
+    setEmail('');
+    setAlive(false);
+
+    setShowList(!showList);
+  }
+
   const onFirstNameChange = (event) => {
     setFirstName(event.target.value);
   }
@@ -80,7 +98,7 @@ function Pedigree(props) {
     setEmail(event.target.value);
   }
   const onAliveChange = (event) => {
-   
+    document.getElementById('deathId').disabled = true;
   }
 
   return (
@@ -95,7 +113,7 @@ function Pedigree(props) {
       />
 
     <Modal
-      isOpen={false}
+      isOpen={true}
       //toggle={this.toggle}
       size='lg'
       centered
@@ -111,15 +129,15 @@ function Pedigree(props) {
         <button onClick={addNewNode} id="buttonPlusUser" className={classes.buttonPlusUser}>
           <img src={plusUser} alt="plususer" id="plusUser" className={classes.plusUser}/>
         </button>
-        <datalist id="family" >
-          <option value="father"/>
-          <option value="mother"/>
-          <option value="brother"/>
-          <option value="sister"/>
-          <option value="daughter"/>
-          <option value="son"/>
-          <option value="Partner"/>
-        </datalist>
+          <datalist id="family" style={{ width: '100px', height: '100px', zIndex: '99' }}>
+            <option value="father">אבא</option>
+            <option value="mother">אמא</option>
+            <option value="brother">אח</option>
+            <option value="sister">אחות</option>
+            <option value="daughter">בת</option>
+            <option value="son">בן</option>
+            <option value="Partner">בן זוג</option>
+          </datalist>
         <br/>
         {
           <form >
@@ -138,9 +156,9 @@ function Pedigree(props) {
             <input type="date" className={classes.InputPedigree} onChange={onBirthChange}/>
             <br/>
             <br/>
-            <label id="deathId" style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
+            <label style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
             <br/>
-            <input disabled={true} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
+            <input  id="deathId" disabled={false} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
             <br/>
             <br/> 
             <input style={{marginLeft:'10px'}} type="checkbox" id="mycheck" onChange={onAliveChange} />
