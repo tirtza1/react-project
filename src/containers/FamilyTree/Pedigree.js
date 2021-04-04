@@ -5,6 +5,8 @@ import { RawNodeDatum } from "react-d3-tree/lib/types/common";
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Node from './node';
 import {data} from './data';
+import classes from './Pedigree.module.css';
+import plusUser from '../../assets/images/user-plus.png'
 
 function Pedigree(props) {
 
@@ -65,6 +67,21 @@ function Pedigree(props) {
   const onFirstNameChange = (event) => {
     setFirstName(event.target.value);
   }
+  const onLastNameChange = (event) => {
+    setLastName(event.target.value);
+  }
+  const onBirthChange = (event) => {
+    setBirth(event.target.value);
+  }
+  const onDeathChange = (event) => {
+    setDeath(event.target.value);
+  }
+  const onEmailChange = (event) => {
+    setEmail(event.target.value);
+  }
+  const onAliveChange = (event) => {
+   
+  }
 
   return (
     <div style={{ width: '100vw', height: '100vh' }} >
@@ -82,40 +99,61 @@ function Pedigree(props) {
       //toggle={this.toggle}
       size='lg'
       centered
+      style={{direction:'rtl'}}
     >
       <ModalHeader style={{textAlign:"center"}}>
         {'name'}
       </ModalHeader>
       <ModalBody>
-        <img src={'https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340'} width="30" height="30" alt={'name'} />
+        <img src={'https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340'} alt={'name'} className={classes.ImageUser}/>
+        <br/>
+        <br/>
+        <button onClick={addNewNode} id="buttonPlusUser" className={classes.buttonPlusUser}>
+          <img src={plusUser} alt="plususer" id="plusUser" className={classes.plusUser}/>
+        </button>
+        <datalist id="family" >
+          <option value="father"/>
+          <option value="mother"/>
+          <option value="brother"/>
+          <option value="sister"/>
+          <option value="daughter"/>
+          <option value="son"/>
+          <option value="Partner"/>
+        </datalist>
+        <br/>
         {
-          <form>
-            <label htmlFor="fromDate">שם פרטי: </label>
-            <input type="text" id="firstName" onChange={onFirstNameChange}/>
-      
-            <label htmlFor="fromDate">שם משפחה: </label>
-            <input type="text"/>
-          
-            <label htmlFor="toDate">תאריך לידה: </label>
-            <input type="date"/>
-
-            <label htmlFor="eventName">תאריך פטירה: </label>
-            <input type="date"/>
-            
-            <input type="checkbox"/>
-
-            <label htmlFor="fromDate">אמייל</label>
-            <input type="email"/>             
+          <form >
+            <label style={{marginLeft:'650px'}} className={classes.LablePedigree}>שם פרטי: </label>
+            <br/>
+            <input  type="text" id="firstName" className={classes.InputPedigree} onChange={onFirstNameChange}/>
+            <br/>
+            <br/> 
+            <label style={{marginLeft:'630px'}} className={classes.LablePedigree}>שם משפחה: </label>
+            <br/>
+            <input type="text" className={classes.InputPedigree} onChange={onLastNameChange}/>
+            <br/>
+            <br/>
+            <label style={{marginLeft:'635px'}} className={classes.LablePedigree}>תאריך לידה: </label>
+            <br/>
+            <input type="date" className={classes.InputPedigree} onChange={onBirthChange}/>
+            <br/>
+            <br/>
+            <label id="deathId" style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
+            <br/>
+            <input disabled={true} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
+            <br/>
+            <br/> 
+            <input style={{marginLeft:'10px'}} type="checkbox" id="mycheck" onChange={onAliveChange} />
+            <label className={classes.LablePedigree} style={{marginLeft:'670px'}}>חי</label>
+            <br/>
+             <br/>
+            <label style={{marginLeft:'665px'}} className={classes.LablePedigree}>אימייל:</label>
+            <br/>
+            <input type="email" className={classes.InputPedigree} onChange={onEmailChange}/>     
+            <br/>        
         </form> 
         }
-        <button onClick={addNewNode}>הוסף בן אדם חדש</button>
-        <datalist id="ice-cream-flavors" >
-          <option value="Chocolate"/>
-          <option value="Coconut"/>
-          <option value="Mint"/>
-          <option value="Strawberry"/>
-          <option value="Vanilla"/>
-        </datalist>
+        
       </ModalBody>
       <ModalFooter>
 
