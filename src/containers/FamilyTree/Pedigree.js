@@ -98,7 +98,10 @@ function Pedigree(props) {
     setEmail(event.target.value);
   }
   const onAliveChange = (event) => {
-    document.getElementById('deathId').disabled = true;
+    if(document.getElementById("myCheck").checked === true)
+       document.getElementById('deathId').disabled = true;
+    else
+       document.getElementById('deathId').disabled = false;
   }
 
   return (
@@ -122,7 +125,7 @@ function Pedigree(props) {
       <ModalHeader style={{textAlign:"center"}}>
         {'name'}
       </ModalHeader>
-      <ModalBody>
+      <ModalBody >
         <img src={'https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340'} alt={'name'} className={classes.ImageUser}/>
         <br/>
         <br/>
@@ -140,31 +143,42 @@ function Pedigree(props) {
           </datalist>
         <br/>
         {
-          <form >
+          <form style={{direction:'rtl'}}>
             <label style={{marginLeft:'650px'}} className={classes.LablePedigree}>שם פרטי: </label>
             <br/>
             <input  type="text" id="firstName" className={classes.InputPedigree} onChange={onFirstNameChange}/>
             <br/>
             <br/> 
-            <label style={{marginLeft:'630px'}} className={classes.LablePedigree}>שם משפחה: </label>
+            <label className={classes.LablePedigree}>שם משפחה: </label>
             <br/>
             <input type="text" className={classes.InputPedigree} onChange={onLastNameChange}/>
+            <br/>
+            <br/>
+            <label style={{marginLeft:'630px'}} className={classes.LablePedigree}>מגדר: </label>
+            <br/>
+            <input  type="radio"  />
+            <label  className={classes.LablePedigree}>זכר </label>
+          
+            <input type="radio"  />
+            <label className={classes.LablePedigree}>נקבה </label>
+          
             <br/>
             <br/>
             <label style={{marginLeft:'635px'}} className={classes.LablePedigree}>תאריך לידה: </label>
             <br/>
             <input type="date" className={classes.InputPedigree} onChange={onBirthChange}/>
             <br/>
+           
+            <br/> 
+            <input style={{marginLeft:'10px'}} type="checkbox" id="myCheck" onChange={onAliveChange} />
+            <label className={classes.LablePedigree} style={{marginLeft:'670px'}}>חי</label>
+            <br/>
             <br/>
             <label style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
             <br/>
             <input  id="deathId" disabled={false} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
             <br/>
-            <br/> 
-            <input style={{marginLeft:'10px'}} type="checkbox" id="mycheck" onChange={onAliveChange} />
-            <label className={classes.LablePedigree} style={{marginLeft:'670px'}}>חי</label>
             <br/>
-             <br/>
             <label style={{marginLeft:'665px'}} className={classes.LablePedigree}>אימייל:</label>
             <br/>
             <input type="email" className={classes.InputPedigree} onChange={onEmailChange}/>     
