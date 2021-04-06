@@ -7,6 +7,7 @@ import Node from './node';
 import {data} from './data';
 import classes from './Pedigree.module.css';
 import plusUser from '../../assets/images/user-plus.png'
+import camera from '../../assets/images/camera.jpg';
 
 function Pedigree(props) {
 
@@ -72,14 +73,14 @@ function Pedigree(props) {
   }
 
   const addNewNode = (event) => {
+    console.log(event)
+    console.log(firstName)
     setFirstName('');
     setLastName('');
     setBirth('');
     setDeath('');
     setEmail('');
     setAlive(false);
-
-    setShowList(!showList);
   }
 
   const onFirstNameChange = (event) => {
@@ -104,6 +105,11 @@ function Pedigree(props) {
        document.getElementById('deathId').disabled = false;
   }
 
+ const handleFileInputClick = () =>  {
+    const clickOn = document.getElementById("inputFile");
+    clickOn.click();
+}
+
   return (
     <div style={{ width: '100vw', height: '100vh' }} >
       <Tree
@@ -121,26 +127,44 @@ function Pedigree(props) {
       size='lg'
       centered
       style={{direction:'rtl'}}
+      className={classes.contentModal}
     >
       <ModalHeader style={{textAlign:"center"}}>
         {'name'}
       </ModalHeader>
       <ModalBody >
+        <div>
+          <input 
+              type="file" 
+              id="inputFile" 
+              accept="image/x-png,image/gif,image/jpeg" 
+              className={classes.inputFile}
+          />
+          <button onClick={handleFileInputClick} id="button-camera" className={classes.buttonCamera}>
+              <img src={camera} alt="camera" id="camera" className={classes.camera}/>
+          </button>
+        </div>
         <img src={'https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340'} alt={'name'} className={classes.ImageUser}/>
         <br/>
         <br/>
-        <button onClick={addNewNode} id="buttonPlusUser" className={classes.buttonPlusUser}>
-          <img src={plusUser} alt="plususer" id="plusUser" className={classes.plusUser}/>
-        </button>
-          <datalist id="family" style={{ width: '100px', height: '100px', zIndex: '99' }}>
-            <option value="father">אבא</option>
-            <option value="mother">אמא</option>
-            <option value="brother">אח</option>
-            <option value="sister">אחות</option>
-            <option value="daughter">בת</option>
-            <option value="son">בן</option>
-            <option value="Partner">בן זוג</option>
-          </datalist>
+       
+         <div className={classes.dropdown}>
+            <button id="button-Plus-User" className={classes.buttonPlusUser}>
+              <img src={plusUser} alt="plususer" id="plusUser" className={classes.plusUser}/>
+            </button>
+            <div className={classes.dropdownContent}>
+              <button onClick={addNewNode} id="father">אבא</button>
+              <button onClick={addNewNode} id="mother">אמא</button>
+              <button onClick={addNewNode} id="brother">אח</button>
+              <button onClick={addNewNode} id="sister">אחות</button>
+              <button onClick={addNewNode} id="son">ילד </button>
+              <button onClick={addNewNode} id="daughter">ילדה</button>
+              <button onClick={addNewNode} id="husband">בעל</button>
+              <button onClick={addNewNode} id="wife">אישה</button>
+            
+            </div>
+          </div>
+
         <br/>
         {
           <form style={{direction:'rtl'}}>
@@ -149,17 +173,17 @@ function Pedigree(props) {
             <input  type="text" id="firstName" className={classes.InputPedigree} onChange={onFirstNameChange}/>
             <br/>
             <br/> 
-            <label className={classes.LablePedigree}>שם משפחה: </label>
+            <label style={{marginLeft:'630px'}} className={classes.LablePedigree}>שם משפחה: </label>
             <br/>
             <input type="text" className={classes.InputPedigree} onChange={onLastNameChange}/>
             <br/>
             <br/>
-            <label style={{marginLeft:'630px'}} className={classes.LablePedigree}>מגדר: </label>
+            <label style={{marginLeft:'675px'}} className={classes.LablePedigree}>מגדר: </label>
             <br/>
-            <input  type="radio"  />
+            <input  type="radio"  id="male" name="gender" value="male"/>
             <label  className={classes.LablePedigree}>זכר </label>
           
-            <input type="radio"  />
+            <input type="radio"  id="female" name="gender" value="female"/>
             <label className={classes.LablePedigree}>נקבה </label>
           
             <br/>
@@ -189,10 +213,10 @@ function Pedigree(props) {
       </ModalBody>
       <ModalFooter>
 
-        <Button color="primary" onClick={console.log('save')}>
+        <Button color="primary" >
           שמור
         </Button>
-        <Button color="secondary" onClick={console.log('close')}>
+        <Button color="secondary" >
           סגור
         </Button>
       </ModalFooter>
