@@ -3,16 +3,14 @@ import './node.css';
 import clone from 'clone'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-function Node({nodeDatum, toggleNode, onNodeClick}) {
+function Node({nodeDatum, toggleNode, onNodeClick, setShowEditModule}) {
 
-  onNodeClick = () => {
-    console.log('abc');
-  }
 
   onNodeClick = (nodeDatum) => {
-    console.log('node was clicked', nodeDatum);
-
+    console.log(nodeDatum);
+    setShowEditModule(true);
   }
+
   return (
     <g id="con">
       <foreignObject width={250} height={250} x={-102} y={-40} onClick={() => onNodeClick(nodeDatum)}>
