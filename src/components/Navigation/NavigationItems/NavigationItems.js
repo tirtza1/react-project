@@ -1,19 +1,31 @@
-import React from 'react';
+import React, { useState } from 'react';
 import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.module.css';
 
-const navigationItems = (props) => (
-  <ul className={classes.NavigationItems}>
-    <NavigationItem link='/Photo'>גלריה</NavigationItem>
-    <NavigationItem link='/Calendar'>לוח שנה</NavigationItem>
-     <NavigationItem link='/Pedigree'>אילן יוחסין</NavigationItem>
-     <NavigationItem link='/LogIn'>התחברות</NavigationItem>
-     <NavigationItem link='/pictures'>תמונות</NavigationItem>
-    {/*<NavigationItem link="/Logout">התנתק</NavigationItem>*/}
-    
-  </ul>
-);
-export default navigationItems;
+const NavigationItems = (props) => {
+
+  const [isSignedIn, setIsSignIn] = useState(true);
+
+  if (isSignedIn) 
+    return (
+      <ul className={classes.NavigationItems}>
+        <NavigationItem link='/Photo'>גלריה</NavigationItem>
+        <NavigationItem link='/Calendar'>לוח שנה</NavigationItem>
+        <NavigationItem link='/Pedigree'>אילן יוחסין</NavigationItem>
+        <NavigationItem link='/group:id'>בית</NavigationItem>
+      {/*<NavigationItem link="/Logout">התנתק</NavigationItem>*/}
+      </ul>
+    );
+
+  else return (
+    <ul className={classes.NavigationItems}>
+      <NavigationItem link='/LogIn'>התחברות</NavigationItem>
+      <NavigationItem link='/'>בית</NavigationItem>
+    </ul>
+  );
+  
+}
+export default NavigationItems;
 
 /* {props.isAuthenticated ? <NavigationItem link="/AddConection">אילן יוחסין</NavigationItem> : null}
     {props.isAuthenticated ? <NavigationItem link="/Calender">לוח שנה</NavigationItem> : null}

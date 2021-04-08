@@ -1,4 +1,4 @@
-//check you, spouse, 
+
 export const data = {
   id: 1,
   name: 'מיכאל כהן',
@@ -12,7 +12,7 @@ export const data = {
         death: '',
         email: ''
       }
-      },
+    },
     gender: 'male',
     birth: '',
     death: '',
@@ -23,39 +23,50 @@ export const data = {
       id:2,
       name: 'ישראל כהן',
       attributes: {
-        wife: 'חדוה כהן'
+        gender: 'male',
+        birth: '',
+        death: '',
+        email: ''
       },
       children: [
         {
           id:3,
           name: 'יהונתן כהן',
           attributes: {
-            dateOfBirth: '',
-            dateOfDeath: ''
+            gender: 'male',
+            birth: '',
+            death: '',
+            email: ''
           },
         },
         {
           id:4,
           name: 'אהרון כהן',
           attributes: {
-            dateOfBirth: '',
-            dateOfDeath: ''
+            gender: 'male',
+            birth: '',
+            death: '',
+            email: ''
           },
         },
         {
           id:5,
           name: 'שירה כהן',
           attributes: {
-            dateOfBirth: '',
-            dateOfDeath: ''
+            gender: 'female',
+            birth: '',
+            death: '',
+            email: ''
           },
         },
         {
           id:10,
           name: 'רבקה כהן',
           attributes: {
-            dateOfBirth: '',
-            dateOfDeath: ''
+            gender: 'female',
+            birth: '',
+            death: '',
+            email: ''
           },
         },
       ],
@@ -64,23 +75,40 @@ export const data = {
       id:6,
       name: 'שחר לוינסון',
       attributes: {
-        wife: 'חנה לוינסון',
+        spouse: {
+          id: 7,
+          name: 'חנה לוינסון',
+          attributes: {
+            gender: 'female',
+            birth: '',
+            death: '',
+            email: ''
+          }
+        },
+        gender: 'male',
+        birth: '',
+        death: '',
+        email: ''
       },
       children: [
         {
           id:7,
           name: 'משה לוינסון',
           attributes: {
-            dateOfBirth: '',
-            dateOfDeath: ''
+            gender: 'male',
+            birth: '',
+            death: '',
+            email: ''
           },
         },
         {
           id:8,
           name: 'יאיר לוינסון',
           attributes: {
-            dateOfBirth: '',
-            dateOfDeath: ''
+            gender: 'male',
+            birth: '',
+            death: '',
+            email: ''
           },
         },
       ],
@@ -89,6 +117,10 @@ export const data = {
       id:9,
       name: 'דוד כהן',
       attributes: {
+        gender: 'male',
+        birth: '',
+        death: '',
+        email: ''
       },
     },
   ],

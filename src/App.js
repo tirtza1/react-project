@@ -9,6 +9,8 @@ import ForgetPassword from './containers/Entrance/LogIn/ForgetPassword/ForgetPas
 import Pedigree from './containers/FamilyTree/Pedigree';
 import Calendar from './components/Calendar/Calendar'
 import Pictures from './components/Pictures/pictures'
+import Home from './components/Home/home';
+import HomeGroup from './components/GroupHome/groupHome'
 
 class App extends Component {
   render() {
@@ -26,8 +28,11 @@ class App extends Component {
                 <Route path='/Calendar'  exact component={Calendar}/>
                 <Route path='/Photo'  exact component={Photo}/>
                 <Route path='/pictures' exact component={Pictures}/>
+                <Route path='/group:id' component={HomeGroup}/>
+                <Route path='/' exact component={Home}/>
               </Switch>
             </Layout>
+
         </BrowserRouter>
       </div>
     );
