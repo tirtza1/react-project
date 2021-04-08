@@ -1,4 +1,5 @@
 import React from 'react'
+import './groupHome.css'
 
 class HomeGroup extends React.Component{
 
