@@ -3,12 +3,10 @@ import './node.css';
 import clone from 'clone'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 
-function Node({nodeDatum, toggleNode, onNodeClick, setShowEditModule}) {
-
+function Node({nodeDatum, toggleNode, onNodeClick}) {
 
   onNodeClick = (nodeDatum) => {
     console.log(nodeDatum);
-    setShowEditModule(true);
   }
 
   return (

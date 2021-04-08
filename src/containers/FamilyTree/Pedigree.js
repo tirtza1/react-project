@@ -136,6 +136,10 @@ function Pedigree(props) {
     clickOn.click();
 }
 
+const handleTreeClick = (nodeData, evt) => {
+  console.log(nodeData, evt);
+}
+
   return (
     <div style={{ width: '100vw', height: '100vh' }} >
       <Tree
@@ -143,8 +147,7 @@ function Pedigree(props) {
         depthFactor={130}
         orientation='vertical'
         pathFunc="step"
-        renderCustomNodeElement={(props) => Node({...props, setShowEditModule })}
-        onNodeClick={null}
+        renderCustomNodeElement={(props) => Node({...props })}
       />
       <Modal
       isOpen={false}
