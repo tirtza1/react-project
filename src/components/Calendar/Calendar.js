@@ -19,8 +19,7 @@ export default class Calendar extends Component {
       fromDate:'',
       toDate:'',
       CalendarEvent:[],
-     
-
+      count: 0
      };
   
  
@@ -37,28 +36,24 @@ export default class Calendar extends Component {
   };
   
 
-  handleEventClick= ({id}) => {
-    console.log( this.state.CalendarEvent[id])
-    //console.log(event.id)
-
-    if(window.confirm("Are you sure you want to remove the event date?")){
-      //this.state.CalendarEvent[event].remove()
-      console.log('event remove!')
-
-   
+  handleEventClick= (event) => {
+    if(window.confirm("Are you sure you want to remove the event date?")) {
+      const id = event.event.id;
+      const newEvents = this.state.CalendarEvent.filter(e => e.id !== event.event.id)
+      console.log(newEvents);
+      this.setState({CalendarEvent: newEvents});
+      this.setState({count: this.state.count - 1});
    }
   }
-    handleEventDrop = (info) => {
-        if(window.confirm("Are you sure you want to change the event date?")){
-            console.log('change confirmed')
-
-            // updateAppointment is another custom method
-            this.updateAppointment({...info.event.extendedProps, start: info.event.start, end: info.event.end})
-
-        } else {
-            console.log('change aborted')
-        }
-   }
+    
+  handleEventDrop = (info) => {
+      console.log(info.event.start)
+      let events = [...this.state.CalendarEvent];
+      let eventToChange = {...events[info.event.id]};
+      eventToChange.start = info.event.start;
+      eventToChange.end = info.event.end;events[info.event.id] = eventToChange;
+      this.setState({CalendarEvent: events});
+  }
 
    //כאשר משנים את האינפוט
    inputChange = (event) => {
@@ -71,7 +66,7 @@ export default class Calendar extends Component {
    AddEventHandle=(count)=>{
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
-        id:count+1,
+        id:this.state.count,
         title: this.state.eventName,
         start: this.state.fromDate,
         end: this.state.toDate
@@ -79,12 +74,12 @@ export default class Calendar extends Component {
     }))
 
     this.toggle();
+    this.setState({ count: this.state.count + 1});
    }
   
 
   
   render() {
-   let count=0;
     return (
       <div className={classes.calendarContent}>
        

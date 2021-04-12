@@ -4,91 +4,99 @@ import Button from '../../../components/UI/Button/Button';
 import classes from './SignUp.module.css';
 //nimport checkValidity from '../../SignUp/checkValidity/checkValidity'
 class SignUp extends Component {
-    state = {
-        controls: {
-            firstname:{
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'שם פרטי'
+    constructor() {
+        super();
+        this.state = {
+            controls: {
+                firstname:{
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'שם פרטי'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                    },
+                    valid: false,
+                    touched: false
                 },
-                value: '',
-                validation: {
-                    required: true,
+               lastname:{
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder: 'שם משפחה'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                    },
+                    valid: false,
+                    touched: false
                 },
-                valid: false,
-                touched: false
+               ID:{
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'text',
+                        placeholder:'תעודת זהות'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                        minLength: 9,
+                        maxLength: 9
+                    },
+                    valid: false,
+                    touched: false
+                },
+                birthdate:{
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'date',
+                        placeholder:'תאריך לידה'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                    },
+                    valid: false,
+                    touched: false
+                },
+                email: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'email',
+                        placeholder: 'אימייל'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                        isEmail: true
+                    },
+                    valid: false,
+                    touched: false
+                },
+                password: {
+                    elementType: 'input',
+                    elementConfig: {
+                        type: 'password',
+                        placeholder: 'סיסמא'
+                    },
+                    value: '',
+                    validation: {
+                        required: true,
+                        minLength: 6
+                    },
+                    valid: false,
+                    touched: false
+                }
             },
-           lastname:{
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder: 'שם משפחה'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false
-            },
-           ID:{
-                elementType: 'input',
-                elementConfig: {
-                    type: 'text',
-                    placeholder:'תעודת זהות'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 9,
-                    maxLength: 9
-                },
-                valid: false,
-                touched: false
-            },
-            birthdate:{
-                elementType: 'input',
-                elementConfig: {
-                    type: 'date',
-                    placeholder:'תאריך לידה'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                },
-                valid: false,
-                touched: false
-            },
-            email: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'email',
-                    placeholder: 'אימייל'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    isEmail: true
-                },
-                valid: false,
-                touched: false
-            },
-            password: {
-                elementType: 'input',
-                elementConfig: {
-                    type: 'password',
-                    placeholder: 'סיסמא'
-                },
-                value: '',
-                validation: {
-                    required: true,
-                    minLength: 6
-                },
-                valid: false,
-                touched: false
-            }
+            showNewGroup: false,
+            showOldGroup: false,
+            groupName: '',
+            groupId: ''
         }
+        this.onSelectChange = this.onSelectChange.bind(this);
     }
 
     checkValidity(value, rules) {
@@ -122,6 +130,25 @@ class SignUp extends Component {
         return isValid;
     }
 
+    onSelectChange = (event) => {
+        if (event.target.value === 'צור קבוצה חדשה') {
+            this.setState({showNewGroup: true})
+            this.setState({showOldGroup: false})
+        }
+        if (event.target.value === 'הצטרף לקבוצה קיימת') {
+            this.setState({showNewGroup: false})
+            this.setState({showOldGroup: true})
+        }
+    }
+
+    nameChange = (event) => {
+        this.setState({groupName: event.target.value})
+    }
+
+    codeChange = (event) => {
+        this.setState({groupId: event.target.value})
+    }
+
     inputChangedHandler = (event, controlName) => {
         const updatedControls = {
             ...this.state.controls,
@@ -145,13 +172,16 @@ class SignUp extends Component {
                 id: this.state.controls.ID.value,
                 birthday: this.state.controls.birthdate.value,
                 email: this.state.controls.email.value,
-                password: this.state.controls.password.value
+                password: this.state.controls.password.value,
+                groupId: parseInt(this.state.groupId),
+                groupName: this.state.groupName
             })
         })
         .then(response => response.text())
         .then(data => {
             window.alert(data)
             //redirect to home page
+            //make the signin state
         })
     }
     
@@ -182,6 +212,27 @@ class SignUp extends Component {
             <div className={classes.SignUp}>
                 <form>
                     {form}
+                    <select onChange={this.onSelectChange}>
+                        <option disabled selected>בחר: </option>
+                        <option id="new">צור קבוצה חדשה</option>
+                        <option id="old">הצטרף לקבוצה קיימת</option>
+                    </select>
+                    {
+                        this.state.showNewGroup ?
+                        <div>
+                            <lable>שם הקבוצה: </lable>
+                            <Input changed={this.nameChange}/>
+                        </div> 
+                        : null
+                    }
+                    {
+                        this.state.showOldGroup ?
+                        <div>
+                            <lable>קוד הקבוצה (נשלח במייל): </lable>
+                            <Input changed={this.codeChange}/>
+                        </div> 
+                        : null
+                    }
                     <Button btnType="Success" clicked={this.onSubmit}>הירשם</Button>
                 </form>
             </div>
