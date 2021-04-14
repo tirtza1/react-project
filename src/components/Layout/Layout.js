@@ -2,6 +2,7 @@ import React, {Component} from 'react';
 import Toolbar from '../Navigation/Toolbar/Toolbar';
 import classes from './Layout.module.css';
 import SideDrawer from '../../components/Navigation/SideDrawer/SideDrawer';
+import Logo from '../Logo/Logo'
 class Layout extends Component{
     
     state = {
@@ -19,6 +20,8 @@ class Layout extends Component{
       render(){
             return( 
                 <React.Fragment>
+                  <Logo/>
+                 
                     <Toolbar drawerToggleClicked={this.sideDrawerToggleHandler} />
                     <SideDrawer
                     closed={this.sideDrawerClosedhandler}

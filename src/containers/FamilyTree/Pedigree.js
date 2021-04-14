@@ -6,7 +6,7 @@ import './node.css';
 import {data} from './data';
 import plusUser from '../../assets/images/user-plus.png';
 import camera from '../../assets/images/camera.jpg';
-import Swal from '@sweetalert/with-react';
+//import Swal from '@sweetalert/with-react';
 
 function Pedigree(props) {
 
@@ -127,75 +127,75 @@ function Pedigree(props) {
 
   //show the plus alert
   const onPlusClick = () => {
-    Swal({
-      content:
-      <div>
-        <div>
-          <input 
-            type="file" 
-            id="inputFile" 
-            accept="image/x-png,image/gif,image/jpeg" 
-            className={classes.inputFile}
-          />
-          <button 
-            onClick={(e) => handleImageClick(e)} 
-            id="button-camera" 
-            className={classes.buttonCamera}
-          >
-            <img src={camera} alt="camera" id="camera" className={classes.camera}/>
-          </button>
-        </div>
-        <img 
-          src={'https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340'} 
-          alt={'name'} 
-          className={classes.ImageUser}
-        />
-        <label for="browser">Choose your browser from the list:</label>
-        <input list="browsers" name="browser" id="browser" onChange={onDataListChange}/>
-        <datalist id="browsers">
-          <option value="אבא/אמא" id="parent"/>
-          <option value="בן/בת" id="descendant"/>
-          <option value="בן/בת זוג" id="spouse"/>
-          <option value="אח/אחות" id="sibling"/>
-        </datalist>
-        <form style={{direction:'rtl'}}>
-          <label style={{marginLeft:'650px'}} className={classes.LablePedigree}>שם : </label>
-          <br/>
-          <input  type="text" id="name" className={classes.InputPedigree} placeholder={name} onChange={onNameChange}/>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'675px'}} className={classes.LablePedigree}>מגדר: </label>
-          <br/>
-          <input  type="radio"  id="male" name="gender" value="male" onChange={onGenderChange}/>
-          <label  className={classes.LablePedigree}>זכר </label>
-          <input type="radio"  id="female" name="gender" value="female" onChange={onGenderChange}/>
-          <label className={classes.LablePedigree}>נקבה </label>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'635px'}} className={classes.LablePedigree}>תאריך לידה: </label>
-          <br/>
-          <input type="date" className={classes.InputPedigree} onChange={onBirthChange}/>
-          <br/>
-          <br/> 
-          <input style={{marginLeft:'10px'}} type="checkbox" id="myCheck" onChange={onAliveChange}/>
-          <label className={classes.LablePedigree} style={{marginLeft:'670px'}}>חי</label>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
-          <br/>
-          <input  id="deathId" disabled={false} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'665px'}} className={classes.LablePedigree}>אימייל:</label>
-          <br/>
-          <input type="email" className={classes.InputPedigree} onChange={onEmailChange} />     
-          <br/>        
-        </form>
-        <button onClick={addNewNode}>OK</button>
-      </div>,
+    // Swal({
+    //   content:
+    //   <div>
+    //     <div>
+    //       <input 
+    //         type="file" 
+    //         id="inputFile" 
+    //         accept="image/x-png,image/gif,image/jpeg" 
+    //         className={classes.inputFile}
+    //       />
+    //       <button 
+    //         onClick={(e) => handleImageClick(e)} 
+    //         id="button-camera" 
+    //         className={classes.buttonCamera}
+    //       >
+    //         <img src={camera} alt="camera" id="camera" className={classes.camera}/>
+    //       </button>
+    //     </div>
+    //     <img 
+    //       src={'https://media.macphun.com/img/uploads/customer/how-to/579/15531840725c93b5489d84e9.43781620.jpg?q=85&w=1340'} 
+    //       alt={'name'} 
+    //       className={classes.ImageUser}
+    //     />
+    //     <label for="browser">Choose your browser from the list:</label>
+    //     <input list="browsers" name="browser" id="browser" onChange={onDataListChange}/>
+    //     <datalist id="browsers">
+    //       <option value="אבא/אמא" id="parent"/>
+    //       <option value="בן/בת" id="descendant"/>
+    //       <option value="בן/בת זוג" id="spouse"/>
+    //       <option value="אח/אחות" id="sibling"/>
+    //     </datalist>
+    //     <form style={{direction:'rtl'}}>
+    //       <label style={{marginLeft:'650px'}} className={classes.LablePedigree}>שם : </label>
+    //       <br/>
+    //       <input  type="text" id="name" className={classes.InputPedigree} placeholder={name} onChange={onNameChange}/>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'675px'}} className={classes.LablePedigree}>מגדר: </label>
+    //       <br/>
+    //       <input  type="radio"  id="male" name="gender" value="male" onChange={onGenderChange}/>
+    //       <label  className={classes.LablePedigree}>זכר </label>
+    //       <input type="radio"  id="female" name="gender" value="female" onChange={onGenderChange}/>
+    //       <label className={classes.LablePedigree}>נקבה </label>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'635px'}} className={classes.LablePedigree}>תאריך לידה: </label>
+    //       <br/>
+    //       <input type="date" className={classes.InputPedigree} onChange={onBirthChange}/>
+    //       <br/>
+    //       <br/> 
+    //       <input style={{marginLeft:'10px'}} type="checkbox" id="myCheck" onChange={onAliveChange}/>
+    //       <label className={classes.LablePedigree} style={{marginLeft:'670px'}}>חי</label>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
+    //       <br/>
+    //       <input  id="deathId" disabled={false} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'665px'}} className={classes.LablePedigree}>אימייל:</label>
+    //       <br/>
+    //       <input type="email" className={classes.InputPedigree} onChange={onEmailChange} />     
+    //       <br/>        
+    //     </form>
+    //     <button onClick={addNewNode}>OK</button>
+    //   </div>,
       
-      buttons: true,
-    })
+    //   buttons: true,
+    // })
   }
 
   //on node click handler
@@ -204,83 +204,83 @@ function Pedigree(props) {
     setId(nodeDatum.id);
     ///...
 
-    Swal({
-      content:
-      <div>
-        <div>
-          <input 
-            type="file" 
-            id="inputFile" 
-            accept="image/x-png,image/gif,image/jpeg" 
-            className={classes.inputFile}
-          />
-          <button 
-            onClick={(e) => handleImageClick(e)} 
-            id="button-camera" 
-            className={classes.buttonCamera}
-          >
-            <img src={camera} alt="camera" id="camera" className={classes.camera}/>
-          </button>
-        </div>
-        <img 
-          src={`http://localhost:3003/tree${nodeDatum.id}`} 
-          alt={'name'} 
-          className={classes.ImageUser}
-        />
-        <div className={classes.dropdown}>
-          <button id="button-Plus-User" className={classes.buttonPlusUser} onClick={onPlusClick}>
-            <img src={plusUser} alt="plususer" id="plusUser" className={classes.plusUser}/>
-          </button>
-          <div className={classes.dropdownContent}>
-            <button onClick={addNewNode} id="father">אבא</button>
-            <button onClick={addNewNode} id="mother">אמא</button>
-            <button onClick={addNewNode} id="brother">אח</button>
-            <button onClick={addNewNode} id="sister">אחות</button>
-            <button onClick={addNewNode} id="son">ילד </button>
-            <button onClick={addNewNode} id="daughter">ילדה</button>
-            <button onClick={addNewNode} id="husband">בעל</button>
-            <button onClick={addNewNode} id="wife">אישה</button>
-          </div>
-        </div>
-        <form style={{direction:'rtl'}}>
-          <label style={{marginLeft:'650px'}} className={classes.LablePedigree}>שם : </label>
-          <br/>
-          <input  type="text" id="name" className={classes.InputPedigree} placeholder={nodeDatum.name} onChange={onNameChange}/>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'675px'}} className={classes.LablePedigree}>מגדר: </label>
-          <br/>
-          <input  type="radio"  id="male" name="gender" value="male" onChange={onGenderChange}/>
-          <label  className={classes.LablePedigree}>זכר </label>
-          <input type="radio"  id="female" name="gender" value="female" onChange={onGenderChange}/>
-          <label className={classes.LablePedigree}>נקבה </label>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'635px'}} className={classes.LablePedigree}>תאריך לידה: </label>
-          <br/>
-          <input type="date" className={classes.InputPedigree} onChange={onBirthChange}/>
-          <br/>
-          <br/> 
-          <input style={{marginLeft:'10px'}} type="checkbox" id="myCheck" onChange={onAliveChange}/>
-          <label className={classes.LablePedigree} style={{marginLeft:'670px'}}>חי</label>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
-          <br/>
-          <input  id="deathId" disabled={false} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
-          <br/>
-          <br/>
-          <label style={{marginLeft:'665px'}} className={classes.LablePedigree}>אימייל:</label>
-          <br/>
-          <input type="email" className={classes.InputPedigree} onChange={onEmailChange} />     
-          <br/>        
-        </form>
-      </div>,
-      buttons: true,
-      onConfirm: () => {
-        editNode(id);
-      }
-    });
+    // Swal({
+    //   content:
+    //   <div>
+    //     <div>
+    //       <input 
+    //         type="file" 
+    //         id="inputFile" 
+    //         accept="image/x-png,image/gif,image/jpeg" 
+    //         className={classes.inputFile}
+    //       />
+    //       <button 
+    //         onClick={(e) => handleImageClick(e)} 
+    //         id="button-camera" 
+    //         className={classes.buttonCamera}
+    //       >
+    //         <img src={camera} alt="camera" id="camera" className={classes.camera}/>
+    //       </button>
+    //     </div>
+    //     <img 
+    //       src={`http://localhost:3003/tree${nodeDatum.id}`} 
+    //       alt={'name'} 
+    //       className={classes.ImageUser}
+    //     />
+    //     <div className={classes.dropdown}>
+    //       <button id="button-Plus-User" className={classes.buttonPlusUser} onClick={onPlusClick}>
+    //         <img src={plusUser} alt="plususer" id="plusUser" className={classes.plusUser}/>
+    //       </button>
+    //       <div className={classes.dropdownContent}>
+    //         <button onClick={addNewNode} id="father">אבא</button>
+    //         <button onClick={addNewNode} id="mother">אמא</button>
+    //         <button onClick={addNewNode} id="brother">אח</button>
+    //         <button onClick={addNewNode} id="sister">אחות</button>
+    //         <button onClick={addNewNode} id="son">ילד </button>
+    //         <button onClick={addNewNode} id="daughter">ילדה</button>
+    //         <button onClick={addNewNode} id="husband">בעל</button>
+    //         <button onClick={addNewNode} id="wife">אישה</button>
+    //       </div>
+    //     </div>
+    //     <form style={{direction:'rtl'}}>
+    //       <label style={{marginLeft:'650px'}} className={classes.LablePedigree}>שם : </label>
+    //       <br/>
+    //       <input  type="text" id="name" className={classes.InputPedigree} placeholder={nodeDatum.name} onChange={onNameChange}/>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'675px'}} className={classes.LablePedigree}>מגדר: </label>
+    //       <br/>
+    //       <input  type="radio"  id="male" name="gender" value="male" onChange={onGenderChange}/>
+    //       <label  className={classes.LablePedigree}>זכר </label>
+    //       <input type="radio"  id="female" name="gender" value="female" onChange={onGenderChange}/>
+    //       <label className={classes.LablePedigree}>נקבה </label>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'635px'}} className={classes.LablePedigree}>תאריך לידה: </label>
+    //       <br/>
+    //       <input type="date" className={classes.InputPedigree} onChange={onBirthChange}/>
+    //       <br/>
+    //       <br/> 
+    //       <input style={{marginLeft:'10px'}} type="checkbox" id="myCheck" onChange={onAliveChange}/>
+    //       <label className={classes.LablePedigree} style={{marginLeft:'670px'}}>חי</label>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'620px'}} className={classes.LablePedigree}>תאריך פטירה: </label>
+    //       <br/>
+    //       <input  id="deathId" disabled={false} type="date" className={classes.InputPedigree} onChange={onDeathChange}/>
+    //       <br/>
+    //       <br/>
+    //       <label style={{marginLeft:'665px'}} className={classes.LablePedigree}>אימייל:</label>
+    //       <br/>
+    //       <input type="email" className={classes.InputPedigree} onChange={onEmailChange} />     
+    //       <br/>        
+    //     </form>
+    //   </div>,
+    //   buttons: true,
+    //   onConfirm: () => {
+    //     editNode(id);
+    //   }
+    // });
   }
 
   //if the new node is a wife, inserts the node to the right place

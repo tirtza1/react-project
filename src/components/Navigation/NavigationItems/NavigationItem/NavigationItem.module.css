@@ -2,15 +2,17 @@
   margin: 10px 0;
   box-sizing: border-box;
   display: block;
-  width: 100%;
+ 
 }
 
 .NavigationItem a {
-  color: #8f2c2c;
+  color: #d48c8c;
   text-decoration: none;
   width: 100%;
   box-sizing: border-box;
   display: block;
+ 
+  margin-left: 40px;
 }
 
 .NavigationItem a:hover,
@@ -31,15 +33,14 @@
   .NavigationItem a {
       color: white;
       height: 100%;
-      padding: 16px 10px;
-      border-bottom: 4px solid transparent;
+      padding: 20px 20px;
   }
   
   .NavigationItem a:hover,
   .NavigationItem a:active,
   .NavigationItem a.active {
-    background-color: rgb(161, 60, 60);
-      border-bottom: 4px solid white;
-      color: white;
+    background-color: white;
+    color: #d48c8c;
+    border-radius: 50px;
   }
 }

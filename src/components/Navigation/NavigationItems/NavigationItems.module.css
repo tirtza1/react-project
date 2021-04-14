@@ -6,8 +6,11 @@
   flex-flow: column;
   align-items: center;
   height: 100%;
- font-style: unset;
-  font-family: 'Lucida Sans', 'Lucida Sans Regular', 'Lucida Grande', 'Lucida Sans Unicode', Geneva, Verdana, sans-serif; 
+  font-style: unset;
+  font-family:'Segoe UI Semibold'; 
+  margin-left: 470px;
+  font-weight: bold;
+  margin-top: 8px;
 }
 
 @media (min-width: 500px){
