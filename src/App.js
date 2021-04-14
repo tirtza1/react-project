@@ -6,7 +6,8 @@ import Photo from './components/Photo/Photo';
 import SignUp from './containers/Entrance/SignUp/SignUp';
 import Layout from './components/Layout/Layout';
 import ForgetPassword from './containers/Entrance/LogIn/ForgetPassword/ForgetPassword';
-import Pedigree from './containers/FamilyTree/Pedigree';
+//import Pedigree from './containers/FamilyTree/Pedigree';
+import FamilyTree from './containers/FamilyTree/FamilyTree';
 import Calendar from './components/Calendar/Calendar'
 import Pictures from './components/Pictures/pictures'
 import Home from './components/Home/home';
@@ -24,7 +25,7 @@ class App extends Component {
                 <Route path='/SignUp'  exact component={SignUp}/>
                 {/*<Route path='/Logout' exact component={Logout} />*/}
                 <Route path='/ForgetPassword'  exact component={ForgetPassword}/>
-                <Route path='/Pedigree'  exact component={Pedigree}/>
+                <Route path='/Pedigree'  exact component={FamilyTree}/>
                 <Route path='/Calendar'  exact component={Calendar}/>
                 <Route path='/Photo'  exact component={Photo}/>
                 <Route path='/pictures' exact component={Pictures}/>
