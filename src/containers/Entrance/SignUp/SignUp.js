@@ -2,95 +2,19 @@ import React, { Component } from 'react';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
 import classes from './SignUp.module.css';
+
+
 //nimport checkValidity from '../../SignUp/checkValidity/checkValidity'
 class SignUp extends Component {
     constructor() {
         super();
         this.state = {
-            controls: {
-                firstname:{
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'שם פרטי'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                    },
-                    valid: false,
-                    touched: false
-                },
-               lastname:{
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder: 'שם משפחה'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                    },
-                    valid: false,
-                    touched: false
-                },
-               ID:{
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'text',
-                        placeholder:'תעודת זהות'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                        minLength: 9,
-                        maxLength: 9
-                    },
-                    valid: false,
-                    touched: false
-                },
-                birthdate:{
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'date',
-                        placeholder:'תאריך לידה'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                    },
-                    valid: false,
-                    touched: false
-                },
-                email: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'email',
-                        placeholder: 'אימייל'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                        isEmail: true
-                    },
-                    valid: false,
-                    touched: false
-                },
-                password: {
-                    elementType: 'input',
-                    elementConfig: {
-                        type: 'password',
-                        placeholder: 'סיסמא'
-                    },
-                    value: '',
-                    validation: {
-                        required: true,
-                        minLength: 6
-                    },
-                    valid: false,
-                    touched: false
-                }
-            },
+            firstname:'',
+            lastname:'',
+            ID:'',
+            birthdate:'',
+            email: '',
+            password: '',
             showNewGroup: false,
             showOldGroup: false,
             groupName: '',
@@ -99,36 +23,11 @@ class SignUp extends Component {
         this.onSelectChange = this.onSelectChange.bind(this);
     }
 
-    checkValidity(value, rules) {
-        let isValid = true;
-        if (!rules) {
-            return true;
-        }
-        
-        if (rules.required) {
-            isValid = value.trim() !== '' && isValid;
-        }
-    
-        if (rules.minLength) {
-            isValid = value.length >= rules.minLength && isValid
-        }
-    
-        if (rules.maxLength) {
-            isValid = value.length <= rules.maxLength && isValid
-        }
-    
-        if (rules.isEmail) {
-            const pattern = /[a-z0-9!#$%&'*+/=?^_`{|}~-]+(?:\.[a-z0-9!#$%&'*+/=?^_`{|}~-]+)*@(?:[a-z0-9](?:[a-z0-9-]*[a-z0-9])?\.)+[a-z0-9](?:[a-z0-9-]*[a-z0-9])?/;
-            isValid = pattern.test(value) && isValid
-        }
-    
-        if (rules.isNumeric) {
-            const pattern = /^\d+$/;
-            isValid = pattern.test(value) && isValid
-        }
-    
-        return isValid;
-    }
+   
+    handleChange = (input) => (e) => {
+        e.preventDefault();
+        this.setState({ [input]: e.target.value });
+      };
 
     onSelectChange = (event) => {
         if (event.target.value === 'צור קבוצה חדשה') {
@@ -149,30 +48,19 @@ class SignUp extends Component {
         this.setState({groupId: event.target.value})
     }
 
-    inputChangedHandler = (event, controlName) => {
-        const updatedControls = {
-            ...this.state.controls,
-            [controlName]: {
-                ...this.state.controls[controlName],
-                value: event.target.value,
-                valid: this.checkValidity(event.target.value, this.state.controls[controlName].validation),
-                touched: true
-            }
-        };
-        this.setState({controls: updatedControls});
-    }
+
 
     onSubmit = () => {
         fetch('http://localhost:3003/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
-                firstName: this.state.controls.firstname.value,
-                lastName: this.state.controls.lastname.value,
-                id: this.state.controls.ID.value,
-                birthday: this.state.controls.birthdate.value,
-                email: this.state.controls.email.value,
-                password: this.state.controls.password.value,
+                firstName: this.state.firstname.value,
+                lastName: this.state.lastname.value,
+                id: this.state.ID.value,
+                birthday: this.state.birthdate.value,
+                email: this.state.email.value,
+                password: this.state.password.value,
                 groupId: parseInt(this.state.groupId),
                 groupName: this.state.groupName
             })
@@ -186,54 +74,110 @@ class SignUp extends Component {
     }
     
     render () {
-        const formElementsArray = [];
-        for ( let key in this.state.controls ) {
-            formElementsArray.push( {
-                id: key,
-                config: this.state.controls[key]
-            } );
-        }
-         
-      
-        const form = formElementsArray.map( formElement => (
-            <Input
-                key={formElement.id}
-                elementType={formElement.config.elementType}
-                elementConfig={formElement.config.elementConfig}
-                value={formElement.config.value}
-                invalid={!formElement.config.valid}
-                shouldValidate={formElement.config.validation}
-                touched={formElement.config.touched}
-                changed={( event ) => this.inputChangedHandler( event, formElement.id )} />
-               
-        ) );
-
         return (
-            <div className={classes.SignUp}>
-                <form>
-                    {form}
-                    <select onChange={this.onSelectChange}>
+            <div >
+                <form onSubmit={this.handleSubmit} className={classes.SignUp}>
+               
+                    <label className={classes.LableLogin} name='first-name'>:שם פרטי</label><br/>
+                    <input
+                        className={classes.InputLogin}
+                        type='text'
+                        name='first-name'
+                        value={this.state.firstname}
+                        onChange={this.handleChange('firstname')}
+                    />
+                    <br />
+                    <label className={classes.LableLogin} htmlFor='last-name'>
+                        :שם משפחה
+                    </label>
+                    <br/>
+                    <input
+                        className={classes.InputLogin}
+                        type='text'
+                        name='lasr-name'
+                        value={this.state.lastname}
+                        onChange={this.handleChange('lastname')}
+                    />
+                    <br />
+
+                    <label className={classes.LableLogin} htmlFor='id'>
+                       :תעודת זהות
+                    </label>
+                    <br/>
+                    <input
+                        className={classes.InputLogin}
+                        type='text'
+                        name='id'
+                        value={this.state.ID}
+                        onChange={this.handleChange('ID')}
+                    />
+
+                    <br />
+
+                    <label className={classes.LableLogin} htmlFor='birthdate'>
+                        :תאריך לידה
+                    </label>
+                    <input
+                        className={classes.InputLogin}
+                        type='date'
+                        name='birthdate'
+                        value={this.state.birthdate}
+                        onChange={this.handleChange('birthdate')}
+                    />
+                    <br />
+
+                    <label className={classes.LableLogin} htmlFor='email'>
+                        :מייל
+                    </label>
+                    <br/>
+                    <input
+                        className={classes.InputLogin}
+                        type='email'
+                        name='email'
+                        value={this.state.email}
+                        onChange={this.handleChange('email')}
+                    />
+                    <br />
+                    <label className={classes.LableLogin} htmlFor='password'>
+                        :סיסמא
+                    </label>
+                    <br/>
+                    <input
+                        className={classes.InputLogin}
+                        type='password'
+                        name='password'
+                        value={this.state.password}
+                        onChange={this.handleChange('password')}
+                    />
+                    <br />
+                    <br />
+                    <select onChange={this.onSelectChange} className={classes.select}>
                         <option disabled selected>בחר: </option>
                         <option id="new">צור קבוצה חדשה</option>
                         <option id="old">הצטרף לקבוצה קיימת</option>
                     </select>
+                    <br/>
                     {
                         this.state.showNewGroup ?
                         <div>
-                            <lable>שם הקבוצה: </lable>
-                            <Input changed={this.nameChange}/>
+                            <br/>
+                            <lable  className={classes.LableLogin}>:שם הקבוצה </lable>
+                            <input onChange={this.nameChange}   className={classes.InputLogin}/>
+                         
                         </div> 
                         : null
                     }
                     {
                         this.state.showOldGroup ?
                         <div>
-                            <lable>קוד הקבוצה (נשלח במייל): </lable>
-                            <Input changed={this.codeChange}/>
+                             <br/>
+                            <lable className={classes.LableLogin}>:קוד הקבוצה (נשלח במייל) </lable>
+                            <input onChange={this.codeChange} className={classes.InputLogin}/>
                         </div> 
                         : null
                     }
-                    <Button btnType="Success" clicked={this.onSubmit}>הירשם</Button>
+                    <br/>
+                    <button className={classes.button} >הירשם</button>
                 </form>
             </div>
         );

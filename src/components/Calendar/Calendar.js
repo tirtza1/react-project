@@ -37,15 +37,23 @@ export default class Calendar extends Component {
   
 
   handleEventClick= (event) => {
+    
+
+
     if(window.confirm("Are you sure you want to remove the event date?")) {
+      
       const id = event.event.id;
-      const newEvents = this.state.CalendarEvent.filter(e => e.id !== event.event.id)
-      console.log(newEvents);
-      this.setState({CalendarEvent: newEvents});
-      this.setState({count: this.state.count - 1});
+      let eventsToUpdate = [...this.state.CalendarEvent];
+      eventsToUpdate.splice(eventsToUpdate.findIndex(a =>  a.id === event.event.id) ,1 );
+      console.log(id)
+  
+      console.log(eventsToUpdate);
+      this.setState({CalendarEvent: eventsToUpdate});
+  
+      console.log(this.state.count)
    }
   }
-    
+ 
   handleEventDrop = (info) => {
       console.log(info.event.start)
       let events = [...this.state.CalendarEvent];
@@ -66,7 +74,7 @@ export default class Calendar extends Component {
    AddEventHandle=(count)=>{
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
-        id:this.state.count,
+        id:Date.now(),
         title: this.state.eventName,
         start: this.state.fromDate,
         end: this.state.toDate

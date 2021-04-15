@@ -1,7 +1,7 @@
 import React from 'react'
 import Tree from 'react-d3-tree'
-import swalReact from '@sweetalert/with-react'
-import swal from 'sweetalert2'
+//import swalReact from '@sweetalert/with-react'
+//import swal from 'sweetalert2'
 import classes from './Pedigree.module.css'
 import './node.css'
 import { data } from './data'
@@ -109,42 +109,42 @@ function FamilyTree(props) {
                 setTreeData(addSibling(node, treeData, id));
                 break;
         }
-        swal.fire({
-            title: 'הוספת תמונה',
-            input: 'file',
-            inputAttributes: {
-              'accept': 'image/*'
-            }
-        })
-        .then((file) => {
-            const img = file.value;
-            const type = img.type.split('/')[1];
-            const name = `tree${node.id}`;
-            var formData = new FormData;
-            formData.append('photo', img, name);
-            fetch('http://localhost:3003/pictures', {
-            method: 'POST',
-            body: formData
-            })
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
+    //     swal.fire({
+    //         title: 'הוספת תמונה',
+    //         input: 'file',
+    //         inputAttributes: {
+    //           'accept': 'image/*'
+    //         }
+    //     })
+    //     .then((file) => {
+    //         const img = file.value;
+    //         const type = img.type.split('/')[1];
+    //         const name = `tree${node.id}`;
+    //         var formData = new FormData;
+    //         formData.append('photo', img, name);
+    //         fetch('http://localhost:3003/pictures', {
+    //         method: 'POST',
+    //         body: formData
+    //         })
+    //         .then(data => console.log(data))
+    //         .catch(err => console.log(err))
 
-            //add the picture to the pictures table
-            fetch('http://localhost:3003/addpicture', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    name: name,
-                    group: group
-                })
-            })
-            .then(response => response.text())
-            .then(data => window.alert(data))
-            .catch(err => console.log(err))
-        })
+    //         //add the picture to the pictures table
+    //         fetch('http://localhost:3003/addpicture', {
+    //             method: 'POST',
+    //             headers: { 'Content-Type': 'application/json'},
+    //             body: JSON.stringify({
+    //                 name: name,
+    //                 group: group
+    //             })
+    //         })
+    //         .then(response => response.text())
+    //         .then(data => window.alert(data))
+    //         .catch(err => console.log(err))
+    //     })
 
 
-    }
+     }
 
     //edit form that is shown when the user decides to edit a node's info
     const EditModule = ({nodeDatum}) => (
@@ -238,113 +238,113 @@ function FamilyTree(props) {
     const onNodeClick = (nodeDatum) => {
 
         //shows a module with action to choose
-        swal.fire({
-            title: 'בחר את הפעולה שברצונך לבצע',
-            input: 'select',
-            inputOptions: {
-              'edit': 'עריכת פרטים',
-              'photo': 'בחירת תמונה חדשה',
-              'add': 'הוספת אדם'
-            },
-            confirmButtonText: 'בחר',
-            showCancelButton: true,
-            cancelButtonText: 'ביטול',
-            reverseButtons: true
-        })
-        .then((choosen) => {
-            if (choosen.value === 'edit') {
-                swalReact({
-                    title: 'עריכת פרטים',
-                    content: 
-                    <EditModule nodeDatum={nodeDatum} />,
-                    buttons: {
-                        cancel: "ביטול",
-                        catch: "שמור"
-                    }
-                })
-                .then((clicked) => {
-                    if (clicked === 'catch') {
-                        const name = document.getElementById('name').value;
-                        const gender = document.getElementById('gender').value;
-                        const birth = document.getElementById('birth').value;
-                        const death = document.getElementById('death').value;
-                        const email = document.getElementById('email').value;
-                        setTreeData(editNode(nodeDatum.id, name, gender, birth, death, email, treeData));
-                    }
-                })
-            }
-            if (choosen.value === 'photo') {
-                swal.fire({
-                    title: 'בחר תמונה חדשה',
-                    input: 'file',
-                    inputAttributes: {
-                      'accept': 'image/*'
-                    }
-                })
-                .then((file) => {
-                    const img = file.value;
-                    const type = img.type.split('/')[1];
-                    const name = `tree${nodeDatum.id}`;
-                    var formData = new FormData;
-                    formData.append('photo', img, name);
-                    fetch('http://localhost:3003/pictures', {
-                    method: 'POST',
-                    body: formData
-                    })
-                    .then(data => console.log(data))
-                    .catch(err => console.log(err))
+        // swal.fire({
+        //     title: 'בחר את הפעולה שברצונך לבצע',
+        //     input: 'select',
+        //     inputOptions: {
+        //       'edit': 'עריכת פרטים',
+        //       'photo': 'בחירת תמונה חדשה',
+        //       'add': 'הוספת אדם'
+        //     },
+        //     confirmButtonText: 'בחר',
+        //     showCancelButton: true,
+        //     cancelButtonText: 'ביטול',
+        //     reverseButtons: true
+        // })
+        // .then((choosen) => {
+        //     if (choosen.value === 'edit') {
+        //         swalReact({
+        //             title: 'עריכת פרטים',
+        //             content: 
+        //             <EditModule nodeDatum={nodeDatum} />,
+        //             buttons: {
+        //                 cancel: "ביטול",
+        //                 catch: "שמור"
+        //             }
+        //         })
+        //         .then((clicked) => {
+        //             if (clicked === 'catch') {
+        //                 const name = document.getElementById('name').value;
+        //                 const gender = document.getElementById('gender').value;
+        //                 const birth = document.getElementById('birth').value;
+        //                 const death = document.getElementById('death').value;
+        //                 const email = document.getElementById('email').value;
+        //                 setTreeData(editNode(nodeDatum.id, name, gender, birth, death, email, treeData));
+        //             }
+        //         })
+        //     }
+        //     if (choosen.value === 'photo') {
+        //         swal.fire({
+        //             title: 'בחר תמונה חדשה',
+        //             input: 'file',
+        //             inputAttributes: {
+        //               'accept': 'image/*'
+        //             }
+        //         })
+        //         .then((file) => {
+        //             const img = file.value;
+        //             const type = img.type.split('/')[1];
+        //             const name = `tree${nodeDatum.id}`;
+        //             var formData = new FormData;
+        //             formData.append('photo', img, name);
+        //             fetch('http://localhost:3003/pictures', {
+        //             method: 'POST',
+        //             body: formData
+        //             })
+        //             .then(data => console.log(data))
+        //             .catch(err => console.log(err))
 
-                    //add the picture to the pictures table
-                    fetch('http://localhost:3003/addpicture', {
-                        method: 'POST',
-                        headers: { 'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            name: name,
-                            group: group
-                        })
-                    })
-                    .then(response => response.text())
-                    .then(data => window.alert(data))
-                    .catch(err => console.log(err))
-                })
-            }
-            if (choosen.value === 'add') {
-                swal.fire({
-                    title: '?מה תרצה להוסיף',
-                    input: 'select',
-                    inputOptions: {
-                      'parent': 'אבא / אמא',
-                      'spouse': 'בן / בת זוג',
-                      'descendant': 'בן / בת',
-                      'sibling': 'אח / אחות'
-                    },
-                    confirmButtonText: 'בחר',
-                    showCancelButton: true,
-                    cancelButtonText: 'ביטול',
-                    reverseButtons: true
-                })
-                .then((add) => {
-                    swalReact({
-                        title: 'הוספת אדם',
-                        content: <AddModule/>,
-                        buttons: {
-                            cancel: "ביטול",
-                            catch: "הוספה"
-                        }
-                    })
-                    .then((clicked) => {
-                        if (clicked === 'catch') {
-                            const name = document.getElementById('name').value;
-                            const gender = document.getElementById('gender').value;
-                            const birth = document.getElementById('birth').value;
-                            const death = document.getElementById('death').value;
-                            const email = document.getElementById('email').value;
-                            addNode(nodeDatum.id, name, gender, birth, death, email, add.value);
-                        }
-                    })
-                })
-            }
-        })  
+        //             //add the picture to the pictures table
+        //             fetch('http://localhost:3003/addpicture', {
+        //                 method: 'POST',
+        //                 headers: { 'Content-Type': 'application/json'},
+        //                 body: JSON.stringify({
+        //                     name: name,
+        //                     group: group
+        //                 })
+        //             })
+        //             .then(response => response.text())
+        //             .then(data => window.alert(data))
+        //             .catch(err => console.log(err))
+        //         })
+        //     }
+        //     if (choosen.value === 'add') {
+        //         swal.fire({
+        //             title: '?מה תרצה להוסיף',
+        //             input: 'select',
+        //             inputOptions: {
+        //               'parent': 'אבא / אמא',
+        //               'spouse': 'בן / בת זוג',
+        //               'descendant': 'בן / בת',
+        //               'sibling': 'אח / אחות'
+        //             },
+        //             confirmButtonText: 'בחר',
+        //             showCancelButton: true,
+        //             cancelButtonText: 'ביטול',
+        //             reverseButtons: true
+        //         })
+        //         .then((add) => {
+        //             swalReact({
+        //                 title: 'הוספת אדם',
+        //                 content: <AddModule/>,
+        //                 buttons: {
+        //                     cancel: "ביטול",
+        //                     catch: "הוספה"
+        //                 }
+        //             })
+        //             .then((clicked) => {
+        //                 if (clicked === 'catch') {
+        //                     const name = document.getElementById('name').value;
+        //                     const gender = document.getElementById('gender').value;
+        //                     const birth = document.getElementById('birth').value;
+        //                     const death = document.getElementById('death').value;
+        //                     const email = document.getElementById('email').value;
+        //                     addNode(nodeDatum.id, name, gender, birth, death, email, add.value);
+        //                 }
+        //             })
+        //         })
+        //     }
+        // })  
     };
 
     return (
