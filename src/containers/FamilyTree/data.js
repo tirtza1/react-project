@@ -38,6 +38,7 @@ export const data = {
             death: '',
             email: ''
           },
+          children: [],
         },
         {
           id:4,
@@ -48,6 +49,7 @@ export const data = {
             death: '',
             email: ''
           },
+          children: [],
         },
         {
           id:5,
@@ -58,6 +60,7 @@ export const data = {
             death: '',
             email: ''
           },
+          children: [],
         },
         {
           id:10,
@@ -68,6 +71,7 @@ export const data = {
             death: '',
             email: ''
           },
+          children: [],
         },
       ],
     },
@@ -100,6 +104,7 @@ export const data = {
             death: '',
             email: ''
           },
+          children: [],
         },
         {
           id:8,
@@ -110,6 +115,7 @@ export const data = {
             death: '',
             email: ''
           },
+          children: [],
         },
       ],
     },
@@ -122,6 +128,7 @@ export const data = {
         death: '',
         email: ''
       },
+      children: [],
     },
   ],
 };
