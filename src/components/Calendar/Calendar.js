@@ -56,25 +56,40 @@ export default class Calendar extends Component {
 
 
   //מוחק אירוע כשלוחצים עליו
-  handleEventClick= (event) => { 
+  handleEventClick= (eventClickInfo) => { 
     if(window.confirm("Are you sure you want to remove the event date?")) {
-      const id = event.event.id;
-      const updatedEvents = this.state.CalendarEvent.filter(function(event) {
-        return event.id != id
-      });
+      const id = eventClickInfo.event.id;
+      let updatedEvents=[...this.state.CalendarEvent]
+      for(var i = 0;i < updatedEvents.length; i ++)
+      {
+        if(updatedEvents[i].id==id)
+        {
+          updatedEvents.splice(i, 1);
+          break;
+        }
+      }
       this.setState({CalendarEvent: updatedEvents});
-   }
   };
+}
  
   //מעביר את המיקום של האירוע כשגוררים אותו
   handleEventDrop = (info) => {
-      console.log(info.event.start)
-      console.log(info.event.id)
+   
+      //של האירוע id
+      const id=info.event.id
+      //העתקה של המערך
       let events = [...this.state.CalendarEvent];
-      let eventToChange = {...events[info.event.id]};
+      //מציאת אינקס לשינוי תאריך התחלה
+      const index= events.findIndex(item => item.id==id)
+      //העתקה של האובייקט לשינוי
+      let eventToChange = {...events[index]};
+     
       const newdate=( info.event.start.getFullYear()+"-"+((info.event.start.getMonth() > 8) ? (info.event.start.getMonth() + 1) : ('0' + (info.event.start.getMonth() + 1))) +"-"+ ((info.event.start.getDate() > 9) ? info.event.start.getDate() : ('0' +info.event.start.getDate())));
+      //עדכון תאריך התחלה
       eventToChange.start = newdate;
-      events[info.event.id] = eventToChange;
+     //עדכון האובייקט
+      events[index] = eventToChange;
+      //עדכון של המערך
       this.setState({CalendarEvent: events});
   }
 
@@ -88,7 +103,7 @@ export default class Calendar extends Component {
      console.log('add event')
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
-        id:this.state.count,
+        id:Date.now(),
         title: this.state.eventName,
         start: this.state.fromDate
       }]
