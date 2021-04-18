@@ -21,7 +21,6 @@ export default class Calendar extends Component {
       fromDate:'',
       toDate:'',
       CalendarEvent:[],
-      count: 0,
       goToPast:''
      };
  
@@ -42,18 +41,6 @@ export default class Calendar extends Component {
     document.getElementById('fromDate').placeholder=newdate;
   
   };
-
-  
- 
-  handleEventClick= (event) => {
-    if(window.confirm("Are you sure you want to remove the event date?")) {
-      const id = event.event.id;
-      let eventsToUpdate = [...this.state.CalendarEvent];
-      eventsToUpdate.splice(eventsToUpdate.findIndex(a =>  a.id === event.event.id) ,1 );
-      this.setState({CalendarEvent: eventsToUpdate});
-    }
-  }
-
 
   //מוחק אירוע כשלוחצים עליו
   handleEventClick= (eventClickInfo) => { 
@@ -111,7 +98,6 @@ export default class Calendar extends Component {
 
     this.toggle();
     this.setState({eventName:''})
-    this.setState({ count: this.state.count + 1});
    }
 
 
