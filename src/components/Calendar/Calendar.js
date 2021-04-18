@@ -6,6 +6,9 @@ import interactionPlugin, { ThirdPartyDraggable } from '@fullcalendar/interactio
 import classes from './Calendar.module.css'
 import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
 import Input from '../UI/Input/Input'
+import bootstrapPlugin from '@fullcalendar/bootstrap';
+import 'bootstrap/dist/css/bootstrap.css';
+import '@fortawesome/fontawesome-free/css/all.css'; // webpack uses file-loader to handle font files
 
 //דברים שאפשר להוסיף
 //כשלוחצים על תאריך בלוח זה אוטומטית שם בתאריך התחלה את התאריך שלחצו עליו
@@ -148,7 +151,9 @@ export default class Calendar extends Component {
           <br/> <br/> 
           <FullCalendar
           height={'860px'}
-            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin]}
+            plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrapPlugin]}
+            theme={true}
+            themeSystem='bootstrap'
             initialView="dayGridMonth"
             ref={this.calendarComponentRef}
             headerToolbar={{

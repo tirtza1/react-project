@@ -4,7 +4,7 @@ import classes from './NavigationItems.module.css';
 
 const NavigationItems = (props) => {
 
-  const [isSignedIn, setIsSignIn] = useState(true);
+  const [isSignedIn, setIsSignIn] = useState(false);
 
   if (isSignedIn) 
     return (
