@@ -1,26 +1,65 @@
 import React from 'react'
-import  './groupHome.css'
 import people from '../../assets/images/circle.png'
-
+import './groupHome.css'
+import image from '../../assets/images/home-image.png'
+import tree from '../../assets/images/home-tree.png'
+import calendar from '../../assets/images/home-calendar.png'
+import { Link } from 'react-router-dom'
+import one from '../../assets/images/1.PNG'
+import two from '../../assets/images/2.PNG'
+import three from '../../assets/images/3.PNG'
 class GroupHome extends React.Component{
-
     render() {
         return(
             <div>
-                <div id="home">
-                    <img src={people} alt={"people"} id="people"/>
-                    <p id="people2">
-                        <h1 style={{fontSize:"70px"}}>family </h1>
-                        <h3 style={{fontSize:"40px"}}>is not an important thing.<br/>
-                            It's everything....</h3><br/>
-                        <h5 style={{fontSize:"15px"}}>Unlock Marketing Secrets That Work</h5>
-                    </p>
+                <div id="pink">
+                    <h1 id="family-name">משפחת ברזילי</h1> 
+                    <br/>
+                    <button className="button">הזמן בני משפחה</button>
                 </div>
-                <div id="tree"></div>
-                <div id="calander"></div>
-                <div id="gallery"></div>
+                <div>
+                     <img src={one} id="one" alt="one"/>
+                     <img src={two} id="two" alt="two"/>
+                     <img src={three} id="three" alt="three"/>
+                </div>
+                <div id="boxes">
+                   
+                    <span id="pink-Square">
+                        <Link to="/Calendar">
+                            <img src={calendar} alt={'calendar'} id="image-box"/>
+                            <div class="overlay">
+                                <div class="text">הוסף אירוע </div>
+                            </div> 
+                        </Link>
+                    </span>
+
+                    <span id="blue-Square"> 
+                   
+                       <Link to="/Pedigree">
+                            <img src={tree} alt={'tree'} id="image-box"/>
+                            <div class="overlay">
+                                <div class="text">צור אילן יוחסין</div>
+                            </div> 
+                       </Link> 
+                       
+                    </span>
+
+                    <span id="purple-Square">
+                        <Link to="/Photo">
+                            <img src={image} alt={'image'} id="image-box"/>
+                            <div class="overlay">
+                                <div class="text">הוסף תמונה</div>
+                            </div>
+                        </Link> 
+                    </span>
+
+                </div>
+                <div id="white">
+
+                </div>
             </div>
-        );
+          
+        )
     }
 }
 

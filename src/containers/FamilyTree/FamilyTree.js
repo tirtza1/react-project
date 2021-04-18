@@ -5,6 +5,7 @@ import swal from 'sweetalert2'
 import classes from './Pedigree.module.css'
 import './node.css'
 import { useHistory } from 'react-router-dom'
+import data from './data'
 
 /*
 Things to fix:
@@ -535,24 +536,33 @@ function FamilyTree(props) {
     };
 
     return (
-        <div style={{ width: '100vw', height: '100vh' }}>
+        <div style={{ width: '300vw', height: '200vh' }}>
             {
                 treeData ?
                 <Tree
-                    data={treeData}
+                    data={data}
                     orientation='vertical'
                     pathFunc='step'
+                    zoom='1'
+                    zoomable={true}
+                  
                     renderCustomNodeElement={(props) => 
                         <g id='con'>
                             <foreignObject width={250} height={250} x={-102} y={-40} >
                                 <div>
-                                    <p className={props.nodeDatum.attributes.gender} onClick={() => onNodeClick(props.nodeDatum)}>{props.nodeDatum.name}</p>
+                                   
+                                    <p className={props.nodeDatum.attributes.gender} onClick={() => onNodeClick(props.nodeDatum)}>
+                                        {props.nodeDatum.name}
+                                        <img className={classes.image} src={`http://localhost:3003/tree-${props.nodeDatum.id}.png`}/>
+                                        </p>
+                                    
                                     {
                                         props.nodeDatum.attributes.spouse
                                         ? <p className={props.nodeDatum.attributes.spouse.attributes.gender} onClick={() => onNodeClick(props.nodeDatum.attributes.spouse)}>{props.nodeDatum.attributes.spouse.name}</p>
                                         : null
+                                        
                                     }
-                                    {/* {<img src={`http://localhost:3003/tree-${props.nodeDatum.id}.png`}/>} */}
+                                   
                                 </div>
                             </foreignObject>
                         </g>

@@ -1,4 +1,5 @@
 import React, { useState } from 'react';
+import Home from '../../Home/home';
 import NavigationItem from './NavigationItem/NavigationItem';
 import classes from './NavigationItems.module.css';
 
@@ -18,10 +19,11 @@ const NavigationItems = (props) => {
     );
 
   else return (
-    <ul className={classes.NavigationItems}>
+    {/* <ul className={classes.NavigationItems}>
       <NavigationItem link='/LogIn'>התחברות</NavigationItem>
-      <NavigationItem link='/'>בית</NavigationItem>
-    </ul>
+      <NavigationItem link='/'>בית</NavigationItem> 
+    </ul>*/}
+    <Home><Home/>
   );
   
 }
