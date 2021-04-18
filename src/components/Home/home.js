@@ -54,6 +54,9 @@ class Home extends React.Component{
                     </span>
 
                 </div>
+                <div id="white">
+
+                </div>
             </div>
           
         )

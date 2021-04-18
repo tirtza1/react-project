@@ -34,10 +34,7 @@
     border: 3px solid #555;
   }
   
-input.Invalid {
-    border: 1px solid red;
-    background-color: #FDA49A;
-}
+
 .button {
     background-color: #EF9C83;
     border:2px solid #EF9C83;
