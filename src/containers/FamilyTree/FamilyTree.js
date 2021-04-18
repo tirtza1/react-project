@@ -4,7 +4,7 @@ import swalReact from '@sweetalert/with-react'
 import swal from 'sweetalert2'
 import classes from './Pedigree.module.css'
 import './node.css'
-import { data } from './data'
+import { useHistory } from 'react-router-dom'
 
 /*
 Things to fix:
@@ -15,8 +15,16 @@ Things to fix:
 
 function FamilyTree(props) {
 
-    const [treeData, setTreeData] = React.useState(null);
-    const [group, setGroup] = React.useState(7);
+    const initialTree = {
+        id: 1, 
+        name: 'טוען נתונים', 
+        attributes: {
+            gender: 'male'
+        }
+    };
+    const [treeData, setTreeData] = React.useState(initialTree);
+    const [group, setGroup] = React.useState(1);
+    const history = useHistory();
 
     const updateTree = () => {
         fetch(`http://localhost:3003/pedigree`, {
@@ -30,6 +38,8 @@ function FamilyTree(props) {
         .then(response => response.json())
         .then(data => console.log(data))
         .catch(err => console.log(err))
+        history.push('/')
+        history.push('/pedigree')
     }
 
     const createFirstNode = (name, gender, birth, death, email) => {
@@ -59,7 +69,7 @@ function FamilyTree(props) {
     }
 
     React.useEffect(() => {
-        if (treeData === null) {
+        if (treeData === initialTree) {
             fetch(`http://localhost:3003/pedigree/${group}`)
             .then(data => data.json())
             .then(tree => {
@@ -106,13 +116,6 @@ function FamilyTree(props) {
                 data.children[i].attributes.email = email;
                 return data;
             } else {
-                if (data.children[i].attributes.spouse.id === id) {
-                    data.children[i].attributes.spouse.name = name;
-                    data.children[i].attributes.spouse.attributes.gender = gender;
-                    data.children[i].attributes.spouse.attributes.birth = birth;
-                    data.children[i].attributes.spouse.attributes.death = death;
-                    data.children[i].attributes.spouse.attributes.email = email;
-                }
                 editNode(id, name, gender, birth, death, email, data.children[i])
             }
         }
@@ -537,7 +540,6 @@ function FamilyTree(props) {
                 treeData ?
                 <Tree
                     data={treeData}
-                    depthFactor={130}
                     orientation='vertical'
                     pathFunc='step'
                     renderCustomNodeElement={(props) => 
@@ -550,7 +552,7 @@ function FamilyTree(props) {
                                         ? <p className={props.nodeDatum.attributes.spouse.attributes.gender} onClick={() => onNodeClick(props.nodeDatum.attributes.spouse)}>{props.nodeDatum.attributes.spouse.name}</p>
                                         : null
                                     }
-                                    <img src={`http://localhost:3003/tree-${props.nodeDatum.id}.png`}/>
+                                    {/* {<img src={`http://localhost:3003/tree-${props.nodeDatum.id}.png`}/>} */}
                                 </div>
                             </foreignObject>
                         </g>
