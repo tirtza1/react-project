@@ -28,8 +28,9 @@ function FamilyTree(props) {
 
         fetch(`http://localhost:3003/pedigree`, {
             method: 'POST',
+            headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                tree: treeData,
+                tree: JSON.stringify(treeData),
                 group: group
             })
         })
