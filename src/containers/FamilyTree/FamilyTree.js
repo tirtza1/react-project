@@ -62,6 +62,22 @@ function FamilyTree(props) {
         
     })
 
+    React.useEffect(() => { 
+        fetch(`http://localhost:3003/pedigree`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                tree: JSON.stringify(treeData),
+                group: group
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+        history.push('/')
+        history.push('/pedigree')
+    }, [treeData])
+
     const createFirstNode = (name, gender, birth, death, email) => {
         const node = {
             id: Date.now(),
@@ -86,22 +102,6 @@ function FamilyTree(props) {
         .then(data => console.log(data))
         .catch(err => console.log(err))
         setTreeData(node);
-    }
-
-    const updateTree = () => {
-        fetch(`http://localhost:3003/pedigree`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                tree: JSON.stringify(treeData),
-                group: group
-            })
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-        history.push('/')
-        history.push('/pedigree')
     }
 
     //pushes the node changes to treeData
@@ -236,7 +236,6 @@ function FamilyTree(props) {
                 if (id === treeData.id || id === treeData.attributes.spouse.id) {
                     node['children'] = treeData;
                     setTreeData(node);
-                    updateTree();
                 } else {
                     swal.fire({
                         icon: 'error',
@@ -249,15 +248,12 @@ function FamilyTree(props) {
                 break;
             case 'descendant':
                 setTreeData(addDescendant(node, treeData, id));
-                updateTree();
                 break;
             case 'spouse':
                 setTreeData(addSpouse(node, treeData, id));
-                updateTree();
                 break;
             case 'sibling':
                 setTreeData(addSibling(node, treeData, id));
-                updateTree();
                 break;
         }
         
@@ -265,41 +261,7 @@ function FamilyTree(props) {
             title: 'הוספת תמונה',
             input: 'file',
             inputAttributes: {
-              'accept': 'image/*'
-            }
-        })
-        .then((file) => {
-            const img = file.value;
-            const type = img.type.split('/')[1];
-            const name = `tree${node.id}`;
-            var formData = new FormData;
-            formData.append('photo', img, name);
-            fetch('http://localhost:3003/pictures', {
-            method: 'POST',
-            body: formData
-            })
-            .then(data => console.log(data))
-            .catch(err => console.log(err))
-
-            //add the picture to the pictures table
-            fetch('http://localhost:3003/addpicture', {
-                method: 'POST',
-                headers: { 'Content-Type': 'application/json'},
-                body: JSON.stringify({
-                    name: name,
-                    group: group
-                })
-            })
-            .then(response => response.text())
-            .then(data => window.alert(data))
-            .catch(err => console.log(err))
-        })
-
-        swal.fire({
-            title: 'הוספת תמונה',
-            input: 'file',
-            inputAttributes: {
-              'accept': 'image/*'
+              'accept': 'image/jpeg'
             },
             confirmButtonColor: '#ef9c83',
             confirmButtonText: 'בחר',
@@ -451,7 +413,8 @@ function FamilyTree(props) {
             confirmButtonText: 'בחר',
             showCancelButton: true,
             cancelButtonText: 'ביטול',
-            reverseButtons: true
+            reverseButtons: true,
+            confirmButtonColor: '#ef9c83'
         })
         .then((choosen) => {
             if (choosen.value === 'edit') {
@@ -462,7 +425,8 @@ function FamilyTree(props) {
                     buttons: {
                         cancel: "ביטול",
                         catch: "שמור"
-                    }
+                    },
+                    confirmButtonColor: '#ef9c83'
                 })
                 .then((clicked) => {
                     if (clicked === 'catch') {
@@ -472,7 +436,6 @@ function FamilyTree(props) {
                         const death = document.getElementById('death').value;
                         const email = document.getElementById('email').value;
                         setTreeData(editNode(nodeDatum.id, name, gender, birth, death, email, treeData));
-                        updateTree();
                     }
                 })
             }
@@ -481,34 +444,42 @@ function FamilyTree(props) {
                     title: 'בחר תמונה חדשה',
                     input: 'file',
                     inputAttributes: {
-                      'accept': 'image/*'
-                    }
+                      'accept': 'image/jpeg'
+                    },
+                    confirmButtonText: 'בחר',
+                    showCancelButton: true,
+                    cancelButtonText: 'ביטול',
+                    reverseButtons: true,
+                    confirmButtonColor: '#ef9c83'
                 })
-                .then((file) => {
-                    const img = file.value;
-                    const type = img.type.split('/')[1];
-                    const name = `tree${nodeDatum.id}`;
-                    var formData = new FormData;
-                    formData.append('photo', img, name);
-                    fetch('http://localhost:3003/pictures', {
-                    method: 'POST',
-                    body: formData
-                    })
-                    .then(data => console.log(data))
-                    .catch(err => console.log(err))
-
-                    //add the picture to the pictures table
-                    fetch('http://localhost:3003/addpicture', {
+                .then((choosen) => {
+                    if (choosen.isConfirmed) {
+                        const img = choosen.value;
+                        const type = img.type.split('/')[1];
+                        const name = `tree-${nodeDatum.id}.${type}`;
+                        var formData = new FormData;
+                        formData.append('photo', img, name);
+                        fetch('http://localhost:3003/pictures', {
                         method: 'POST',
-                        headers: { 'Content-Type': 'application/json'},
-                        body: JSON.stringify({
-                            name: name,
-                            group: group
+                        body: formData
                         })
-                    })
-                    .then(response => response.text())
-                    .then(data => window.alert(data))
-                    .catch(err => console.log(err))
+                        .then(data => console.log(data))
+                        .catch(err => console.log(err))
+
+                        //add the picture to the pictures table
+                        fetch('http://localhost:3003/addpicture', {
+                            method: 'POST',
+                            headers: { 'Content-Type': 'application/json'},
+                            body: JSON.stringify({
+                                name: name,
+                                group: group
+                            })
+                        })
+                        .then(response => response.text())
+                        .then(data => window.alert(data))
+                        .catch(err => console.log(err))
+                        
+                    }
                 })
             }
             if (choosen.value === 'add') {
@@ -524,27 +495,30 @@ function FamilyTree(props) {
                     confirmButtonText: 'בחר',
                     showCancelButton: true,
                     cancelButtonText: 'ביטול',
-                    reverseButtons: true
+                    reverseButtons: true,
+                    confirmButtonColor: '#ef9c83'
                 })
                 .then((add) => {
-                    swalReact({
-                        title: 'הוספת אדם',
-                        content: <AddModule/>,
-                        buttons: {
-                            cancel: "ביטול",
-                            catch: "הוספה"
-                        }
-                    })
-                    .then((clicked) => {
-                        if (clicked === 'catch') {
-                            const name = document.getElementById('name').value;
-                            const gender = document.getElementById('gender').value;
-                            const birth = document.getElementById('birth').value;
-                            const death = document.getElementById('death').value;
-                            const email = document.getElementById('email').value;
-                            addNode(nodeDatum.id, name, gender, birth, death, email, add.value);
-                        }
-                    })
+                    if (add.isConfirmed) {
+                        swalReact({
+                            title: 'הוספת אדם',
+                            content: <AddModule/>,
+                            buttons: {
+                                cancel: "ביטול",
+                                catch: "הוספה"
+                            }
+                        })
+                        .then((clicked) => {
+                            if (clicked === 'catch') {
+                                const name = document.getElementById('name').value;
+                                const gender = document.getElementById('gender').value;
+                                const birth = document.getElementById('birth').value;
+                                const death = document.getElementById('death').value;
+                                const email = document.getElementById('email').value;
+                                addNode(nodeDatum.id, name, gender, birth, death, email, add.value);
+                            }
+                        })
+                    }
                 })
             }
         })  
@@ -568,7 +542,7 @@ function FamilyTree(props) {
                                    
                                     <p className={props.nodeDatum.attributes.gender} onClick={() => onNodeClick(props.nodeDatum)}>
                                         {props.nodeDatum.name}
-                                        <img className={classes.image} src={`http://localhost:3003/tree-${props.nodeDatum.id}.png`}/>
+                                        {/* {<img className={classes.image} src={`http://localhost:3003/tree-${props.nodeDatum.id}.jpeg`}/>} */}
                                         </p>
                                     
                                     {

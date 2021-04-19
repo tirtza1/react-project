@@ -63,8 +63,7 @@ export default class LogIn extends Component {
     })
     .then(response => response.text())
     .then(data => {
-        window.alert(data)
-        //redirect to home page
+        console.log(data);
     })
    }
     render () {
@@ -99,7 +98,7 @@ export default class LogIn extends Component {
                     />
   
                     <button onClick={this.handleClick} className={classes.button} style={{ position:'absolute',right:"630px"}}>התחבר</button>
-                    <Link to='/SignUp'>
+                    <Link to='/Register'>
                         <button className={classes.button} style={{ position:'absolute',right:"800px"}}>הירשם</button>
                     </Link>
                     <br/> <br/>

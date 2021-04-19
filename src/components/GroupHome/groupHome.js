@@ -9,11 +9,26 @@ import one from '../../assets/images/1.PNG'
 import two from '../../assets/images/2.PNG'
 import three from '../../assets/images/3.PNG'
 class GroupHome extends React.Component{
+
+    constructor() {
+        super();
+        this.state = {
+            GroupName: null
+        }
+    }
+
+    componentDidMount() {
+        fetch(`http://localhost:3003/group/${window.location.href.split('/').pop()}`)
+        .then(res => res.json())
+        .then(data => this.setState({GroupName: data[0].GroupName}))
+        .catch(err => console.log(err))
+    }
+
     render() {
         return(
             <div>
                 <div id="pink">
-                    <h1 id="family-name">משפחת ברזילי</h1> 
+                    <h1 id="family-name">{this.state.GroupName}</h1> 
                     <br/>
                     <button className="button">הזמן בני משפחה</button>
                 </div>

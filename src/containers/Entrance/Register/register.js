@@ -1,14 +1,15 @@
 import React, { Component } from 'react';
 import Input from '../../../components/UI/Input/Input';
 import Button from '../../../components/UI/Button/Button';
-import classes from './SignUp.module.css';
+import classes from './register.module.css';
 import { checkValidity } from '../../../shared/validate';
-
+import { Redirect, withRouter } from 'react-router-dom'
 
 //nimport checkValidity from '../../SignUp/checkValidity/checkValidity'
-class SignUp extends Component {
-    constructor() {
-        super();
+
+class Register extends Component {
+    constructor(props) {
+        super(props);
         this.state = {
                 user: {
                     firstname:'',
@@ -44,9 +45,7 @@ class SignUp extends Component {
                         required: true,
                         regExc: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
                     },
-                    password: { required: true, minLength: 8, maxLength: 15 },
-                    groupName:{required: true, minLength: 1},
-                    groupId:{required: true, minLength: 1}
+                    password: { required: true, minLength: 8, maxLength: 15 }
                 },
                 userValid: {
                         firstName: { valid: false, touched: false, errmessage: '' },
@@ -54,9 +53,7 @@ class SignUp extends Component {
                         Id: { valid: false, touched: false, errmessage: '' },
                         birthdate: { valid: false, touched: false, errmessage: '' },
                         email: { valid: false, touched: false, errmessage: '' },
-                        password: { valid: false, touched: false, errmessage: '' },
-                        groupName: { valid: false, touched: false, errmessage: '' },
-                        groupId: { valid: false, touched: false, errmessage: '' }
+                        password: { valid: false, touched: false, errmessage: '' }
                 },
                 isValidForm: false,
                 emailError: null,
@@ -65,7 +62,11 @@ class SignUp extends Component {
                
             };
           this.onSelectChange = this.onSelectChange.bind(this);
+          this.handleChange = this.handleChange.bind(this);
+          this.onSubmit = this.onSubmit.bind(this);
     }
+
+
     
     //כאשר אינפוט משתנה
     handleChange = (input) => (e) => {
@@ -90,7 +91,7 @@ class SignUp extends Component {
           userValid: validUser,
           isValidForm: validForm,
         });
-      };
+    };
 
 
     onSelectChange = (event) => {
@@ -112,29 +113,29 @@ class SignUp extends Component {
         this.setState({groupId: event.target.value})
     }
 
-
-
     onSubmit = () => {
+        console.log('submits')
         fetch('http://localhost:3003/register', {
             method: 'post',
             headers: { 'Content-Type': 'application/json'},
             body: JSON.stringify({
-                firstName: this.state.user.firstname.value,
-                lastName: this.state.user.lastname.value,
-                id: this.state.user.id.value,
-                birthday: this.state.user.birthdate.value,
-                email: this.state.user.email.value,
-                password: this.state.user.password.value,
+                firstName: this.state.user.firstName,
+                lastName: this.state.user.lastName,
+                id: this.state.user.Id,
+                birthday: this.state.user.birthdate,
+                email: this.state.user.email,
+                password: this.state.user.password,
                 groupId: parseInt(this.state.groupId),
                 groupName: this.state.groupName
             })
         })
         .then(response => response.text())
         .then(data => {
-            window.alert(data)
-            //redirect to home page
-            //make the signin state
+            this.props.setGroupId(data);
+            this.props.setSignIn();
+            this.props.history.push(`/group/${data}`);
         })
+        .catch(err => console.log(err))
     }
     
     render () {
@@ -142,46 +143,42 @@ class SignUp extends Component {
         error = <p style={{ color: 'red' }}>{this.state.emailError}</p>;
         return (
             <div >
-                <form onSubmit={this.handleSubmit} className={classes.SignUp}>
-               
-                        <Input
+                <div className={classes.SignUp}>
+                    <Input
                         type='text'
                         name='first-name'
                         inputtype='input'
                         label='שם פרטי'
-                        value={this.state.user.firstName}
                         onChange={this.handleChange('firstName')}
                         invalid={(!this.state.userValid.firstName.valid).toString()}
                         touched={this.state.userValid.firstName.touched.toString()}
                         errmessage={this.state.userValid.firstName.errmessage}
                     />
-                        <Input
+                    <Input
                         type='text'
                         name='last-name'
                         inputtype='input'
                         label='שם משפחה'
-                        value={this.state.user.lastName}
                         onChange={this.handleChange('lastName')}
                         invalid={(!this.state.userValid.lastName.valid).toString()}
                         touched={this.state.userValid.lastName.touched.toString()}
                         errmessage={this.state.userValid.lastName.errmessage}
                     />
-                       <Input
+                    <Input
                         type='text'
                         name='id'
                         inputtype='input'
                         label='תעודת זהות'
-                        value={this.state.user.Id}
                         onChange={this.handleChange('Id')}
                         invalid={(!this.state.userValid.Id.valid).toString()}
                         touched={this.state.userValid.Id.touched.toString()}
-                        errmessage={this.state.userValid.Id.errmessage}/>
+                        errmessage={this.state.userValid.Id.errmessage}
+                    />
                     <Input
                         type='date'
                         name='date'
                         inputtype='input'
                         label='תאריך לידה'
-                        value={this.state.user. birthdate}
                         onChange={this.handleChange('birthdate')}
                         invalid={(!this.state.userValid.birthdate.valid).toString()}
                         touched={this.state.userValid.birthdate.touched.toString()}
@@ -192,7 +189,6 @@ class SignUp extends Component {
                         name='email'
                         inputtype='input'
                         label='מייל'
-                        value={this.state.user.email}
                         onChange={this.handleChange('email')}
                         invalid={(!this.state.userValid.email.valid).toString()}
                         touched={this.state.userValid.email.touched.toString()}
@@ -204,7 +200,6 @@ class SignUp extends Component {
                         name='password'
                         inputtype='input'
                         label='סיסמה'
-                        value={this.state.user.password}
                         onChange={this.handleChange('password')}
                         invalid={(!this.state.userValid.password.valid).toString()}
                         touched={this.state.userValid.password.touched.toString()}
@@ -227,11 +222,7 @@ class SignUp extends Component {
                                 name='group-name'
                                 inputtype='input'
                                 label='שם קבוצה'
-                                value={this.state.user.groupName}
-                                onChange={this.handleChange('groupName')}
-                                invalid={(!this.state.userValid.groupName.valid).toString()}
-                                touched={this.state.userValid.groupName.touched.toString()}
-                                errmessage={this.state.userValid.groupName.errmessage}
+                                onChange={this.nameChange}
                             />
                          
                         </div> 
@@ -247,22 +238,18 @@ class SignUp extends Component {
                                 name='group-code'
                                 inputtype='input'
                                 label='קוד קבוצה '
-                                value={this.state.user.groupId}
-                                onChange={this.handleChange('groupId')}
-                                invalid={(!this.state.userValid.groupId.valid).toString()}
-                                touched={this.state.userValid.groupId.touched.toString()}
-                                errmessage={this.state.userValid.groupId.errmessage}
+                                onChange={this.codeChange}
                             />
                         </div> 
                         : null
                     }
                     <br/>
-                    <button className={classes.button} >הירשם</button>
-                </form>
+                <button className={classes.button} disabled={!this.state.isValidForm}  onClick={this.onSubmit}>הירשם</button>
+                </div>
             </div>
         );
     }
 }
 
 
-export default SignUp;
+export default withRouter(Register);

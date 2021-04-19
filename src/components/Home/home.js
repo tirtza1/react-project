@@ -1,4 +1,5 @@
 import React from 'react'
+import {Link} from 'react-router-dom'
 import  './home.css'
 import people from '../../assets/images/circle.png'
 import BigTree from '../../assets/images/BigTree.png'
@@ -72,15 +73,15 @@ class Home extends React.Component{
                     <p id="blackP">רשומים? נהדר!<br/>
                        הכניסו פרטים למעבר<br/>
                         לאיזור האישי שלכם</p>
-                    {/* <input>מייל</input>
-                    <input>סיסמא</input> */}
-                    <button id="b5">התחבר</button>
+                    <Link to="/login">
+                        <button id="b5">התחבר</button>
+                    </Link>
                     <img src={phone} alt={"phone"} id="phone"/>
                     <label id="l1">Tel: +972 504124407</label>
                     <img src={mail} alt={"mail"} id="mail"/>
                     <label id="l2">info@familink.com</label>
                 </div>
-                <p id="end" >&copy 2021 by TirTza Barzilay & Hani Abu</p>
+                <p id="end" >&copy; 2021 by TirTza Barzilay & Hani Abu</p>
                 <br/>
                 <br/>
 
