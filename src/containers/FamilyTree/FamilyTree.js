@@ -24,50 +24,8 @@ function FamilyTree(props) {
         }
     };
     const [treeData, setTreeData] = React.useState(initialTree);
-    const [group, setGroup] = React.useState(1);
+    const [group, setGroup] = React.useState(3);
     const history = useHistory();
-
-    const updateTree = () => {
-        fetch(`http://localhost:3003/pedigree`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                tree: JSON.stringify(treeData),
-                group: group
-            })
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-        history.push('/')
-        history.push('/pedigree')
-    }
-
-    const createFirstNode = (name, gender, birth, death, email) => {
-        const node = {
-            id: Date.now(),
-            name: name,
-            attributes: {
-                gender: gender,
-                birth: birth,
-                death: death,
-                email: email
-            },
-            children: [],
-        };
-        fetch(`http://localhost:3003/createPedigree`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                tree: JSON.stringify(node),
-                group: group
-            })
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-        setTreeData(node);
-    }
 
     React.useEffect(() => {
         if (treeData === initialTree) {
@@ -104,8 +62,65 @@ function FamilyTree(props) {
         
     })
 
+    const createFirstNode = (name, gender, birth, death, email) => {
+        const node = {
+            id: Date.now(),
+            name: name,
+            attributes: {
+                gender: gender,
+                birth: birth,
+                death: death,
+                email: email
+            },
+            children: [],
+        };
+        fetch(`http://localhost:3003/createPedigree`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                tree: JSON.stringify(node),
+                group: group
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+        setTreeData(node);
+    }
+
+    const updateTree = () => {
+        fetch(`http://localhost:3003/pedigree`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                tree: JSON.stringify(treeData),
+                group: group
+            })
+        })
+        .then(response => response.json())
+        .then(data => console.log(data))
+        .catch(err => console.log(err))
+        history.push('/')
+        history.push('/pedigree')
+    }
+
     //pushes the node changes to treeData
     const editNode = (id, name, gender, birth, death, email, data) => {
+        
+        if (data.id === id) {
+            data.name = name;
+            data.attributes.gender = gender;
+            data.attributes.birth = birth;
+            data.attributes.death = death;
+            return data;
+        }
+        if (data.attributes.spouse && data.attributes.spouse.id === id) {
+            data.attributes.spouse.name = name;
+            data.attributes.spouse.attributes.gender = gender;
+            data.attributes.spouse.attributes.birth = birth;
+            data.attributes.spouse.attributes.death = death;
+            return data;
+        }
         if (data.children === undefined || data.children === null)
             return data;
         for (let i = 0; i < data.children.length; i++) {
@@ -114,7 +129,6 @@ function FamilyTree(props) {
                 data.children[i].attributes.gender = gender;
                 data.children[i].attributes.birth = birth;
                 data.children[i].attributes.death = death;
-                data.children[i].attributes.email = email;
                 return data;
             } else {
                 editNode(id, name, gender, birth, death, email, data.children[i])
@@ -125,6 +139,7 @@ function FamilyTree(props) {
     const addDescendant = (node, data, id) => {
         if (data.id === id || data.attributes.spouse.id === id) {
             data.children.push(node);
+            console.log(data);
             return data;
         }
         
@@ -540,7 +555,7 @@ function FamilyTree(props) {
             {
                 treeData ?
                 <Tree
-                    data={data}
+                    data={treeData}
                     orientation='vertical'
                     pathFunc='step'
                     zoom='1'
