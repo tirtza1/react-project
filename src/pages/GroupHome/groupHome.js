@@ -8,6 +8,7 @@ import { Link } from 'react-router-dom'
 import one from '../../assets/images/1.PNG'
 import two from '../../assets/images/2.PNG'
 import three from '../../assets/images/3.PNG'
+import Swal from 'sweetalert2'
 class GroupHome extends React.Component{
 
     constructor() {
@@ -16,7 +17,7 @@ class GroupHome extends React.Component{
             GroupName: null
         }
     }
-
+ 
     componentDidMount() {
         fetch(`http://localhost:3003/group/${window.location.href.split('/').pop()}`)
         .then(res => res.json())
@@ -24,13 +25,27 @@ class GroupHome extends React.Component{
         .catch(err => console.log(err))
     }
 
+    handleClick=()=>
+    {
+        Swal.fire({
+            title: 'הזן כתובת מייל להצטרפות לקבוצה ',
+            input: 'email',
+            confirmButtonColor: '#ef9c83',
+            confirmButtonText: 'שלח',
+            showCancelButton: true,
+            cancelButtonText: 'ביטול',
+            reverseButtons: true
+        }
+            
+        )
+    }
     render() {
         return(
             <div>
-                <div id="pink">
-                    <h1 id="family-name">{this.state.GroupName}</h1> 
+                <div id="Divpink">
+                    <h1 id="familyName">{this.state.GroupName}</h1> 
                     <br/>
-                    <button className="button">הזמן בני משפחה</button>
+                    <button className="button" onClick={this.handleClick}>הזמן בני משפחה</button>
                 </div>
                 <div>
                      <img src={one} id="one" alt="one"/>
