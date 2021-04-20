@@ -1,10 +1,9 @@
-import React, { useState } from 'react';
-import NavigationItem from './NavigationItem/NavigationItem';
-import classes from './NavigationItems.module.css';
+import React, { useState } from 'react'
+import NavigationItem from './NavigationItem/NavigationItem'
+import classes from './NavigationItems.module.css'
 
 const NavigationItems = (props) => {
-
-  if (props.isSignedIn) 
+  if (props.isSignIn) {
     return (
       <ul className={classes.NavigationItems}>
         <NavigationItem link='/Photo'>גלריה</NavigationItem>
@@ -13,6 +12,7 @@ const NavigationItems = (props) => {
         <NavigationItem link='/group/:id'>בית</NavigationItem>
       </ul>
     );
+  }
   else return null;
 }
 export default NavigationItems;

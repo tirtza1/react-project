@@ -16,13 +16,13 @@ class App extends Component {
       groupId: null,
       isSignIn: false,
     }
-    this.setSignIn = this.setState.bind(this);
+    this.setSignIn = this.setSignIn.bind(this);
     this.setGroupId = this.setGroupId.bind(this);
   }
 
   setSignIn() {
     this.setState({isSignIn: true});
-  }
+  } 
 
   setGroupId(id) {
     this.setState({groupId: id})
@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <div> 
         <BrowserRouter>
-          <Layout>
+          <Layout isSignIn={this.state.isSignIn}>
               <Switch>
                 <Route path='/LogIn' exact>
                   <LogIn 

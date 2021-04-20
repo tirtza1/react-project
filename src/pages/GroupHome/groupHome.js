@@ -42,8 +42,8 @@ class GroupHome extends React.Component{
                     <span id="pink-Square">
                         <Link to="/Calendar">
                             <img src={calendar} alt={'calendar'} id="image-box"/>
-                            <div class="overlay">
-                                <div class="text">הוסף אירוע </div>
+                            <div className="overlay">
+                                <div className="text">הוסף אירוע </div>
                             </div> 
                         </Link>
                     </span>
@@ -52,8 +52,8 @@ class GroupHome extends React.Component{
                    
                        <Link to="/Pedigree">
                             <img src={tree} alt={'tree'} id="image-box"/>
-                            <div class="overlay">
-                                <div class="text">צור אילן יוחסין</div>
+                            <div className="overlay">
+                                <div className="text">צור אילן יוחסין</div>
                             </div> 
                        </Link> 
                        
@@ -62,8 +62,8 @@ class GroupHome extends React.Component{
                     <span id="purple-Square">
                         <Link to="/Photo">
                             <img src={image} alt={'image'} id="image-box"/>
-                            <div class="overlay">
-                                <div class="text">הוסף תמונה</div>
+                            <div className="overlay">
+                                <div className="text">הוסף תמונה</div>
                             </div>
                         </Link> 
                     </span>

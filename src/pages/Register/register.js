@@ -1,72 +1,68 @@
-import React, { Component } from 'react';
-import Input from '../../components/UI/Input/Input';
-import classes from './register.module.css';
-import { checkValidity } from '../../validation/validate';
-import { Redirect, withRouter } from 'react-router-dom'
-
-//nimport checkValidity from '../../SignUp/checkValidity/checkValidity'
-
+import React, { Component } from 'react'
+import Input from '../../components/UI/Input/Input'
+import classes from './register.module.css'
+import { checkValidity } from '../../validation/validate'
+import { withRouter } from 'react-router-dom'
+import swal from 'sweetalert2'
 class Register extends Component {
     constructor(props) {
         super(props);
         this.state = {
-                user: {
-                    firstname:'',
-                    lastname:'',
-                    id:'',
-                    birthdate:'',
-                    email: '',
-                    password: '',
-                    groupName: '',
-                    groupId: ''
+            user: {
+                firstname:'',
+                lastname:'',
+                id:'',
+                birthdate:'',
+                email: '',
+                password: '',
+                groupName: '',
+                groupId: ''
+            },
+            userValidationRules: {
+                firstName: {
+                    required: true,
+                    minLength: 2,
+                    maxLength: 15,
+                    letterOnly: true,
                 },
-                userValidationRules: {
-                    firstName: {
-                        required: true,
-                        minLength: 2,
-                        maxLength: 15,
-                        letterOnly: true,
-                    },
-                    lastName: {
-                        required: true,
-                        minLength: 2,
-                        maxLength: 20,
-                        letterOnly: true,
-                    },
-                    Id: {
-                        required: true,
-                        maxLength: 9,
-                        numberOnly : true
-                       
-                    },
-                    birthdate: { required: true},
-                    email: {
-                        required: true,
-                        regExc: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
-                    },
-                    password: { required: true, minLength: 8, maxLength: 15 }
+                lastName: {
+                    required: true,
+                    minLength: 2,
+                    maxLength: 20,
+                    letterOnly: true,
                 },
-                userValid: {
-                        firstName: { valid: false, touched: false, errmessage: '' },
-                        lastName: { valid: false, touched: false, errmessage: '' },
-                        Id: { valid: false, touched: false, errmessage: '' },
-                        birthdate: { valid: false, touched: false, errmessage: '' },
-                        email: { valid: false, touched: false, errmessage: '' },
-                        password: { valid: false, touched: false, errmessage: '' }
+                Id: {
+                    required: true,
+                    maxLength: 9,
+                    numberOnly : true
+                    
                 },
-                isValidForm: false,
-                emailError: null,
-                showNewGroup: false,
-                showOldGroup: false,
-               
-            };
-          this.onSelectChange = this.onSelectChange.bind(this);
-          this.handleChange = this.handleChange.bind(this);
-          this.onSubmit = this.onSubmit.bind(this);
+                birthdate: { required: true},
+                email: {
+                    required: true,
+                    regExc: /^(([^<>()\[\]\\.,;:\s@"]+(\.[^<>()\[\]\\.,;:\s@"]+)*)|(".+"))@((\[[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}\.[0-9]{1,3}])|(([a-zA-Z\-0-9]+\.)+[a-zA-Z]{2,}))$/,
+                },
+                password: { required: true, minLength: 8, maxLength: 15 }
+            },
+            userValid: {
+                    firstName: { valid: false, touched: false, errmessage: '' },
+                    lastName: { valid: false, touched: false, errmessage: '' },
+                    Id: { valid: false, touched: false, errmessage: '' },
+                    birthdate: { valid: false, touched: false, errmessage: '' },
+                    email: { valid: false, touched: false, errmessage: '' },
+                    password: { valid: false, touched: false, errmessage: '' }
+            },
+            isValidForm: false,
+            emailError: null,
+            showNewGroup: false,
+            showOldGroup: false,
+            
+        };
+        this.onSelectChange = this.onSelectChange.bind(this);
+        this.handleChange = this.handleChange.bind(this);
+        this.onSubmit = this.onSubmit.bind(this);
     }
 
-
-    
     //כאשר אינפוט משתנה
     handleChange = (input) => (e) => {
         e.preventDefault();
@@ -92,7 +88,6 @@ class Register extends Component {
         });
     };
 
-
     onSelectChange = (event) => {
         if (event.target.value === 'צור קבוצה חדשה') {
             this.setState({showNewGroup: true})
@@ -113,28 +108,34 @@ class Register extends Component {
     }
 
     onSubmit = () => {
-        console.log('submits')
-        fetch('http://localhost:3003/register', {
-            method: 'post',
-            headers: { 'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                firstName: this.state.user.firstName,
-                lastName: this.state.user.lastName,
-                id: this.state.user.Id,
-                birthday: this.state.user.birthdate,
-                email: this.state.user.email,
-                password: this.state.user.password,
-                groupId: parseInt(this.state.groupId),
-                groupName: this.state.groupName
+        if (this.state.isValidForm) {
+            fetch('http://localhost:3003/register', {
+                method: 'post',
+                headers: { 'Content-Type': 'application/json'},
+                body: JSON.stringify({ 
+                    firstName: this.state.user.firstName,
+                    lastName: this.state.user.lastName,
+                    id: this.state.user.Id,
+                    birthday: this.state.user.birthdate,
+                    email: this.state.user.email,
+                    password: this.state.user.password,
+                    groupId: parseInt(this.state.groupId),
+                    groupName: this.state.groupName
+                })
             })
+            .then(response => response.text())
+            .then(data => {
+                this.props.setGroupId(data);
+                this.props.setSignIn(true);
+                this.props.history.push(`/group/${data}`);
+            })
+            .catch(err => console.log(err))
+        } else swal.fire({
+            icon: 'info',
+            title: 'יש לוודא שכל השדות מלאים',
+            confirmButtonText: 'בסדר',
+            confirmButtonColor: '#EF9C83'
         })
-        .then(response => response.text())
-        .then(data => {
-            this.props.setGroupId(data);
-            this.props.setSignIn();
-            this.props.history.push(`/group/${data}`);
-        })
-        .catch(err => console.log(err))
     }
     
     render () {
@@ -243,7 +244,7 @@ class Register extends Component {
                         : null
                     }
                     <br/>
-                <button className={classes.button} disabled={!this.state.isValidForm}  onClick={this.onSubmit}>הירשם</button>
+                    <button className={classes.button} onClick={this.onSubmit}>הירשם</button>
                 </div>
             </div>
         );
