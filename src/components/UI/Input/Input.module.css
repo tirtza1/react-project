@@ -2,6 +2,8 @@
     width: 100%;
     padding: 7px;
     box-sizing: border-box;
+    align-items: center;
+    text-align: center;
   }
   
   .Label {
@@ -15,12 +17,11 @@
   .InputElement{
   
     padding: 12px 20px;
-    margin: 2px;
+    margin-left:42px;
     text-align: right;
     align-items: center;
     box-sizing: border-box;
     font: inherit;
-    padding:8px 10px;
     display: block;
     outline: none;
     border: none;
@@ -28,12 +29,14 @@
     width: 80%;
     direction: rtl;
 }
-  .InputElement:focus,
+  .InputElement:focus{
+    border-bottom: 3px solid rgb(0, 0, 0);
+  }
   .InputElement:active {
     outline: none;
     background-color: rgba(235, 241, 235, 0.336);
   }
   .InValid {
     border-bottom: 2px solid rgb(226, 33, 33);
-    background-color: rgb(238, 228, 227);
+    background-color:#f3e9e6;
   }

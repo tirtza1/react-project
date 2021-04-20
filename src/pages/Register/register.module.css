@@ -15,26 +15,7 @@
         width: 500px;
     }
 }
-.InputLogin{
-    
-    padding: 12px 20px;
-    margin: 8px 0;
-    border: none;
-    border-bottom: 2px solid rgb(0, 0, 0);
-    width: 80%;
-    text-align: right;
-    direction: rtl;
-}
 
-.LableLogin{
-   font-weight: bold;
-   font-family:'Segoe UI';
-   font-size: large;
-}
-.InputLogin:focus {
-    border-bottom: 3px solid #555;
-    border:none;
-  }
   .button {
     background-color: #EF9C83;
     border:2px solid #EF9C83;
@@ -59,4 +40,7 @@
     direction: rtl;
     font-family: Arial, Helvetica, sans-serif;
     border: 2px solid black;
+    font-weight: bold;
+    font-size: 1rem;
+    
 }

@@ -105,9 +105,9 @@ class LogIn extends Component {
             touched={this.state.userValid.password.touched.toString()}
             errmessage={this.state.userValid.password.errmessage}
           />
-          <button onClick={this.handleClick} className={classes.button} style={{ position:'absolute',right:"630px"}}>התחבר</button>
+          <button onClick={this.handleClick} className={classes.button} style={{ position:'absolute',right:"720px"}}>התחבר</button>
           <Link to='/Register'>
-            <button className={classes.button} style={{ position:'absolute',right:"800px"}}>הירשם</button>
+            <button className={classes.button} style={{ position:'absolute',right:"860px"}}>הירשם</button>
           </Link>
           <br/><br/><br/>
           <Link to='/ForgetPassword'>
