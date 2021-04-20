@@ -43,6 +43,7 @@ export default class Calendar extends Component {
 
   //מוחק אירוע כשלוחצים עליו
   handleEventClick= (eventClickInfo) => { 
+    console.log(eventClickInfo)
     if(window.confirm("Are you sure you want to remove the event date?")) {
       const id = eventClickInfo.event.id;
       let updatedEvents = [...this.state.CalendarEvent]
@@ -83,8 +84,10 @@ export default class Calendar extends Component {
    }
 
    //מוסיף אירוע ומעדכן אותו בלוח השנה
-  AddEventHandle = () => {
+  AddEventHandle = (event) => {
+    
     console.log('add event')
+    
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
         id:Date.now(),
@@ -92,6 +95,21 @@ export default class Calendar extends Component {
         start: this.state.fromDate
       }]
     }))
+
+    fetch(`http://localhost:3003/calendar`, {
+      
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name:this.state.eventName,
+        group:1,
+        date:this.state.fromDate
+      })
+    })
+    
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
     this.toggle();
     this.setState({eventName:''})
   }

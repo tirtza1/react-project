@@ -8,6 +8,8 @@ import { Link } from 'react-router-dom'
 import one from '../../assets/images/1.PNG'
 import two from '../../assets/images/2.PNG'
 import three from '../../assets/images/3.PNG'
+import swalReact from '@sweetalert/with-react'
+import swal from 'sweetalert2'
 class GroupHome extends React.Component{
 
     constructor() {
@@ -24,13 +26,28 @@ class GroupHome extends React.Component{
         .catch(err => console.log(err))
     }
 
+    handalClick=()=>{
+        swal.fire({
+            title: 'הזן מייל לקבלת קוד לקבוצה',
+            input: 'email',
+        
+            confirmButtonText: 'בחר',
+            showCancelButton: true,
+            cancelButtonText: 'ביטול',
+            reverseButtons: true,
+            confirmButtonColor: '#ef9c83'
+            
+        })
+       
+    }
+  
     render() {
         return(
             <div>
-                <div id="pink">
-                    <h1 id="family-name">{this.state.GroupName}</h1> 
+                <div id="divpink">
+                    <p id="familyName">{this.state.GroupName}</p> 
                     <br/>
-                    <button className="button">הזמן בני משפחה</button>
+                    <button className="button" onClick={this.handalClick}>הזמן בני משפחה</button>
                 </div>
                 <div>
                      <img src={one} id="one" alt="one"/>

@@ -1,8 +1,8 @@
 .NavigationItem {
- 
+
   box-sizing: border-box;
   display: block;
- 
+ width: 100%;
 }
 
 .NavigationItem a {
@@ -11,9 +11,7 @@
   width: 100%;
   box-sizing: border-box;
   display: block;
- text-align: center;
-  margin-left: 40px;
-  padding: 20px;
+
 }
 
 
@@ -27,7 +25,7 @@
      
   }
 } 
-  .NavigationItem a {
+.NavigationItem a {
       color: white;
       height: 100%;
       
@@ -40,4 +38,5 @@
  border-radius: 20px;
  padding: 20px;
  text-align: center;
+ cursor: pointer;
 }
