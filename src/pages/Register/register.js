@@ -1,8 +1,7 @@
 import React, { Component } from 'react';
-import Input from '../../../components/UI/Input/Input';
-import Button from '../../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input';
 import classes from './register.module.css';
-import { checkValidity } from '../../../shared/validate';
+import { checkValidity } from '../../validation/validate';
 import { Redirect, withRouter } from 'react-router-dom'
 
 //nimport checkValidity from '../../SignUp/checkValidity/checkValidity'

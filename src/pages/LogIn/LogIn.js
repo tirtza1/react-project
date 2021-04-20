@@ -1,9 +1,8 @@
 import React, { Component } from 'react';
-import Input from '../../../components/UI/Input/Input';
-import Button from '../../../components/UI/Button/Button';
+import Input from '../../components/UI/Input/Input'
 import classes from './LogIn.module.css';
 import {Link} from 'react-router-dom'
-import { checkValidity } from '../../../shared/validate';
+import { checkValidity } from '../../validation/validate';
 //import * as action from '../../../../store/action/index';
 
 export default class LogIn extends Component {

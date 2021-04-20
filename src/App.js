@@ -1,13 +1,13 @@
 import React, { Component } from 'react'
-import {Switch, Route, BrowserRouter} from 'react-router-dom'
-import LogIn from './containers/Entrance/LogIn/LogIn'
-import Photo from './components/Photo/Photo'
-import Register from './containers/Entrance/Register/register'
+import { Switch, Route, BrowserRouter } from 'react-router-dom'
+import LogIn from './pages/LogIn/LogIn'
+import Photo from './pages/Photo/Photo'
+import Register from './pages/Register/register'
 import Layout from './components/Layout/Layout'
-import FamilyTree from './containers/FamilyTree/FamilyTree'
-import Calendar from './components/Calendar/Calendar'
-import Home from './components/Home/home'
-import HomeGroup from './components/GroupHome/groupHome'
+import FamilyTree from './pages/FamilyTree/FamilyTree'
+import Calendar from './pages/Calendar/Calendar'
+import Home from './pages/Home/home'
+import HomeGroup from './pages/GroupHome/groupHome'
 
 class App extends Component {
   constructor() {
@@ -32,7 +32,6 @@ class App extends Component {
     return (
       <div> 
         <BrowserRouter>
-        
           <Layout>
               <Switch>
                 <Route path='/LogIn' exact>
@@ -62,13 +61,9 @@ class App extends Component {
                 <Route path='/' exact component={Home}/>
               </Switch>
             </Layout>
-
         </BrowserRouter>
       </div>
     );
   }
 }
 export default App;
-
-
-/**/

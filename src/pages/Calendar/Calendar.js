@@ -1,18 +1,14 @@
-import React ,{Component} from 'react'
+import React, { Component } from 'react'
 import FullCalendar from '@fullcalendar/react'
 import dayGridPlugin from '@fullcalendar/daygrid'
 import timeGridPlugin from '@fullcalendar/timegrid'
 import interactionPlugin, { ThirdPartyDraggable } from '@fullcalendar/interaction'
 import classes from './Calendar.module.css'
-import { Button, Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap';
-import Input from '../UI/Input/Input'
-import bootstrapPlugin from '@fullcalendar/bootstrap';
-import 'bootstrap/dist/css/bootstrap.css';
-import '@fortawesome/fontawesome-free/css/all.css'; // webpack uses file-loader to handle font files
+import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
+import bootstrapPlugin from '@fullcalendar/bootstrap'
+import 'bootstrap/dist/css/bootstrap.css'
+import '@fortawesome/fontawesome-free/css/all.css'
 
-//דברים שאפשר להוסיף
-//כשלוחצים על תאריך בלוח זה אוטומטית שם בתאריך התחלה את התאריך שלחצו עליו
-//לשנות את הצבעים של הלוח שיתאימו לאתר
 export default class Calendar extends Component {
  
   calendarComponentRef = React.createRef();
@@ -25,12 +21,13 @@ export default class Calendar extends Component {
       toDate:'',
       CalendarEvent:[],
       goToPast:''
-     };
+    };
  
-  onDatePastChange=(input) => (e) => {
+  onDatePastChange = (input) => (e) => {
     e.preventDefault();
     this.setState({ [input]: e.target.value });
   }
+
   toggle = () => {
     this.setState({ modal: !this.state.modal });
   };
@@ -42,45 +39,42 @@ export default class Calendar extends Component {
     const newdate=( eventClickInfo.date.getFullYear()+"-"+((eventClickInfo.date.getMonth() > 8) ? (eventClickInfo.date.getMonth() + 1) : ('0' + (eventClickInfo.date.getMonth() + 1))) +"-"+ ((eventClickInfo.date.getDate() > 9) ? eventClickInfo.date.getDate() : ('0' + eventClickInfo.date.getDate())));
     this.state.fromDate=newdate;
     document.getElementById('fromDate').placeholder=newdate;
-  
   };
 
   //מוחק אירוע כשלוחצים עליו
   handleEventClick= (eventClickInfo) => { 
     if(window.confirm("Are you sure you want to remove the event date?")) {
       const id = eventClickInfo.event.id;
-      let updatedEvents=[...this.state.CalendarEvent]
-      for(var i = 0;i < updatedEvents.length; i ++)
-      {
-        if(updatedEvents[i].id==id)
-        {
+      let updatedEvents = [...this.state.CalendarEvent]
+      for(var i = 0; i < updatedEvents.length; i ++) {
+        if(updatedEvents[i].id == id) {
           updatedEvents.splice(i, 1);
           break;
         }
       }
       this.setState({CalendarEvent: updatedEvents});
-  };
-}
+    }
+  }
  
   //מעביר את המיקום של האירוע כשגוררים אותו
   handleEventDrop = (info) => {
-   
-      //של האירוע id
-      const id=info.event.id
-      //העתקה של המערך
-      let events = [...this.state.CalendarEvent];
-      //מציאת אינקס לשינוי תאריך התחלה
-      const index= events.findIndex(item => item.id==id)
-      //העתקה של האובייקט לשינוי
-      let eventToChange = {...events[index]};
-     
-      const newdate=( info.event.start.getFullYear()+"-"+((info.event.start.getMonth() > 8) ? (info.event.start.getMonth() + 1) : ('0' + (info.event.start.getMonth() + 1))) +"-"+ ((info.event.start.getDate() > 9) ? info.event.start.getDate() : ('0' +info.event.start.getDate())));
-      //עדכון תאריך התחלה
-      eventToChange.start = newdate;
-     //עדכון האובייקט
-      events[index] = eventToChange;
-      //עדכון של המערך
-      this.setState({CalendarEvent: events});
+    
+    //של האירוע id
+    const id=info.event.id
+    //העתקה של המערך
+    let events = [...this.state.CalendarEvent];
+    //מציאת אינקס לשינוי תאריך התחלה
+    const index= events.findIndex(item => item.id==id)
+    //העתקה של האובייקט לשינוי
+    let eventToChange = {...events[index]};
+    
+    const newdate=( info.event.start.getFullYear()+"-"+((info.event.start.getMonth() > 8) ? (info.event.start.getMonth() + 1) : ('0' + (info.event.start.getMonth() + 1))) +"-"+ ((info.event.start.getDate() > 9) ? info.event.start.getDate() : ('0' +info.event.start.getDate())));
+    //עדכון תאריך התחלה
+    eventToChange.start = newdate;
+    //עדכון האובייקט
+    events[index] = eventToChange;
+    //עדכון של המערך
+    this.setState({CalendarEvent: events});
   }
 
    //כאשר משנים את האינפוט
@@ -89,8 +83,8 @@ export default class Calendar extends Component {
    }
 
    //מוסיף אירוע ומעדכן אותו בלוח השנה
-   AddEventHandle=()=>{
-     console.log('add event')
+  AddEventHandle = () => {
+    console.log('add event')
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
         id:Date.now(),
@@ -98,23 +92,20 @@ export default class Calendar extends Component {
         start: this.state.fromDate
       }]
     }))
-
     this.toggle();
     this.setState({eventName:''})
-   }
+  }
 
 
-   checkValidity=()=>{
-     if(this.state.eventName==='')
-     {
-       alert("שם אירוע זהו שדה חובה")
-     }
-     else 
-     this.AddEventHandle()
-   }
+  checkValidity = () => {
+    if(this.state.eventName==='')
+      alert("שם אירוע זהו שדה חובה")
+    else 
+      this.AddEventHandle()
+  }
 
    //פונקציה שעוברת לתאריך ברצוי
-   gotoPast = () => {
+  gotoPast = () => {
     let calendarApi = this.calendarComponentRef.current.getApi();
     calendarApi.gotoDate(this.state.goToPast); // call a method on the Calendar object
   };
@@ -130,13 +121,13 @@ export default class Calendar extends Component {
             value={this.state.goToPast}
             onChange={this.onDatePastChange('goToPast')}
             className={classes.InputDatePast}
-            />
+          />
           <label className={classes.label}>בחר תאריך:</label> 
           <br/><br/><br/>
           <button onClick={this.gotoPast} className={classes.button}>עבור </button>
           <br/> <br/> 
           <FullCalendar
-          height={'860px'}
+            height={'860px'}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrapPlugin]}
             theme={true}
             themeSystem='bootstrap'
@@ -170,45 +161,41 @@ export default class Calendar extends Component {
             events={this.state.CalendarEvent}
             eventsSet={this.handleEvents} // called after events are initialized/added/changed/removed
           />
-         <Modal
-              isOpen={this.state.modal}
-              toggle={this.toggle}
-              size='lg'
-              centered
-            
-            >
-              <ModalHeader toggle={this.toggle} style={{ fontWeight:'bold', fontSize:'large',marginLeft:'590px'}} >
-                :הוסף אירוע 
-              </ModalHeader>
-             <hr/>
-              <ModalBody>
-               {
-                  <form className={classes.form}>
-                          <label className={classes.LableCalendar}  htmlFor="eventName"  >:שם אירוע</label>
-                           <br/>
-                          <input className={classes.InputCalendar} type="text"  placeholder="שם אירוע"  name="eventName"  onChange={this.inputChange}  id="eventName" required/>
-                          <br/>
-                          <br/>
-                          <label className={classes.LableCalendar}  htmlFor="fromDate">:תאריך </label>
-                          <br/>
-                          <input className={classes.InputCalendar} type="text" placeholder="Enter from date" name="fromDate" onChange={this.inputChange} id="fromDate" />
-                          <br/>
-                </form> }
-  
-              </ModalBody>
-              <ModalFooter style={{marginRight:'280px'}}>
-          
-                <button  onClick={this.checkValidity} className={classes.button}>
-                   הוסף
-                </button>
-                <button  onClick={this.toggle} className={classes.button}>
-                 סגור
-                </button>
-              </ModalFooter>
+          <Modal
+            isOpen={this.state.modal}
+            toggle={this.toggle}
+            size='lg'
+            centered
+          >
+          <ModalHeader toggle={this.toggle} style={{ fontWeight:'bold', fontSize:'large',marginLeft:'590px'}} >
+            :הוסף אירוע 
+          </ModalHeader>
+          <hr/>
+          <ModalBody>
+            {
+              <form className={classes.form}>
+                <label className={classes.LableCalendar}  htmlFor="eventName"  >:שם אירוע</label>
+                  <br/>
+                <input className={classes.InputCalendar} type="text"  placeholder="שם אירוע"  name="eventName"  onChange={this.inputChange}  id="eventName" required/>
+                <br/>
+                <br/>
+                <label className={classes.LableCalendar}  htmlFor="fromDate">:תאריך </label>
+                <br/>
+                <input className={classes.InputCalendar} type="text" placeholder="Enter from date" name="fromDate" onChange={this.inputChange} id="fromDate" />
+                <br/>
+              </form> 
+            }
+          </ModalBody>
+          <ModalFooter style={{marginRight:'280px'}}>
+            <button  onClick={this.checkValidity} className={classes.button}>
+              הוסף
+            </button>
+            <button  onClick={this.toggle} className={classes.button}>
+              סגור
+            </button>
+          </ModalFooter>
         </Modal>
       </div>
     )
-    
   }
-  
 }
