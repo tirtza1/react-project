@@ -19,6 +19,21 @@ class GroupHome extends React.Component{
     }
  
     componentDidMount() {
+        Swal.fire({
+            title: 'תזכורת',
+            titleText: 'היום יום הולדת לנעמה ',
+            imageUrl: 'https://unsplash.it/400/200',
+            imageWidth: 400,
+            imageHeight: 200,
+            imageAlt: 'Custom image',
+            width:600,
+            heightAuto:700,
+            confirmButtonColor:'#ef9c83',
+            confirmButtonText:
+              '<i class="fa fa-thumbs-up"></i>  תודה ',
+            showCloseButton: true,
+
+          })
         fetch(`http://localhost:3003/group/${window.location.href.split('/').pop()}`)
         .then(res => res.json())
         .then(data => this.setState({GroupName: data[0].GroupName}))

@@ -304,26 +304,30 @@ function FamilyTree(props) {
 
     //edit form that is shown when the user decides to edit a node's info
     const EditModule = ({nodeDatum}) => (
-        <form style={{direction: 'rtl'}}>
-            <label className={classes.LabelPedigree}>שם: </label>
+        <form className={classes.contentModule}>
+            <label className={classes.LabelPedigree}>:שם </label>
             <input 
                 id='name' 
                 className={classes.InputPedigree} 
                 defaultValue={nodeDatum.name}
             />
-            <label className={classes.LabelPedigree}>מגדר</label>
+            <br/>
+            <label className={classes.LabelPedigree}>:מגדר</label>
+            <br/>
             {
                 nodeDatum.attributes.gender === 'male' ?
-                <select id='gender'>
+                <select id='gender' className={classes.select}>
                     <option selected>זכר</option>
                     <option>נקבה</option>
                 </select>
                 :
-                <select id='gender'>
+                <select id='gender' className={classes.select}>
                     <option>זכר</option>
                     <option selected>נקבה</option>
                 </select>
             }
+            <br/>
+            <br/>
             <label className={classes.LabelPedigree}>:תאריך לידה</label>
             <input 
                 type='date' 
@@ -331,6 +335,7 @@ function FamilyTree(props) {
                 id='birth'
                 defaultValue={nodeDatum.attributes.birth}
             />
+            <br/>
             {/* {<label className={classes.LabelPedigree}>?חי</label>
             <input 
                 type='checkbox' 
@@ -346,6 +351,7 @@ function FamilyTree(props) {
                 id='death'
                 defaultValue={nodeDatum.attributes.death}
             />
+            <br/>
             <label className={classes.LabelPedigree}>:אמייל</label>
             <input 
                 type='email' 
@@ -353,28 +359,35 @@ function FamilyTree(props) {
                 id='email'
                 defaultValue={nodeDatum.attributes.email}
             />
+            <br/>
         </form>
     );
 
     //add person form
     const AddModule = () => (
-        <form style={{direction: 'rtl'}}>
-            <label className={classes.LabelPedigree}>שם: </label>
+        <form className={classes.contentModule}>
+            <label className={classes.LabelPedigree}>:שם</label>
             <input 
                 id='name' 
                 className={classes.InputPedigree}
             />
-            <select id='gender'>
-                <option disabled selected>:מגדר</option>
+            <br/>
+            <label className={classes.LabelPedigree}>:מגדר</label>
+            <br/>
+            <select id='gender' className={classes.select}>
+                <option disabled selected>בחר</option>
                 <option>זכר</option>
                 <option>נקבה</option>
             </select>
+            <br/>
+            <br/>
             <label className={classes.LabelPedigree}>:תאריך לידה</label>
             <input 
                 type='date' 
                 className={classes.InputPedigree} 
                 id='birth'
             />
+             <br/>
             {/* {<label className={classes.LabelPedigree}>?חי</label>
             <input 
                 type='checkbox' 
@@ -389,6 +402,7 @@ function FamilyTree(props) {
                 className={classes.InputPedigree} 
                 id='death'
             />
+             <br/>
             <label className={classes.LabelPedigree}>:אמייל</label>
             <input 
                 type='email' 
@@ -396,6 +410,7 @@ function FamilyTree(props) {
                 id='email'
             />
         </form>
+        
     );
 
     //node click handler
@@ -403,6 +418,7 @@ function FamilyTree(props) {
 
         //shows a module with action to choose
         swal.fire({
+            
             title: 'בחר את הפעולה שברצונך לבצע',
             input: 'select',
             inputOptions: {
@@ -424,7 +440,8 @@ function FamilyTree(props) {
                     <EditModule nodeDatum={nodeDatum} />,
                     buttons: {
                         cancel: "ביטול",
-                        catch: "שמור"
+                        catch: "שמור",
+                        
                     },
                     confirmButtonColor: '#ef9c83'
                 })
@@ -505,7 +522,7 @@ function FamilyTree(props) {
                             content: <AddModule/>,
                             buttons: {
                                 cancel: "ביטול",
-                                catch: "הוספה"
+                                catch: "הוספה",
                             }
                         })
                         .then((clicked) => {

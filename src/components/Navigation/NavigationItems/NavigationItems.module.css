@@ -9,7 +9,8 @@
   font-family:'Segoe UI Semibold'; 
   margin-left: 470px;
   font-weight: bold;
-  margin-top: 8px;
+  margin-top: 80px;
+  z-index: 1;
 }
 
 @media (min-width: 500px){

@@ -72,18 +72,26 @@ class Photo extends React.Component{
 
     render() {
         return(
-            <div id="gallery">
-                <input 
-                    type="file" 
-                    id="inputFile" 
-                    accept="image/x-png,image/gif,image/jpeg" 
-                    onChange={this.handleNewImage}
-                />
-                <button onClick={this.handleFileInputClick} id="button-plus">
-                    <img src={photo} alt="plus" id="plus"/>
-                </button>
-                <h1>גלריה</h1>
-                <Gallery images={this.state.images_for_gallery}/>
+            <div> 
+                <div id="tooltip">
+                    <button onClick={this.handleFileInputClick} id="button-plus">
+                         <img src={photo} alt="plus" id="plus"/>
+                     </button>
+                    <span id="tooltiptext"> בחר תמונה</span>
+                </div>
+                
+                <div id="galleryContent"> 
+                   
+                        <input 
+                            type="file" 
+                            id="inputFile" 
+                            accept="image/x-png,image/gif,image/jpeg" 
+                            onChange={this.handleNewImage}
+                        />
+                      
+                    <h1>גלריה</h1>
+                    <Gallery images={this.state.images_for_gallery}/>
+                </div>
             </div>
         )
     }

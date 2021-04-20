@@ -1,26 +1,43 @@
+.contentModule{
+    width: 100%;
+    padding: 7px;
+    box-sizing: border-box;
+    align-items: center;
+    text-align: center;
+}
+
 .LablePedigree{
     font-weight: bold;
-    font-family:'Calibri Light';
-    font-size:large;
+    display: block;
+    margin-bottom: 5px;
+    padding-right: 0.5rem;
+ font-weight: bold;
+    font-size: 50px;
  }
- 
- .InputPedigree:focus {
-     border: 3px solid #555;
-   }
-   
-   .InputPedigree{
-    
+
+
+.InputPedigree{
+  
     padding: 12px 20px;
-    margin: 8px 0;
+    margin-left:42px;
+    text-align: right;
+    align-items: center;
     box-sizing: border-box;
+    font: inherit;
+    display: block;
+    outline: none;
     border: none;
     border-bottom: 2px solid rgb(0, 0, 0);
     width: 80%;
-    text-align: right;
     direction: rtl;
-    margin-left: 100px;
 }
+.InputPedigree:focus{
+    border-bottom: 3px solid rgb(0, 0, 0);
+  }
 
+  .select{
+      direction: rtl;
+  }
 .plusUser {
     background-color: white;
     width: 80px;

@@ -22,7 +22,8 @@ export default class Calendar extends Component {
       CalendarEvent:[],
       goToPast:''
     };
- 
+
+  
   onDatePastChange = (input) => (e) => {
     e.preventDefault();
     this.setState({ [input]: e.target.value });
@@ -43,6 +44,7 @@ export default class Calendar extends Component {
 
   //מוחק אירוע כשלוחצים עליו
   handleEventClick= (eventClickInfo) => { 
+    console.log(eventClickInfo)
     if(window.confirm("Are you sure you want to remove the event date?")) {
       const id = eventClickInfo.event.id;
       let updatedEvents = [...this.state.CalendarEvent]
@@ -58,7 +60,6 @@ export default class Calendar extends Component {
  
   //מעביר את המיקום של האירוע כשגוררים אותו
   handleEventDrop = (info) => {
-    
     //של האירוע id
     const id=info.event.id
     //העתקה של המערך
@@ -67,7 +68,6 @@ export default class Calendar extends Component {
     const index= events.findIndex(item => item.id==id)
     //העתקה של האובייקט לשינוי
     let eventToChange = {...events[index]};
-    
     const newdate=( info.event.start.getFullYear()+"-"+((info.event.start.getMonth() > 8) ? (info.event.start.getMonth() + 1) : ('0' + (info.event.start.getMonth() + 1))) +"-"+ ((info.event.start.getDate() > 9) ? info.event.start.getDate() : ('0' +info.event.start.getDate())));
     //עדכון תאריך התחלה
     eventToChange.start = newdate;
@@ -83,8 +83,10 @@ export default class Calendar extends Component {
    }
 
    //מוסיף אירוע ומעדכן אותו בלוח השנה
-  AddEventHandle = () => {
+  AddEventHandle = (event) => {
+    
     console.log('add event')
+    
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
         id:Date.now(),
@@ -92,6 +94,20 @@ export default class Calendar extends Component {
         start: this.state.fromDate
       }]
     }))
+
+    fetch(`http://localhost:3003/addEvent`, {
+      
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        name:this.state.eventName,
+        group:1,
+        date:this.state.fromDate
+      })
+    })
+    .then(response => response.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
     this.toggle();
     this.setState({eventName:''})
   }
@@ -114,7 +130,9 @@ export default class Calendar extends Component {
   render() { 
 
     return (
-      <div className={classes.calendarContent}>
+    
+      <div className={classes.calendarContent}> 
+          <h1 className={classes.header}>לוח שנה</h1>
           <input
             type='date'
             name='goToPast'
@@ -125,7 +143,7 @@ export default class Calendar extends Component {
           <label className={classes.label}>בחר תאריך:</label> 
           <br/><br/><br/>
           <button onClick={this.gotoPast} className={classes.button}>עבור </button>
-          <br/> <br/> 
+          <br/> <br/> <br/> 
           <FullCalendar
             height={'860px'}
             plugins={[dayGridPlugin, timeGridPlugin, interactionPlugin,bootstrapPlugin]}

@@ -12,6 +12,14 @@
     left: 10px;
 }
 
+.header{
+    text-align: center;
+    padding: 50px;
+    font-weight: bold;
+    margin-top:-30px;
+    font-size: 50px;
+    text-shadow: 4px 4px 5px #EF9C83;
+}
 .InputCalendar{
     
     padding: 12px 20px;
@@ -55,13 +63,13 @@
 }
 .label{
     position: absolute;
-    right: 620px;
+    right: 720px;
     font-size: 20px;
-    top:310px;
+   margin-top: 13px;
 }
 .InputDatePast{
     position: absolute;
-    left: 530px;
+    left: 590px;
     width: 15%;
     padding: 9px 20px;
     margin: 8px 0;
