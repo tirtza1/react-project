@@ -32,7 +32,7 @@ class App extends Component {
     return (
       <div> 
         <BrowserRouter>
-          <Layout isSignIn={this.state.isSignIn}>
+          <Layout isSignIn={this.state.isSignIn} groupId={this.state.groupId}>
               <Switch>
                 <Route path='/LogIn' exact>
                   <LogIn 

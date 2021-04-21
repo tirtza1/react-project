@@ -10,7 +10,7 @@ const sideDrawer = (props) => {
       <Backdrop show={props.show} clicked={props.closed} />
       <div className={attachedClasses.join(' ')}>
         <nav>
-          <NavigationItems isSignIn={props.isSignIn}/>
+          <NavigationItems isSignIn={props.isSignIn} groupId={props.groupId}/>
         </nav>
       </div>
     </React.Fragment>

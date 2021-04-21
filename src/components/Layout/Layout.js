@@ -26,11 +26,13 @@ class Layout extends Component{
           <Toolbar 
             drawerToggleClicked={this.sideDrawerToggleHandler} 
             isSignIn={this.props.isSignIn}
+            groupId={this.props.groupId}
           />
           <SideDrawer
             closed={this.sideDrawerClosedhandler}
             show={this.state.showSideDrawer}
             isSignIn={this.props.isSignIn}
+            groupId={this.props.groupId}
           />
           <main className={classes.Content}>
               {this.props.children}

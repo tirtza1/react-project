@@ -9,7 +9,7 @@ const NavigationItems = (props) => {
         <NavigationItem link='/Photo'>גלריה</NavigationItem>
         <NavigationItem link='/Calendar'>לוח שנה</NavigationItem>
         <NavigationItem link='/Pedigree'>אילן יוחסין</NavigationItem>
-        <NavigationItem link='/group/:id'>בית</NavigationItem>
+        <NavigationItem link={`/group/${props.groupId}`}>בית</NavigationItem>
       </ul>
     );
   }
