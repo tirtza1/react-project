@@ -28,12 +28,43 @@ class Calendar extends Component {
     };
   }
 
+  //מציג תזכורת של האירועים היום
+  getTodaysEvents = () => {
+    const date = new Date();
+    const today = `${date.getFullYear()}-${date.getMonth() > 8 ? (date.getMonth() + 1) : ('0' + (date.getMonth() + 1))}-${date.getDate()}`;
+    const todayEvents = this.state.CalendarEvent.filter(event => {
+      if (event.start === today) return event
+    });
+    let eventString = '';
+    todayEvents.map(event => eventString = eventString + event.title + '\n');
+    swal.fire({
+      title: ':אירועים היום',
+      text: eventString || 'אין אירועים היום',
+      imageUrl: 'https://unsplash.it/400/200',
+      imageWidth: 400,
+      imageHeight: 200,
+      imageAlt: 'Custom image',
+      width:600,
+      heightAuto:700,
+      confirmButtonColor:'#ef9c83',
+      confirmButtonText:
+        '<i class="fa fa-thumbs-up"></i>  תודה ',
+      showCloseButton: true,
+
+    })
+  }
+
   //טוען את האירועים מבסיס הנתונים
   componentDidMount() {
     if (this.props.groupId) {
       fetch(`http://localhost:3003/calendar/${this.props.groupId}`)
       .then(res => res.json())
-      .then(data => this.setState({CalendarEvent: data}))
+      .then(data => {
+        data.forEach(event => {
+          this.AddEvent(event.EventId, event.EventName, event.EventDate.slice(0,10));
+        });
+        this.getTodaysEvents();
+      })
       .catch(err => console.log(err))
     } else swal.fire({
       icon: 'info',
@@ -124,19 +155,19 @@ class Calendar extends Component {
       this.setState({[`${event.target.id}`]: event.target.value})
    }
 
-   //מוסיף אירוע ומעדכן אותו בלוח השנה
-  AddEventHandle = (event) => {
-    
-    console.log('add event')
-    
+   AddEvent = (id, title, start) => {
     this.setState(prevState => ({
       CalendarEvent: [...prevState.CalendarEvent, {
-        id:Date.now(),
-        title: this.state.eventName,
-        start: this.state.fromDate
+        id: id,
+        title: title,
+        start: start
       }]
     }))
+   }
 
+   //מוסיף אירוע ומעדכן אותו בלוח השנה
+  AddEventHandle = (event) => {
+    this.AddEvent(Date.now(), this.state.eventName, this.state.fromDate);
     fetch(`http://localhost:3003/calendar/addEvent`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
