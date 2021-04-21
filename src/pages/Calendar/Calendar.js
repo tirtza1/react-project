@@ -8,12 +8,16 @@ import { Modal, ModalHeader, ModalBody, ModalFooter } from 'reactstrap'
 import bootstrapPlugin from '@fullcalendar/bootstrap'
 import 'bootstrap/dist/css/bootstrap.css'
 import '@fortawesome/fontawesome-free/css/all.css'
+import swal from 'sweetalert2'
+import { withRouter } from 'react-router-dom'
 
-export default class Calendar extends Component {
+class Calendar extends Component {
  
   calendarComponentRef = React.createRef();
 
-    state = {
+  constructor(props) {
+    super(props);
+    this.state = {
       modal: false,
       calendarWeekends: true,
       eventName:'',
@@ -22,8 +26,23 @@ export default class Calendar extends Component {
       CalendarEvent:[],
       goToPast:''
     };
+  }
 
-  
+  //טוען את האירועים מבסיס הנתונים
+  componentDidMount() {
+    if (this.props.groupId) {
+      fetch(`http://localhost:3003/calendar/${this.props.groupId}`)
+      .then(res => res.json())
+      .then(data => this.setState({CalendarEvent: data}))
+      .catch(err => console.log(err))
+    } else swal.fire({
+      icon: 'info',
+      title: 'יש להתחבר על מנת לראות את לוח השנה',
+      confirmButtonText: 'בסדר',
+      confirmButtonColor: '#EF9C83'
+    }).then((clicked) => {if (clicked) { this.props.history.push('/login')}})
+  }
+
   onDatePastChange = (input) => (e) => {
     e.preventDefault();
     this.setState({ [input]: e.target.value });
@@ -37,9 +56,9 @@ export default class Calendar extends Component {
   handleDateClick = (eventClickInfo) => {
     this.toggle();
     this.setState(eventClickInfo.event);
-    const newdate=( eventClickInfo.date.getFullYear()+"-"+((eventClickInfo.date.getMonth() > 8) ? (eventClickInfo.date.getMonth() + 1) : ('0' + (eventClickInfo.date.getMonth() + 1))) +"-"+ ((eventClickInfo.date.getDate() > 9) ? eventClickInfo.date.getDate() : ('0' + eventClickInfo.date.getDate())));
-    this.state.fromDate=newdate;
-    document.getElementById('fromDate').placeholder=newdate;
+    const newdate = (eventClickInfo.date.getFullYear() + "-" + ((eventClickInfo.date.getMonth() > 8) ? (eventClickInfo.date.getMonth() + 1) : ('0' + (eventClickInfo.date.getMonth() + 1))) + "-" + ((eventClickInfo.date.getDate() > 9) ? eventClickInfo.date.getDate() : ('0' + eventClickInfo.date.getDate())));
+    this.state.fromDate = newdate;
+    document.getElementById('fromDate').placeholder = newdate;
   };
 
   //מוחק אירוע כשלוחצים עליו
@@ -56,6 +75,17 @@ export default class Calendar extends Component {
       }
       this.setState({CalendarEvent: updatedEvents});
     }
+    fetch(`http://localhost:3003/calendar/removeEvent`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        eventId: eventClickInfo.event.id,
+        groupId: this.props.groupId
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
   }
  
   //מעביר את המיקום של האירוע כשגוררים אותו
@@ -75,6 +105,18 @@ export default class Calendar extends Component {
     events[index] = eventToChange;
     //עדכון של המערך
     this.setState({CalendarEvent: events});
+    
+    fetch(`http://localhost:3003/calendar/updateEvent`, {
+      method: 'POST',
+      headers: {'Content-Type': 'application/json'},
+      body: JSON.stringify({
+        date: this.state.fromDate,
+        groupId: this.props.groupId
+      })
+    })
+    .then(res => res.json())
+    .then(data => console.log(data))
+    .catch(err => console.log(err))
   }
 
    //כאשר משנים את האינפוט
@@ -95,18 +137,17 @@ export default class Calendar extends Component {
       }]
     }))
 
-    fetch(`http://localhost:3003/addEvent`, {
-      
+    fetch(`http://localhost:3003/calendar/addEvent`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        name:this.state.eventName,
-        group:1,
-        date:this.state.fromDate
+        name: this.state.eventName,
+        group: this.props.groupId,
+        date: this.state.fromDate
       })
     })
     .then(response => response.json())
-    .then(data => console.log(data))
+    .then(data => console.log(data.message))
     .catch(err => console.log(err))
     this.toggle();
     this.setState({eventName:''})
@@ -125,7 +166,6 @@ export default class Calendar extends Component {
     let calendarApi = this.calendarComponentRef.current.getApi();
     calendarApi.gotoDate(this.state.goToPast); // call a method on the Calendar object
   };
-
  
   render() { 
 
@@ -217,3 +257,5 @@ export default class Calendar extends Component {
     )
   }
 }
+
+export default withRouter(Calendar);
