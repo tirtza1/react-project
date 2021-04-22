@@ -17,10 +17,10 @@ class Home extends React.Component{
                 <div id="home">
                     <img src={people} alt={"people"} id="people"/>
                     <p id="people2">
-                        <h1 style={{fontSize:"70px"}}>family </h1>
-                        <h3 style={{fontSize:"40px"}}>is not an important thing.<br/>
+                        <h1 style={{fontSize:"80px"}}>family </h1>
+                        <h3 style={{fontSize:"55px"}}>is not an important thing.<br/>
                             It's everything....</h3><br/>
-                        <h5 style={{fontSize:"15px"}}>FamiLink- Your family experience</h5>
+                        <h5 style={{fontSize:"25px"}}>FamiLink- Your family experience</h5>
                     </p>
                     <Link to="/login">
                             <button id="bb" className="button" ><span>התחל</span></button>
@@ -35,10 +35,10 @@ class Home extends React.Component{
                      <h id="ilan">אילן</h>
                      <h id="yuhasin">יוחסין</h>
                      <p id="TreeText" style={{direction:"rtl"}}>בניית אילן יוחסין<br/>
-                                    ... בקלות ובמהירות<br/>
+                                    בקלות ובמהירות...<br/>
                                     תוכלו להוסיף כל קרוב משפחה<br/>
-                                    שתרצו לאילן שתבנו ולהזמין אותו<br/>
-                                     להשתתף באתר ולהנות מהאילן משפחתי 
+                                    שתרצו לאילן שלכם ולהזמין אותו<br/>
+                                     להשתתף לקבוצה ולהנות מהאתר משפחתי 
                      </p>
                      <Link to="/login">
                             <button id="b1" className="button" ><span>התחל</span></button>
@@ -48,11 +48,11 @@ class Home extends React.Component{
                     <img src={Calendar} alt={"Calendar"} id="CalendarPic"/>
                      <h id="luch">לוח</h>
                      <h id="event">אירועים</h>
-                     <p id="CalendarText">לוח אירועים<br/>
+                     <p id="CalendarText">לוח שנה<br/>
                                       בו תוכל להוסיף <br/>  
                                       כל ארוע משפחתי<br/>
-                                     שרק תחפוץ והאתר<br/>
-                             יתזכר לך על אירועי היום         
+                                          ובכל יום תקבל  <br/>
+                             תזכורת על אירועי היום         
                      </p>
                       <Link to="/login">
                         <button id="b2" className="button"><span>הוסף אירוע</span></button>
@@ -62,11 +62,10 @@ class Home extends React.Component{
                 <img src={Gallery} alt={"Gallery"} id="GalleryPic"/>
                      <h id="gal">גל</h>
                      <h id="ery">ריה</h>
-                     <p id="GalleryText">ניתן להוסיף<br/>
-                                        תמונות משפחתיות<br/>
-                            מכל מיני אירועים ולפרסם אותן<br/>
-                                ועל ידי כך תוכלו להתעדכן <br/> 
-                                ...בכל הנעשה במשפחתכן המורחבת     
+                     <p id="GalleryText">כאן תוכל להעלות<br/>
+                                 תמונות לגלריה המשפחתית<br/>
+                                  מכל הזמנים, ובכך לשתף<br/>
+                            את המשפחה בחוויות ולהתעדכן<br/>
                      </p>
                      <Link to="/login">
                          <button id="b3" className="button"><span>הוסף תמונה</span></button>
