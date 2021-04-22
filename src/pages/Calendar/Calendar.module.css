@@ -63,13 +63,13 @@
 }
 .label{
     position: absolute;
-    right: 720px;
+    right: 620px;
     font-size: 20px;
-   margin-top: 13px;
+     margin-top: 13px;
 }
 .InputDatePast{
     position: absolute;
-    left: 590px;
+    left: 550px;
     width: 15%;
     padding: 9px 20px;
     margin: 8px 0;

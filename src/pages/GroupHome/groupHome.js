@@ -46,8 +46,8 @@ class GroupHome extends React.Component{
         }).then((clicked) => {
             if (clicked.isConfirmed) {
                 const email_to = clicked.value;
-                const subject = this.state.GroupName + 'הוזמנת להצטרף לקבוצה ';
-                const message = 'שלום וברכה' + '\n' + 'הנך מוזמן להצטרף לקבוצה משפחתית ב' + 'Family Link' + ' הכנס לקישור הבא: ' + 'http://localhost:3000/Register' + ' צור משתמש עם קוד הקבוצה הזה: ' + this.props.groupId;
+                const subject = this.state.GroupName + ' הוזמנת להצטרף לקבוצה ';
+                const message = 'שלום וברכה' + '\n' + 'הנך מוזמן להצטרף לקבוצה משפחתית ב' + 'Family Link'+ '\n' + ' הכנס לקישור הבא: ' + 'http://localhost:3000/Register'+ '\n' + ' צור משתמש עם קוד הקבוצה הזה: ' + this.props.groupId;
                 fetch('http://localhost:3003/sendInvetation', {
                     method: 'POST',
                     headers: {'Content-Type': 'application/json'},
@@ -59,7 +59,14 @@ class GroupHome extends React.Component{
                 })
                 .then(res => res.json())
                 .then(data => console.log(data))
-                .catch(err => console.log(err))
+                .catch(err => console.log(err)).then(
+                    Swal.fire({
+                        icon: 'success',
+                        title: '!קוד קבוצה נשלח בהצלחה',
+                        confirmButtonText: 'תודה',
+                        confirmButtonColor: '#EF9C83'
+                      })
+                  )
             }
           })
     }

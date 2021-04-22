@@ -1,42 +1,45 @@
 .NavigationItem {
-
+  padding: 20px;
+  margin: 10px 0;
   box-sizing: border-box;
   display: block;
- width: 100%;
+  width: 100%;
+  
 }
 
 .NavigationItem a {
-  color: #d48c8c;
+  color:white;
   text-decoration: none;
   width: 100%;
+  
   box-sizing: border-box;
   display: block;
-
+  padding: 14px 16px;
 }
-
+.NavigationItem:hover {
+  cursor: pointer;
+}
 
 @media (min-width: 500px) {
   .NavigationItem {
-    margin-top: 17px;
-      display: flex;
-      height: 100%;
-      width: auto;
-      align-items: center;
+    margin: 0;
+    width: auto;
+    display: flex;
+    height: 100%;
+    align-items: center;
+    position: relative;
      
   }
 } 
-.NavigationItem a {
-      color: white;
-      height: 100%;
-      
+  .NavigationItem a:hover,
+  .NavigationItem a:active,
+  .NavigationItem a.active { 
+   
+    width: 100%;
+    background-color: white;
+    color: #d48c8c;
+    text-decoration: none;
+   border-radius: 30px;
+    text-align: center;
   }
-.NavigationItem a:hover{
-  background-color: white;
-  background-size: 300px 100px;
-  color: #d48c8c;
- text-decoration: none;
- border-radius: 20px;
- padding: 20px;
- text-align: center;
-  cursor: pointer;
-}
+

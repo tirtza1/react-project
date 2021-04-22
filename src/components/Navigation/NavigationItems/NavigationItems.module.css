@@ -1,5 +1,5 @@
 .NavigationItems {
-  padding-bottom: 35px;
+  position: absolute;
   list-style: none;
   display: flex;
   flex-flow: column;
@@ -9,7 +9,7 @@
   font-family:'Segoe UI Semibold'; 
   margin-left: 470px;
   font-weight: bold;
-  margin-top: 80px;
+  
   z-index: 1;
 }
 
