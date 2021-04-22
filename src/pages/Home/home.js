@@ -20,11 +20,14 @@ class Home extends React.Component{
                         <h1 style={{fontSize:"70px"}}>family </h1>
                         <h3 style={{fontSize:"40px"}}>is not an important thing.<br/>
                             It's everything....</h3><br/>
-                        <h5 style={{fontSize:"15px"}}>Unlock Marketing Secrets That Work</h5>
+                        <h5 style={{fontSize:"15px"}}>FamiLink- Your family experience</h5>
                     </p>
+                    <Link to="/login">
+                            <button id="bb" className="button" ><span>התחל</span></button>
+                     </Link>
                 </div>
                 <div id="linkme">
-                        <h style={{fontSize:"50px"}}>LINK ME</h><br/>
+                        <h style={{fontSize:"50px"}}>FamiLink</h><br/>
                         <h style={{fontSize:"25px"}}>ברוכים הבאים לאתר המשפחתי</h>
                  </div>
                 <div id="tree">
@@ -37,7 +40,9 @@ class Home extends React.Component{
                                     שתרצו לאילן שתבנו ולהזמין אותו<br/>
                                      להשתתף באתר ולהנות מהאילן משפחתי 
                      </p>
-                     <button id="b1" btnType="Success" clicked={this.handleClick}>התחל</button>
+                     <Link to="/login">
+                            <button id="b1" className="button" ><span>התחל</span></button>
+                     </Link>
                 </div>
                 <div id="calander">
                     <img src={Calendar} alt={"Calendar"} id="CalendarPic"/>
@@ -47,10 +52,11 @@ class Home extends React.Component{
                                       בו תוכל להוסיף <br/>  
                                       כל ארוע משפחתי<br/>
                                      שרק תחפוץ והאתר<br/>
-                             יתזכר לך על אירועי היום
-                                    
+                             יתזכר לך על אירועי היום         
                      </p>
-                     <button id="b2">הוסף אירוע</button>
+                      <Link to="/login">
+                        <button id="b2" className="button"><span>הוסף אירוע</span></button>
+                      </Link>
                 </div>
                 <div id="Gallery">
                 <img src={Gallery} alt={"Gallery"} id="GalleryPic"/>
@@ -62,16 +68,20 @@ class Home extends React.Component{
                                 ועל ידי כך תוכלו להתעדכן <br/> 
                                 ...בכל הנעשה במשפחתכן המורחבת     
                      </p>
-                     <button id="b3">הוסף תמונה</button>
+                     <Link to="/login">
+                         <button id="b3" className="button"><span>הוסף תמונה</span></button>
+                     </Link>
                 </div>
-                {/* <div id="pink">
+                <div id="pink">
                      <img src={pink} alt={"pink"} id="pinkPic"/>
-                     <p id="pinkP">הצטרפו אלינו לחויה משפחתית <br/>שטרם הכרתם</p>
-                     <button id="b4">הירשם</button>
-                </div> */}
+                     <p id="pinkP">הצטרפו אלינו לחויה דיגיטלית  <br/> משפחתית שטרם הכרתם</p>
+                     <Link to="/register">
+                         <button id="b4">הירשם</button>
+                     </Link>
+                </div> 
                 <div id="black">
                     <p id="blackP">רשומים? נהדר!<br/>
-                       הכניסו פרטים למעבר<br/>
+                       התחברו לכניסה <br/>
                         לאיזור האישי שלכם</p>
                     <Link to="/login">
                         <button id="b5">התחבר</button>
@@ -81,7 +91,7 @@ class Home extends React.Component{
                     <img src={mail} alt={"mail"} id="mail"/>
                     <label id="l2">info@familink.com</label>
                 </div>
-                <p id="end" >&copy; 2021 by TirTza Barzilay & Hani Abu</p>
+                <p id="end" >&copy; 2021 by Tirtza Barzilay & Hani Abu</p>
                 <br/>
                 <br/>
 

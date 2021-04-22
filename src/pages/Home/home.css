@@ -1,8 +1,48 @@
+.button{
+  position: absolute;
+  z-index: 1;
+  text-align: center;
+  text-decoration: none;
+  display: inline-block;
+  font-size: 18px;
+  margin: 4px 2px;
+  cursor: pointer;
+  border-radius: 30px;
+  padding: 8px 25px;
+
+}
+.button span {
+  cursor: pointer;
+  display: inline-block;
+  position: relative;
+  transition: 0.5s;
+}
+
+.button span:after {
+  content: '\00bb';
+  position: absolute;
+  opacity: 0;
+  top: 0;
+  right: -20px;
+  transition: 0.5s;
+}
+
+.button:hover span {
+  padding-right: 25px;
+}
+
+.button:hover span:after {
+  opacity: 1;
+  right: 0;
+}
+
+
 #home{
   position: relative;
   width: 100%;
   height: 400px;
- 
+  top:0px;
+  z-index: 1;
   background-color:rgb(239, 156, 131);
 }
 #people{
@@ -30,24 +70,34 @@
   z-index: 1;
   font-family:bradley hand ITC;
   font-weight: bold;
+  text-shadow: 2px 2px 5px #000000c7;
+}
+#bb{
+  left: 550px;
+  top: 290px;
+  background-color:none;
+  border: 2px solid black;
+  color: black;
 }
 #linkme{
   color: black;
   position: absolute;
-  top:510px;
-  left: 540px;
-  /* text-align:justify;"#EF9C83" */
+  top:660px;
+  left: 35%;
+   text-align:center;
   z-index: 1;
   font-family:Segoe UI;
   font-weight: bold;
+  text-shadow: 2px 2px 5px #000000c7;
 }
 #tree{
   position: absolute;
   width: 770px;
   height: 340px;
   left: 150px;
-  top: 630px;
+  top: 830px;
   background-color:#a7d1d4 ;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2), 0 7px 30px 0 rgba(0, 0, 0, 0.19);
 }
 #BigTree{
   width: 280px;
@@ -56,19 +106,18 @@
   bottom: 150px; 
   left: 85px;
   z-index: 1; 
-  /* transform: rotateY(150deg); */
-   
 }
 #TreeText{
   color: black;
   position: absolute;
   z-index: 1;
-  font-size: 17px;
+  font-size: 19px;
   font-family:Segoe UI;
   font-weight: bold;
-  left: 450px;
-  top: 170px;
-  direction: rtl !important;
+  left: 390px;
+  top: 135px;
+  /* direction: rtl !important; */
+  text-align: right;
 }
 #ilan{
   color: black;
@@ -91,41 +140,35 @@
   top: 40px;
 }
 #b1{
-  position: absolute;
-  z-index: 1;
+  
   left: 800px;
   top: 200px;
   background-color: #a7d1d4;
   border: 2px solid #a7d1d4;
   color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 30px;
-  padding: 8px 25px;
 } 
 #b1:hover{
   background-color: white;
   color:#a7d1d4;
   font-weight: bold;
+  cursor: pointer;
+  overflow: hidden;
 }
 #calander{
   position: absolute;
   width: 770px;
   height: 340px;
   right: 150px;
-  top: 1020px;
+  top: 1220px;
   background-color:#ef9c83 ; 
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2), 0 7px 30px 0 rgba(0, 0, 0, 0.19);
 }
 #CalendarPic{
   width: 400px;
   height: 350px;
   position: absolute;
   top: 65px; 
-  right:150px;
+  right:120px;
   z-index: 1; 
 }
 #luch{
@@ -152,29 +195,20 @@
   color: #ef9c83;
   position: absolute;
   z-index: 1;
-  font-size: 17px;
+  font-size: 19px;
   font-family:Segoe UI;
   font-weight: bold;
-  left: -190px;
-  top: 150px;
-  direction: ltr;
+  left: -220px;
+  top: 135px;
+  /* direction: ltr; */
+  text-align: right;
 }
 #b2{
-  position: absolute;
-  z-index: 1;
-  right: 600px;
+  left: 60px ;
   top: 190px;
   background-color:white;
   border: 2px solid white;
   color: #ef9c83;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 30px;
-  padding: 8px 25px;
 } 
 #b2:hover{
   background-color: #ef9c83;
@@ -186,8 +220,9 @@
   width: 770px;
   height: 340px;
   left: 150px;
-  top: 1480px;
+  top: 1680px;
   background-color:#aaaeba ;
+  box-shadow: 0 5px 30px 0 rgba(0, 0, 0, 0.2), 0 7px 30px 0 rgba(0, 0, 0, 0.19);
 }
 #GalleryPic{
   width: 380px;
@@ -201,12 +236,13 @@
   color: black;
   position: absolute;
   z-index: 1;
-  font-size: 17px;
+  font-size: 19px;
   font-family:Segoe UI;
   font-weight: bold;
-  left: 450px;
-  top: 170px;
-  direction: ltr;
+  left: 420px;
+  top: 135px;
+  /* direction: ltr; */
+  text-align: right;
 }
 #gal{
   color: black;
@@ -229,21 +265,11 @@
   top: 40px;
 }
 #b3{
-  position: absolute;
-  z-index: 1;
   left: 800px;
   top: 200px;
   background-color: #aaaeba;
   border: 2px solid #aaaeba;
   color: white;
-  text-align: center;
-  text-decoration: none;
-  display: inline-block;
-  font-size: 18px;
-  margin: 4px 2px;
-  cursor: pointer;
-  border-radius: 30px;
-  padding: 8px 25px;
 } 
 #b3:hover{
   background-color: white;
@@ -252,18 +278,18 @@
 }
 #pink{
   position: absolute;
-  width: 582px;
-  height: 250px;
+  width: 582px !important;
+  height: 250px !important;
   right:50px;
-  top: 1890px;
-  background-color: #F4C0AF;
+  top: 2090px !important;
+  background-color: #F4C0AF !important;
 }
 #pinkPic{
   position: absolute;
-  width: 160px;
-  height: 130px;
-  right:120px;
-  top: 90px;
+  width: 140px;
+  height: 110px;
+  right:100px;
+  top: 60px;
 }
 #pinkP{
   color: black;
@@ -272,17 +298,17 @@
   font-size: 15px;
   font-family:Segoe UI;
   font-weight: bold;
-  right:300px;
-  top: 120px;
+  right:220px;
+  top: 80px;
   direction: rtl !important;
 }
 #b4{
   position: absolute;
   z-index: 1;
-  right:300px;
-  top: 170px;
+  right:250px;
+  top: 130px;
   background-color: #F4C0AF;
-  border: 1px solid black;
+  border: 2px solid black;
   color: black;
   text-align: center;
   text-decoration: #F4C0AF;
@@ -301,8 +327,8 @@
   width: 582px;
   height: 250px;
   left: 50px;
-  top: 1890px;
-  background-color: rgba(0, 0, 0, 0.781);
+  top: 2090px;
+  background-color: #000000c7;
 }
 #blackP{
   color: white;
@@ -311,23 +337,24 @@
   font-size: 13px;
   font-family:Segoe UI;
   font-weight: bold;
-  left:240px;
-  top: 40px;
+  left:220px; 
+  top: 60px;
+  text-align: center;
   direction: rtl !important;
 }
 #b5{
   position: absolute;
   z-index: 1;
-  left:270px;
-  top: 150px;
-  background-color: #F4C0AF;
-  border: 1px solid #F4C0AF;
-  color: black;
+  left:240px;
+  top: 130px;
+  background-color:rgba(0, 0, 0, 0.315) !important;
+  border: 2px solid #F4C0AF;
+  color: #F4C0AF;
   text-align: center;
   text-decoration: #F4C0AF;
   display: inline-block;
   font-size: 11px;
-  margin: 4px 2px;
+  margin: 4px  2px;
   cursor: pointer;
   border-radius: 30px;
   padding: 8px 25px;
@@ -348,7 +375,7 @@
   color: white;
   position: absolute;
   z-index: 1;
-  left:160px;
+  left:164px;
   top: 205px;
   font-size: 11px;
 }
@@ -370,7 +397,7 @@
 }
 #end{
   position: absolute;
-  top: 2170px;
+  top: 2370px;
   font-size: 15px;
   text-align: center;
   left: 500px;
