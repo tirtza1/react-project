@@ -4,29 +4,37 @@ import './groupHome.css'
 import image from '../../assets/images/home-image.png'
 import tree from '../../assets/images/home-tree.png'
 import calendar from '../../assets/images/home-calendar.png'
-import { Link } from 'react-router-dom'
+import { Link, withRouter } from 'react-router-dom'
 import one from '../../assets/images/1.PNG'
 import two from '../../assets/images/2.PNG'
 import three from '../../assets/images/3.PNG'
 import Swal from 'sweetalert2'
 class GroupHome extends React.Component{
 
-    constructor() {
-        super();
+    constructor(props) {
+        super(props);
         this.state = {
             GroupName: null
         }
+        this.handleClick = this.handleClick.bind(this);
     }
  
     componentDidMount() {
-        fetch(`http://localhost:3003/group/${window.location.href.split('/').pop()}`)
-        .then(res => res.json())
-        .then(data => this.setState({GroupName: data[0].GroupName}))
-        .catch(err => console.log(err))
+        if (this.props.groupId) {
+            fetch(`http://localhost:3003/group/${window.location.href.split('/').pop()}`)
+            .then(res => res.json())
+            .then(data => this.setState({GroupName: data[0].GroupName}))
+            .catch(err => console.log(err))
+        } else Swal.fire({
+            icon: 'info',
+            title: 'יש להתחבר על מנת לראות את עמוד הבית של הקבוצה',
+            confirmButtonText: 'בסדר',
+            confirmButtonColor: '#EF9C83'
+          }).then((clicked) => {if (clicked) { this.props.history.push('/login')}})
+        
     }
 
-    handleClick=()=>
-    {
+    handleClick=()=> {
         Swal.fire({
             title: 'הזן כתובת מייל להצטרפות לקבוצה ',
             input: 'email',
@@ -35,10 +43,27 @@ class GroupHome extends React.Component{
             showCancelButton: true,
             cancelButtonText: 'ביטול',
             reverseButtons: true
-        }
-            
-        )
+        }).then((clicked) => {
+            if (clicked.isConfirmed) {
+                const email_to = clicked.value;
+                const subject = this.state.GroupName + 'הוזמנת להצטרף לקבוצה ';
+                const message = 'שלום וברכה' + '\n' + 'הנך מוזמן להצטרף לקבוצה משפחתית ב' + 'Family Link' + ' הכנס לקישור הבא: ' + 'http://localhost:3000/Register' + ' צור משתמש עם קוד הקבוצה הזה: ' + this.props.groupId;
+                fetch('http://localhost:3003/sendInvetation', {
+                    method: 'POST',
+                    headers: {'Content-Type': 'application/json'},
+                    body: JSON.stringify({
+                        email_to: email_to,
+                        subject: subject,
+                        message: message
+                    })
+                })
+                .then(res => res.json())
+                .then(data => console.log(data))
+                .catch(err => console.log(err))
+            }
+          })
     }
+
     render() {
         return(
             <div>
@@ -93,4 +118,4 @@ class GroupHome extends React.Component{
     }
 }
 
-export default GroupHome
+export default withRouter(GroupHome);
