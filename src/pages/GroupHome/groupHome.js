@@ -62,6 +62,7 @@ class GroupHome extends React.Component{
                 .catch(err => console.log(err)).then(
                     Swal.fire({
                         icon: 'success',
+                        iconColor:'#EF9C83',
                         title: '!קוד קבוצה נשלח בהצלחה',
                         confirmButtonText: 'תודה',
                         confirmButtonColor: '#EF9C83'

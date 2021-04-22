@@ -51,10 +51,9 @@ class Home extends React.Component{
                      <h id="luch">לוח</h>
                      <h id="event">אירועים</h>
                      <p id="CalendarText">לוח שנה<br/>
-                                      בו תוכל להוסיף <br/>  
+                                      בו תוכלו להוסיף <br/>  
                                       כל ארוע משפחתי<br/>
-                                          ובכל יום תקבל  <br/>
-                             תזכורת על אירועי היום         
+                       ולקבל תזכורת על אירועי היום  <br/>
                      </p>
                       <Link to="/login">
                         <button id="b2" className="button"><span>הוסף אירוע</span></button>
@@ -64,10 +63,10 @@ class Home extends React.Component{
                 <img src={Gallery} alt={"Gallery"} id="GalleryPic"/>
                      <h id="gal">גל</h>
                      <h id="ery">ריה</h>
-                     <p id="GalleryText">כאן תוכל להעלות<br/>
+                     <p id="GalleryText">כאן תוכלו להעלות<br/>
                                  תמונות לגלריה המשפחתית<br/>
                                   מכל הזמנים, ובכך לשתף<br/>
-                            את המשפחה בחוויות ולהתעדכן<br/>
+                            ...את המשפחה בחוויות ולהתעדכן<br/>
                      </p>
                      <Link to="/login">
                          <button id="b3" className="button"><span>הוסף תמונה</span></button>
@@ -76,14 +75,15 @@ class Home extends React.Component{
                 <div id="pink">
                      <img src={pink} alt={"pink"} id="pinkPic"/>
                      <p id="pinkP">הצטרפו אלינו לחויה דיגיטלית  <br/> משפחתית שטרם הכרתם</p>
+                     <br/>
                      <Link to="/register">
                          <button id="b4">הירשם</button>
                      </Link>
                 </div> 
                 <div id="black">
                     <p id="blackP">רשומים? נהדר!<br/>
-                       התחברו לכניסה <br/>
-                        לאיזור האישי שלכם</p>
+                       התחברו לאתר <br/>
+                        לקבוצה המשפחתית שלכם</p>
                     <Link to="/login">
                         <button id="b5">התחבר</button>
                     </Link>
