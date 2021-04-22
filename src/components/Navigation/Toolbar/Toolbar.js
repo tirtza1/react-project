@@ -9,7 +9,6 @@ const toolbar=(props)=>(
         
         <nav className={classes.DesktopOnly}>
             <NavigationItems 
-                isAuthenticated={props.isAuth} 
                 isSignIn={props.isSignIn}
                 groupId={props.groupId}
             />
