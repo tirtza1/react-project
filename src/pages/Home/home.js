@@ -8,12 +8,14 @@ import Gallery from '../../assets/images/Gallery.png'
 import pink from '../../assets/images/pink.PNG'
 import phone from '../../assets/images/phone.png'
 import mail from '../../assets/images/mail.png'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 class Home extends React.Component{
 
     render() {
         return(
             <div>
+               
                 <div id="home">
                     <img src={people} alt={"people"} id="people"/>
                     <p id="people2">

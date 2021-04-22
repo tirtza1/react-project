@@ -5,31 +5,45 @@ import swal from 'sweetalert2'
 import classes from './Pedigree.module.css'
 import './node.css'
 import { useHistory } from 'react-router-dom'
-import data from './data'
 
 /*
 Things to fix:
 - in the photos take just the ones that don't start with tree
 - put the right photo in the node
 - check why it dosent update
+- make all of the buttons in the right color with the right text
+- force the person to choose a name and gender
 */
 
 function FamilyTree(props) {
 
-    const initialTree = {
-        id: 1, 
-        name: 'טוען נתונים', 
-        attributes: {
-            gender: 'male'
-        }
-    };
-    const [treeData, setTreeData] = React.useState(initialTree);
-    const [group, setGroup] = React.useState(3);
+    const [treeData, setTreeData] = React.useState(null);
     const history = useHistory();
 
+    //updates the tree
+    const updateTree = () => {
+        console.log('updating tree');
+        if (treeData !== null && treeData !== 'undefined') {
+            fetch(`http://localhost:3003/pedigree`, {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                tree: JSON.stringify(treeData),
+                group: props.groupId
+            })
+            })
+            .then(response => response.json())
+            .then(data => console.log('the tree was updated'))
+            .catch(err => console.log('error updating tree'))
+            history.push('/')
+            history.push('/pedigree')
+        }
+    }
+
+    //טוען את אילן היוחסין מבסיס הנתונים
     React.useEffect(() => {
-        if (treeData === initialTree) {
-            fetch(`http://localhost:3003/pedigree/${group}`)
+        if (props.groupId) {
+            fetch(`http://localhost:3003/pedigree/${props.groupId}`)
             .then(data => data.json())
             .then(tree => {
                 if (tree.length === 0) {
@@ -53,31 +67,24 @@ function FamilyTree(props) {
                         }
                     })
                 } else {
-                    console.log(tree[0].tree);
-                    setTreeData(JSON.parse(tree[0].tree));
+                    const data = JSON.parse(tree[0].tree);
+                    console.log('get tree data at useEffect: ', data);
+                    setTreeData(data);
                 }
             })
-            .catch(err => console.log(err))
-        }
-        
-    })
+            .catch(err => console.log('get tree data err at useEffect: ', err))
+        } else swal.fire({
+            icon: 'info',
+            title: 'יש להתחבר על מנת לראות את אילן היוחסין',
+            confirmButtonText: 'להתחברות',
+            confirmButtonColor: '#EF9C83'
+          }).then((clicked) => {if (clicked) { history.push('/login')}})
+    }, [])
 
-    React.useEffect(() => { 
-        fetch(`http://localhost:3003/pedigree`, {
-            method: 'POST',
-            headers: {'Content-Type': 'application/json'},
-            body: JSON.stringify({
-                tree: JSON.stringify(treeData),
-                group: group
-            })
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-        history.push('/')
-        history.push('/pedigree')
-    }, [treeData])
+    //שולח את האילן לבסיס הנתונים כל פעם שמתבצע בו שינוי
+    React.useEffect(updateTree, [treeData])
 
+    //יצירת האיבר הראשון באילן היוחסין
     const createFirstNode = (name, gender, birth, death, email) => {
         const node = {
             id: Date.now(),
@@ -95,12 +102,12 @@ function FamilyTree(props) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 tree: JSON.stringify(node),
-                group: group
+                group: props.groupId
             })
         })
         .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
+        .then(data => console.log('create first node res: ', data))
+        .catch(err => console.log('create first node err: ', err))
         setTreeData(node);
     }
 
@@ -136,10 +143,14 @@ function FamilyTree(props) {
         }
     };
 
+    const addParent = (node, data, id) => {
+
+    }
+
     const addDescendant = (node, data, id) => {
         if (data.id === id || data.attributes.spouse.id === id) {
             data.children.push(node);
-            console.log(data);
+            console.log('add descendant data: ', data);
             return data;
         }
         
@@ -149,6 +160,7 @@ function FamilyTree(props) {
         for (let i = 0; i < data.children.length; i++) {
             if (data.children[i].id === id || data.children[i].attributes.spouse.id === id) {
                 data.children[i].children.push(node);
+                console.log('add descendant data: ', data);
                 return data;
             } else {
                 addDescendant(node, data.children[i], id);
@@ -158,7 +170,7 @@ function FamilyTree(props) {
 
     const addSpouse = (node, data, id) => {
         if (data.id === id) {
-            if (data.attributes.spouse.length) {
+            if (data.attributes.spouse && data.attributes.spouse.length) {
                 swal.fire({
                     icon: 'error',
                     text: 'אין אפשרות להוסיף',
@@ -207,7 +219,7 @@ function FamilyTree(props) {
             return data;
 
         for (let i = 0; i < data.children.length; i++) {
-            console.log(data.children[i].id, id);
+            console.log('add sibling data: ', data.children[i].id, id);
             if (data.children[i].id === id || (data.children[i].attributes.spouse && data.children[i].attributes.spouse.id === id)) {
                 data.children.push(node);
                 return data;
@@ -233,27 +245,20 @@ function FamilyTree(props) {
 
         switch(type) {
             case 'parent':
-                if (id === treeData.id || id === treeData.attributes.spouse.id) {
-                    node['children'] = treeData;
-                    setTreeData(node);
-                } else {
-                    swal.fire({
-                        icon: 'error',
-                        text: 'אין אפשרות להוסיף',
-                        confirmButtonText: 'אישור',
-                        confirmButtonColor: '#ef9c83'
-                    });
-                    return;
-                }
+                setTreeData(addParent(node, treeData, id));
+                updateTree();
                 break;
             case 'descendant':
                 setTreeData(addDescendant(node, treeData, id));
+                updateTree();
                 break;
             case 'spouse':
                 setTreeData(addSpouse(node, treeData, id));
+                updateTree();
                 break;
             case 'sibling':
                 setTreeData(addSibling(node, treeData, id));
+                updateTree();
                 break;
         }
         
@@ -280,8 +285,8 @@ function FamilyTree(props) {
                 method: 'POST',
                 body: formData
                 })
-                .then(data => console.log(data))
-                .catch(err => console.log(err))
+                .then(data => console.log('picture post res: ', data))
+                .catch(err => console.log('picture post err: ', err))
 
                 //add the picture to the pictures table
                 fetch('http://localhost:3003/addpicture', {
@@ -289,12 +294,12 @@ function FamilyTree(props) {
                     headers: { 'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         name: name,
-                        group: group
+                        group: props.groupId
                     })
                 })
                 .then(response => response.text())
-                .then(data => console.log(data))
-                .catch(err => console.log(err))
+                .then(data => console.log('add picture res: ', data))
+                .catch(err => console.log('add picture err: ', err))
             }
         })
 
@@ -315,7 +320,7 @@ function FamilyTree(props) {
             <label className={classes.LabelPedigree}>:מגדר</label>
             <br/>
             {
-                nodeDatum.attributes.gender === 'male' ?
+                nodeDatum.attributes.gender === 'זכר' ?
                 <select id='gender' className={classes.select}>
                     <option selected>זכר</option>
                     <option>נקבה</option>
@@ -418,7 +423,6 @@ function FamilyTree(props) {
 
         //shows a module with action to choose
         swal.fire({
-            
             title: 'בחר את הפעולה שברצונך לבצע',
             input: 'select',
             inputOptions: {
@@ -453,6 +457,7 @@ function FamilyTree(props) {
                         const death = document.getElementById('death').value;
                         const email = document.getElementById('email').value;
                         setTreeData(editNode(nodeDatum.id, name, gender, birth, death, email, treeData));
+                        updateTree();
                     }
                 })
             }
@@ -480,8 +485,8 @@ function FamilyTree(props) {
                         method: 'POST',
                         body: formData
                         })
-                        .then(data => console.log(data))
-                        .catch(err => console.log(err))
+                        .then(data => console.log('picture post response: ', data))
+                        .catch(err => console.log('picture post error: ', err))
 
                         //add the picture to the pictures table
                         fetch('http://localhost:3003/addpicture', {
@@ -489,12 +494,12 @@ function FamilyTree(props) {
                             headers: { 'Content-Type': 'application/json'},
                             body: JSON.stringify({
                                 name: name,
-                                group: group
+                                group: props.groupId
                             })
                         })
                         .then(response => response.text())
-                        .then(data => window.alert(data))
-                        .catch(err => console.log(err))
+                        .then(data => window.alert('add picture res: ', data))
+                        .catch(err => console.log('add picture err: ', err))
                         
                     }
                 })
@@ -533,6 +538,7 @@ function FamilyTree(props) {
                                 const death = document.getElementById('death').value;
                                 const email = document.getElementById('email').value;
                                 addNode(nodeDatum.id, name, gender, birth, death, email, add.value);
+                                updateTree();
                             }
                         })
                     }
@@ -551,15 +557,26 @@ function FamilyTree(props) {
                     pathFunc='step'
                     zoom='1'
                     zoomable={true}
-                  
-                    renderCustomNodeElement={(props) => 
+                    onNodeClick={onNodeClick}
+                    collapsible={false}
+                />
+                : null
+            }
+        </div>
+    );
+}
+
+export default FamilyTree;  
+
+{/*
+    renderCustomNodeElement={(props) => 
                         <g id='con'>
                             <foreignObject width={250} height={250} x={-102} y={-40} >
                                 <div>
                                    
                                     <p className={props.nodeDatum.attributes.gender} onClick={() => onNodeClick(props.nodeDatum)}>
                                         {props.nodeDatum.name}
-                                        {/* {<img className={classes.image} src={`http://localhost:3003/tree-${props.nodeDatum.id}.jpeg`}/>} */}
+                                        {<img className={classes.image} src={`http://localhost:3003/tree-${props.nodeDatum.id}.jpeg`}/>}}
                                         </p>
                                     
                                     {
@@ -573,12 +590,4 @@ function FamilyTree(props) {
                             </foreignObject>
                         </g>
                     }
-                />
-                : null
-            }
-        </div>
-    );
-
-}
-
-export default FamilyTree;  
+ */}

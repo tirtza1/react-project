@@ -15,7 +15,9 @@ class App extends Component {
     this.state = {
       groupId: null,
       isSignIn: false,
+      displaySpinner: false,
     }
+    this.toggleSpinner = this.toggleSpinner.bind(this);
     this.setSignIn = this.setSignIn.bind(this);
     this.setGroupId = this.setGroupId.bind(this);
   }
@@ -27,6 +29,10 @@ class App extends Component {
   setGroupId(id) {
     this.setState({groupId: id})
   }
+  toggleSpinner() {
+    this.setState({displaySpinner: !this.state.displaySpinner})
+  }
+
 
   render() {
     return (
@@ -38,22 +44,36 @@ class App extends Component {
                   <LogIn 
                     setSignIn={this.setSignIn}
                     setGroupId={this.setGroupId}
+                    displaySpinner={this.state.displaySpinner}
+                    toggleSpinner={this.toggleSpinner}
                   />
                 </Route>
                 <Route path='/Register' exact>
                   <Register 
                     setSignIn={this.setSignIn}
                     setGroupId={this.setGroupId}
+                    displaySpinner={this.state.displaySpinner}
+                    toggleSpinner={this.toggleSpinner}
                   />
                 </Route>
                 <Route path='/Pedigree' exact>
-                  <FamilyTree groupId={this.state.groupId} />
+                  <FamilyTree 
+                    groupId={this.state.groupId} 
+                    displaySpinner={this.state.displaySpinner}/>
                 </Route>
                 <Route path='/Calendar' exact >
-                  <Calendar groupId={this.state.groupId} />
+                  <Calendar
+                   displaySpinner={this.state.displaySpinner}
+                   groupId={this.state.groupId} 
+                   displaySpinner={this.state.displaySpinner}
+                   toggleSpinner={this.toggleSpinner} />
                 </Route>
                 <Route path='/Photo' exact >
-                  <Photo groupId={this.state.groupId} />
+                  <Photo 
+                    displaySpinner={this.state.displaySpinner}
+                    groupId={this.state.groupId}
+                    displaySpinner={this.state.displaySpinner}
+                    toggleSpinner={this.toggleSpinner} />
                 </Route>
                 <Route path='/group/:id'>
                   <HomeGroup groupId={this.state.groupId}/>

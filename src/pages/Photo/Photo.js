@@ -2,7 +2,7 @@ import React from 'react'
 import './Photo.css'
 import Gallery from 'react-grid-gallery'
 import photo from '../../assets/images/photo.png';
-
+import Spinner from '../../components/UI/Spinner/Spinner'
 class Photo extends React.Component{
     constructor(props) {
         super(props)
@@ -12,18 +12,23 @@ class Photo extends React.Component{
             images_for_gallery: [],
             count: 0
         }
+        this.handleFileInputClick=this.handleFileInputClick.bind(this);
+        this.handleNewImage=this.handleNewImage.bind(this)
     }
 
     componentDidMount() {
         console.log('component did mount');
+        this.props.toggleSpinner();
         fetch(`http://localhost:3003/pictures/${1}`)
         .then(response => response.json())
         .then(data => {
+            this.props.toggleSpinner();
             const images = Object.values(data).map((value) => value.ImageName);
             const count = Object.keys(data).length;
             this.setState({ images, count});
-            const images_for_gallery = images.map((img) => {
+            const images_for_gallery = images.map((img) => { this.props.toggleSpinner()
                 return {
+                   
                     src: `http://localhost:3003/${img}`,
                     thumbnail: `http://localhost:3003/${img}`,
                     thumbnailWidth: 320,
@@ -33,7 +38,7 @@ class Photo extends React.Component{
             console.log(images_for_gallery);
             this.setState({images_for_gallery})
         })
-        .catch(err => console.log(err))
+        .catch( err =>  {this.props.toggleSpinner();console.log(err)})
     }
 
     handleFileInputClick = () =>  {
@@ -92,6 +97,7 @@ class Photo extends React.Component{
                     <h1>גלריה</h1>
                     <Gallery images={this.state.images_for_gallery}/>
                 </div>
+                <div >{this.props.displaySpinner ? <Spinner/> : null}</div>
             </div>
         )
     }

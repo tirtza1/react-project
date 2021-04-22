@@ -4,6 +4,8 @@ import classes from './register.module.css'
 import { checkValidity } from '../../validation/validate'
 import { withRouter } from 'react-router-dom'
 import swal from 'sweetalert2'
+import Spinner from '../../components/UI/Spinner/Spinner'
+
 class Register extends Component {
     constructor(props) {
         super(props);
@@ -109,6 +111,7 @@ class Register extends Component {
 
     onSubmit = () => {
         if (this.state.isValidForm) {
+            this.props.toggleSpinner();
             fetch('http://localhost:3003/register', {
                 method: 'post',
                 headers: { 'Content-Type': 'application/json'},
@@ -125,6 +128,7 @@ class Register extends Component {
             })
             .then(response => response.text())
             .then(data => {
+                this.props.toggleSpinner();
                 this.props.setGroupId(data);
                 this.props.setSignIn(true);
                 this.props.history.push(`/group/${data}`);
@@ -246,6 +250,7 @@ class Register extends Component {
                     <br/>
                     <button className={classes.button} onClick={this.onSubmit}>הירשם</button>
                 </div>
+                <div >{this.props.displaySpinner ? <Spinner/> : null}</div>
             </div>
         );
     }

@@ -4,12 +4,11 @@ import NavigationItems from '../NavigationItems/NavigationItems';
 import DrawerToggler from '../SideDrawer/DrawerToggler/DrawerToggler'
 
 const toolbar=(props)=>(
-    <header className={classes.Toolbar}>
+    <header className={classes.Toolbar} isSignIn={props.isSignIn}>
         <DrawerToggler clicked={props.drawerToggleClicked} />
         
         <nav className={classes.DesktopOnly}>
             <NavigationItems 
-                isAuthenticated={props.isAuth} 
                 isSignIn={props.isSignIn}
                 groupId={props.groupId}
             />
