@@ -5,31 +5,25 @@ import swal from 'sweetalert2'
 import classes from './Pedigree.module.css'
 import './node.css'
 import { useHistory } from 'react-router-dom'
-import data from './data'
 
 /*
 Things to fix:
 - in the photos take just the ones that don't start with tree
 - put the right photo in the node
 - check why it dosent update
+- make all of the buttons in the right color with the right text
+- force the person to choose a name and gender
 */
 
 function FamilyTree(props) {
 
-    const initialTree = {
-        id: 1, 
-        name: 'טוען נתונים', 
-        attributes: {
-            gender: 'male'
-        }
-    };
-    const [treeData, setTreeData] = React.useState(initialTree);
-    const [group, setGroup] = React.useState(3);
+    const [treeData, setTreeData] = React.useState(null);
     const history = useHistory();
 
+    //טוען את אילן היוחסין מבסיס הנתונים
     React.useEffect(() => {
-        if (treeData === initialTree) {
-            fetch(`http://localhost:3003/pedigree/${group}`)
+        if (props.groupId) {
+            fetch(`http://localhost:3003/pedigree/${props.groupId}`)
             .then(data => data.json())
             .then(tree => {
                 if (tree.length === 0) {
@@ -53,31 +47,41 @@ function FamilyTree(props) {
                         }
                     })
                 } else {
-                    console.log(tree[0].tree);
-                    setTreeData(JSON.parse(tree[0].tree));
+                    const data = JSON.parse(tree[0].tree);
+                    console.log(data);
+                    setTreeData(data);
                 }
             })
             .catch(err => console.log(err))
-        }
-        
-    })
+        } else swal.fire({
+            icon: 'info',
+            title: 'יש להתחבר על מנת לראות את אילן היוחסין',
+            confirmButtonText: 'להתחברות',
+            confirmButtonColor: '#EF9C83'
+          }).then((clicked) => {if (clicked) { history.push('/login')}})
+    }, [])
 
-    React.useEffect(() => { 
-        fetch(`http://localhost:3003/pedigree`, {
+    //שולח את האילן לבסיס הנתונים כל פעם שמתבצע בו שינוי
+    React.useEffect(() => {
+        if (treeData !== null && treeData !== 'undefined') {
+            console.log('updateing tree', treeData);
+            fetch(`http://localhost:3003/pedigree`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 tree: JSON.stringify(treeData),
-                group: group
+                group: props.groupId
             })
-        })
-        .then(response => response.json())
-        .then(data => console.log(data))
-        .catch(err => console.log(err))
-        history.push('/')
-        history.push('/pedigree')
+            })
+            .then(response => response.json())
+            .then(data => console.log(data))
+            .catch(err => console.log(err))
+            history.push('/')
+            history.push('/pedigree')
+        }
     }, [treeData])
 
+    //יצירת האיבר הראשון באילן היוחסין
     const createFirstNode = (name, gender, birth, death, email) => {
         const node = {
             id: Date.now(),
@@ -95,7 +99,7 @@ function FamilyTree(props) {
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
                 tree: JSON.stringify(node),
-                group: group
+                group: props.groupId
             })
         })
         .then(response => response.json())
@@ -289,7 +293,7 @@ function FamilyTree(props) {
                     headers: { 'Content-Type': 'application/json'},
                     body: JSON.stringify({
                         name: name,
-                        group: group
+                        group: props.groupId
                     })
                 })
                 .then(response => response.text())
@@ -418,7 +422,6 @@ function FamilyTree(props) {
 
         //shows a module with action to choose
         swal.fire({
-            
             title: 'בחר את הפעולה שברצונך לבצע',
             input: 'select',
             inputOptions: {
@@ -489,7 +492,7 @@ function FamilyTree(props) {
                             headers: { 'Content-Type': 'application/json'},
                             body: JSON.stringify({
                                 name: name,
-                                group: group
+                                group: props.groupId
                             })
                         })
                         .then(response => response.text())
@@ -551,15 +554,26 @@ function FamilyTree(props) {
                     pathFunc='step'
                     zoom='1'
                     zoomable={true}
-                  
-                    renderCustomNodeElement={(props) => 
+                    onNodeClick={onNodeClick}
+                    collapsible={false}
+                />
+                : null
+            }
+        </div>
+    );
+}
+
+export default FamilyTree;  
+
+{/*
+    renderCustomNodeElement={(props) => 
                         <g id='con'>
                             <foreignObject width={250} height={250} x={-102} y={-40} >
                                 <div>
                                    
                                     <p className={props.nodeDatum.attributes.gender} onClick={() => onNodeClick(props.nodeDatum)}>
                                         {props.nodeDatum.name}
-                                        {/* {<img className={classes.image} src={`http://localhost:3003/tree-${props.nodeDatum.id}.jpeg`}/>} */}
+                                        {<img className={classes.image} src={`http://localhost:3003/tree-${props.nodeDatum.id}.jpeg`}/>}}
                                         </p>
                                     
                                     {
@@ -573,12 +587,4 @@ function FamilyTree(props) {
                             </foreignObject>
                         </g>
                     }
-                />
-                : null
-            }
-        </div>
-    );
-
-}
-
-export default FamilyTree;  
+ */}
