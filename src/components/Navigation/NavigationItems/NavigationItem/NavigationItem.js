@@ -4,7 +4,6 @@ import { Link } from 'react-router-dom'
 
 const navigationItem = (props) => (
   <li className={classes.NavigationItem} onClick={props.onClick}>
-   
     <Link 
       to={props.link}
       activeclassname={classes.active}>

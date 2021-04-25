@@ -8,7 +8,7 @@ import FamilyTree from './pages/FamilyTree/FamilyTree'
 import Calendar from './pages/Calendar/Calendar'
 import Home from './pages/Home/home'
 import HomeGroup from './pages/GroupHome/groupHome'
-
+import NavigationItems from './components/Navigation/NavigationItems/NavigationItems';
 
 class App extends Component {
   constructor() {
@@ -47,6 +47,7 @@ class App extends Component {
   render() {
     return (
       <div> 
+        <NavigationItems handleUserOut={this.handleUserOut}/>
         <BrowserRouter>
           <Layout isSignIn={this.state.isSignIn} groupId={this.state.groupId}>
               <Switch>
