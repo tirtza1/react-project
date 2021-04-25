@@ -5,13 +5,10 @@ import swal from 'sweetalert2'
 import classes from './Pedigree.module.css'
 import './node.css'
 import { useHistory } from 'react-router-dom'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 /*
 Things to fix:
-- in the photos take just the ones that don't start with tree
-- put the right photo in the node
-- check why it dosent update
-- make all of the buttons in the right color with the right text
 - force the person to choose a name and gender
 */
 
@@ -24,6 +21,7 @@ function FamilyTree(props) {
     const updateTree = () => {
         console.log('updating tree');
         if (treeData !== null && treeData !== 'undefined') {
+            props.toggleSpinner();
             fetch(`http://localhost:3003/pedigree`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
@@ -33,8 +31,14 @@ function FamilyTree(props) {
             })
             })
             .then(response => response.json())
-            .then(data => console.log('the tree was updated'))
-            .catch(err => console.log('error updating tree'))
+            .then(data => {
+                props.toggleSpinner();
+                console.log('the tree was updated');
+            })
+            .catch(err => {
+                console.log('error updating tree');
+                props.toggleSpinner();
+            })
             history.push('/')
             history.push('/pedigree')
         }
@@ -43,6 +47,7 @@ function FamilyTree(props) {
     //טוען את אילן היוחסין מבסיס הנתונים
     React.useEffect(() => {
         if (props.groupId) {
+            props.toggleSpinner();
             fetch(`http://localhost:3003/pedigree/${props.groupId}`)
             .then(data => data.json())
             .then(tree => {
@@ -64,12 +69,14 @@ function FamilyTree(props) {
                             const death = document.getElementById('death').value;
                             const email = document.getElementById('email').value;
                             createFirstNode(name, gender, birth, death, email);
+                            props.toggleSpinner();
                         }
                     })
                 } else {
                     const data = JSON.parse(tree[0].tree);
                     console.log('get tree data at useEffect: ', data);
                     setTreeData(data);
+                    props.toggleSpinner();
                 }
             })
             .catch(err => console.log('get tree data err at useEffect: ', err))
@@ -547,7 +554,9 @@ function FamilyTree(props) {
         })  
     };
 
-    return (
+    if (props.displaySpinner)
+    return <Spinner/> 
+    else return (
         <div style={{ width: '300vw', height: '200vh' }}>
             {
                 treeData ?
