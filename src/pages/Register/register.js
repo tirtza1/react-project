@@ -129,10 +129,19 @@ class Register extends Component {
             })
             .then(response => response.text())
             .then(data => {
+                if (data === 'תעודת זהות קיימת') {
+                    swal.fire({
+                        icon: 'error',
+                        title: 'תעודת זהות קיימת',
+                        confirmButtonText: 'אישור',
+                        confirmButtonColor: '#EF9C83'
+                    })
+                } else {
+                    this.props.setGroupId(data);
+                    this.props.setSignIn(true);
+                    this.props.history.push(`/group/${data}`);
+                }
                 this.props.toggleSpinner();
-                this.props.setGroupId(data);
-                this.props.setSignIn(true);
-                this.props.history.push(`/group/${data}`);
             })
             .catch(err => console.log(err))
         } else swal.fire({

@@ -23,7 +23,10 @@ class Photo extends React.Component{
         .then(response => response.json())
         .then(data => {
             this.props.toggleSpinner();
-            const images = Object.values(data).map((value) => value.ImageName);
+            let images = Object.values(data).map((value) => value.ImageName);
+            images = images.filter((img) => {
+                if (img[0] !== 't') return img
+            })
             const count = Object.keys(data).length;
             this.setState({ images, count});
             const images_for_gallery = images.map((img) => { this.props.toggleSpinner()

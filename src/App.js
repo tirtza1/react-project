@@ -70,7 +70,9 @@ class App extends Component {
                 <Route path='/Pedigree' exact>
                   <FamilyTree 
                     groupId={this.state.groupId} 
-                    displaySpinner={this.state.displaySpinner}/>
+                    displaySpinner={this.state.displaySpinner}
+                    toggleSpinner={this.toggleSpinner}
+                  />
                 </Route>
                 <Route path='/Calendar' exact >
                   <Calendar
