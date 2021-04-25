@@ -10,6 +10,7 @@ import 'bootstrap/dist/css/bootstrap.css'
 import '@fortawesome/fontawesome-free/css/all.css'
 import swal from 'sweetalert2'
 import { withRouter } from 'react-router-dom'
+import Spinner from '../../components/UI/Spinner/Spinner'
 
 
 class Calendar extends Component {
@@ -58,15 +59,17 @@ class Calendar extends Component {
   //טוען את האירועים מבסיס הנתונים
   componentDidMount() {
     if (this.props.groupId) {
+      this.props.toggleSpinner();
       fetch(`http://localhost:3003/calendar/${this.props.groupId}`)
       .then(res => res.json())
       .then(data => {
-        data.forEach(event => {
+        this.props.toggleSpinner();
+         data.forEach(event => {
           this.AddEvent(event.EventId, event.EventName, event.EventDate.slice(0,10));
         });
         this.getTodaysEvents();
       })
-      .catch(err => console.log(err))
+      .catch(err => {console.log(err);this.props.toggleSpinner();})
     } else swal.fire({
       icon: 'info',
       title: 'יש להתחבר על מנת לראות את לוח השנה',
@@ -96,7 +99,7 @@ class Calendar extends Component {
   //מוחק אירוע כשלוחצים עליו
   handleEventClick= (eventClickInfo) => { 
     console.log(eventClickInfo)
-    if(window.confirm("Are you sure you want to remove the event date?")) {
+    if(window.confirm("האם את/ה רוצה למחוק את האירוע?")) {
       const id = eventClickInfo.event.id;
       let updatedEvents = [...this.state.CalendarEvent]
       for(var i = 0; i < updatedEvents.length; i ++) {
@@ -238,6 +241,7 @@ class Calendar extends Component {
               },
             }}
             editable={true}
+           
             eventBackgroundColor={"#EF9C83"}
             eventBorderColor={"#EF9C83"}
             selectable={true}
@@ -285,6 +289,7 @@ class Calendar extends Component {
             </button>
           </ModalFooter>
         </Modal>
+        <div >{this.props.displaySpinner ? <Spinner/> : null}</div>
       </div>
     )
   }

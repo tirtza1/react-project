@@ -36,6 +36,7 @@ class Register extends Component {
                 Id: {
                     required: true,
                     maxLength: 9,
+                    minLength: 9,
                     numberOnly : true
                     
                 },
