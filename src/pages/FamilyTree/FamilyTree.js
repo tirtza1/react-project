@@ -23,14 +23,14 @@ function FamilyTree(props) {
 
     //updates the tree
     const updateTree = async (data) => {
-        console.log('updating tree', data);
+        console.log('updating tree: ', data);
         if (treeData !== null && treeData !== 'undefined') {
             props.toggleSpinner();
             await fetch(`http://localhost:3003/pedigree`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                tree: JSON.stringify(treeData || data),
+                tree: JSON.stringify(data),
                 group: props.groupId
             })
             })
@@ -58,7 +58,7 @@ function FamilyTree(props) {
             .then(data => data.json())
             .then(tree => {
                 console.log('tree from server: ', tree)
-                if (tree.length === 0) {
+                if (tree.length === 0 || tree[0].tree === 'undefined') {
                     swalReact({
                         title: 'יצירת אילן יוחסין',
                         text: 'הכנס את הפרטים שלך',
@@ -154,9 +154,12 @@ function FamilyTree(props) {
         }
     };
 
+    //adds a parent to a node
     const addParent = (node, data, id) => {
         if (data.id === id || data.attributes.spouse && data.attributes.spouse.id === id) {
-            
+            node['children'] = [];
+            node['children'].push(data);
+            return node;
         } else swal.fire({
             icon: 'error',
             text: 'אין אפשרות להוסיף',
@@ -165,8 +168,9 @@ function FamilyTree(props) {
         })
     }
 
+    //adds a descendant to a node
     const addDescendant = (node, data, id) => {
-        if (data.id === id || data.attributes.spouse.id === id) {
+        if (data.id === id || data.attributes.spouse === id && data.attributes.spouse.id === id) {
             data.children.push(node);
             console.log('add descendant data: ', data);
             return data;
@@ -176,7 +180,7 @@ function FamilyTree(props) {
             return data;
 
         for (let i = 0; i < data.children.length; i++) {
-            if (data.children[i].id === id || data.children[i].attributes.spouse.id === id) {
+            if (data.children[i].id === id || data.children[i].attributes.spouse && data.children[i].attributes.spouse.id === id) {
                 data.children[i].children.push(node);
                 console.log('add descendant data: ', data);
                 return data;
@@ -221,6 +225,7 @@ function FamilyTree(props) {
         }
     }
 
+    //add a sibling
     const addSibling = (node, data, id) => {
 
         if (data.id === id || data.attributes.spouse && data.attributes.spouse.id === id) {
@@ -248,7 +253,7 @@ function FamilyTree(props) {
     }
 
     //adds a node to data
-    const addNode = (id, name, gender, birth, death, email, type) => {
+    const addNode = async (id, name, gender, birth, death, email, type) => {
         if (gender === 'בחר' || name === '') forceGenderName();
         const node = {
             id: Date.now(),
@@ -262,22 +267,29 @@ function FamilyTree(props) {
             children: [],
         };
 
+        let newData = {};
+
         switch(type) {
             case 'parent':
-                setTreeData(addParent(node, treeData, id));
-                updateTree();
+                newData = await addParent(node, treeData, id);
+                await setTreeData(newData);
+                updateTree(newData);
                 break;
             case 'descendant':
-                setTreeData(addDescendant(node, treeData, id));
-                updateTree();
+                newData = await addDescendant(node, treeData, id)
+                console.log(newData);
+                await setTreeData(newData);
+                updateTree(newData);
                 break;
             case 'spouse':
-                setTreeData(addSpouse(node, treeData, id));
-                updateTree();
+                newData = await addSpouse(node, treeData, id)
+                await setTreeData(newData);
+                updateTree(newData);
                 break;
             case 'sibling':
-                setTreeData(addSibling(node, treeData, id));
-                updateTree();
+                newData = await addSibling(node, treeData, id)
+                await setTreeData(newData);
+                updateTree(newData);
                 break;
         }
         
@@ -549,15 +561,14 @@ function FamilyTree(props) {
                                 catch: "הוספה",
                             }
                         })
-                        .then((clicked) => {
+                        .then(async (clicked) => {
                             if (clicked === 'catch') {
                                 const name = document.getElementById('name').value;
                                 const gender = document.getElementById('gender').value;
                                 const birth = document.getElementById('birth').value;
                                 const death = document.getElementById('death').value;
                                 const email = document.getElementById('email').value;
-                                addNode(nodeDatum.id, name, gender, birth, death, email, add.value);
-                                updateTree();
+                                await addNode(nodeDatum.id, name, gender, birth, death, email, add.value);
                             }
                         })
                     }
