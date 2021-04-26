@@ -22,6 +22,7 @@ class Calendar extends Component {
     this.state = {
       modal: false,
       calendarWeekends: true,
+      eventId:'',
       eventName:'',
       fromDate:'',
       toDate:'',
@@ -142,14 +143,14 @@ class Calendar extends Component {
     //עדכון של המערך
     this.setState({CalendarEvent: events});
     console.log(this.state.CalendarEvent)
-    console.log(date)
+    console.log(id)
     console.log(newDate)
     fetch(`http://localhost:3003/calendar/updateEvent`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
+        EventId:id,
         newDate:newDate,
-        date:date,
         groupId: this.props.groupId
       })
     })
@@ -171,15 +172,19 @@ class Calendar extends Component {
         start: start
       }]
     }))
+    
    }
 
    //מוסיף אירוע ומעדכן אותו בלוח השנה
   AddEventHandle = (event) => {
-    this.AddEvent(Date.now(), this.state.eventName, this.state.fromDate);
+    this.setState({eventId:Date.now()}) 
+    this.AddEvent(this.state.eventId, this.state.eventName, this.state.fromDate);
+    console.log(this.state.CalendarEvent)
     fetch(`http://localhost:3003/calendar/addEvent`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
+        EventId:this.state.eventId,
         name: this.state.eventName,
         group: this.props.groupId,
         date: this.state.fromDate
