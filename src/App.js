@@ -8,6 +8,7 @@ import FamilyTree from './pages/FamilyTree/FamilyTree'
 import Calendar from './pages/Calendar/Calendar'
 import Home from './pages/Home/home'
 import HomeGroup from './pages/GroupHome/groupHome'
+import NavigationItems from './components/Navigation/NavigationItems/NavigationItems';
 
 class App extends Component {
   constructor() {
@@ -16,11 +17,15 @@ class App extends Component {
       groupId: null,
       isSignIn: false,
       displaySpinner: false,
+      user:{}
     }
     this.toggleSpinner = this.toggleSpinner.bind(this);
     this.setSignIn = this.setSignIn.bind(this);
     this.setGroupId = this.setGroupId.bind(this);
+    this.handleUserOut = this.handleUserOut.bind(this);
   }
+
+  
 
   setSignIn() {
     this.setState({isSignIn: true});
@@ -33,10 +38,16 @@ class App extends Component {
     this.setState({displaySpinner: !this.state.displaySpinner})
   }
 
-
+  handleUserOut() {
+    this.setState({ user: {}, isSignIn: false});
+    localStorage.clear();
+    window.location.href = '/';
+  
+  }
   render() {
     return (
       <div> 
+        <NavigationItems handleUserOut={this.handleUserOut}/>
         <BrowserRouter>
           <Layout isSignIn={this.state.isSignIn} groupId={this.state.groupId}>
               <Switch>
@@ -48,6 +59,7 @@ class App extends Component {
                     toggleSpinner={this.toggleSpinner}
                   />
                 </Route>
+              
                 <Route path='/Register' exact>
                   <Register 
                     setSignIn={this.setSignIn}
@@ -78,7 +90,10 @@ class App extends Component {
                     toggleSpinner={this.toggleSpinner} />
                 </Route>
                 <Route path='/group/:id'>
-                  <HomeGroup groupId={this.state.groupId}/>
+                  <HomeGroup 
+                  groupId={this.state.groupId}
+                  handleUserOut={this.handleUserOut}
+                  />
                 </Route>
                 <Route path='/' exact component={Home}/>
               </Switch>
