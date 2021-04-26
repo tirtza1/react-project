@@ -11,7 +11,7 @@ import '@fortawesome/fontawesome-free/css/all.css'
 import swal from 'sweetalert2'
 import { withRouter } from 'react-router-dom'
 import Spinner from '../../components/UI/Spinner/Spinner'
-
+import alertPic from '../../assets/images/heart2.jpg'
 
 class Calendar extends Component {
  
@@ -42,9 +42,8 @@ class Calendar extends Component {
     swal.fire({
       title: ':אירועים היום',
       text: eventString || 'אין אירועים היום',
-      imageUrl: 'https://unsplash.it/400/200',
-      imageWidth: 400,
-      imageHeight: 200,
+      imageUrl: alertPic,
+      imageSize: '600x500',
       imageAlt: 'Custom image',
       width:600,
       heightAuto:700,
@@ -125,6 +124,7 @@ class Calendar extends Component {
  
   //מעביר את המיקום של האירוע כשגוררים אותו
   handleEventDrop = (info) => {
+    console.log(this.state.CalendarEvent)
     //של האירוע id
     const id=info.event.id
     //העתקה של המערך
@@ -133,19 +133,23 @@ class Calendar extends Component {
     const index= events.findIndex(item => item.id==id)
     //העתקה של האובייקט לשינוי
     let eventToChange = {...events[index]};
-    const newdate=( info.event.start.getFullYear()+"-"+((info.event.start.getMonth() > 8) ? (info.event.start.getMonth() + 1) : ('0' + (info.event.start.getMonth() + 1))) +"-"+ ((info.event.start.getDate() > 9) ? info.event.start.getDate() : ('0' +info.event.start.getDate())));
+    const date = eventToChange.start
+    const newDate=( info.event.start.getFullYear()+"-"+((info.event.start.getMonth() > 8) ? (info.event.start.getMonth() + 1) : ('0' + (info.event.start.getMonth() + 1))) +"-"+ ((info.event.start.getDate() > 9) ? info.event.start.getDate() : ('0' +info.event.start.getDate())));
     //עדכון תאריך התחלה
-    eventToChange.start = newdate;
+    eventToChange.start = newDate;
     //עדכון האובייקט
     events[index] = eventToChange;
     //עדכון של המערך
     this.setState({CalendarEvent: events});
-    
+    console.log(this.state.CalendarEvent)
+    console.log(date)
+    console.log(newDate)
     fetch(`http://localhost:3003/calendar/updateEvent`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        date: this.state.fromDate,
+        newDate:newDate,
+        date:date,
         groupId: this.props.groupId
       })
     })

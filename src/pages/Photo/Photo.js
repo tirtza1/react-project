@@ -7,7 +7,6 @@ class Photo extends React.Component{
     constructor(props) {
         super(props)
         this.state = {
-            group: 1,
             images: [],
             images_for_gallery: [],
             count: 0
@@ -19,7 +18,7 @@ class Photo extends React.Component{
     componentDidMount() {
         console.log('component did mount');
         this.props.toggleSpinner();
-        fetch(`http://localhost:3003/pictures/${1}`)
+        fetch(`http://localhost:3003/pictures/${this.props.groupId}`)
         .then(response => response.json())
         .then(data => {
             this.props.toggleSpinner();

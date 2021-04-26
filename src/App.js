@@ -22,7 +22,6 @@ class App extends Component {
     this.toggleSpinner = this.toggleSpinner.bind(this);
     this.setSignIn = this.setSignIn.bind(this);
     this.setGroupId = this.setGroupId.bind(this);
-    this.handleUserOut = this.handleUserOut.bind(this);
   }
 
   
@@ -38,12 +37,7 @@ class App extends Component {
     this.setState({displaySpinner: !this.state.displaySpinner})
   }
 
-  handleUserOut() {
-    this.setState({ user: {}, isSignIn: false});
-    localStorage.clear();
-    window.location.href = '/';
   
-  }
   render() {
     return (
       <div> 

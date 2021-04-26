@@ -34,15 +34,16 @@ export default class NavigationItems extends Component{
        <span>
         {
           this.props.isSignIn?
-          <ul className={classes.NavigationItems}>
-            <NavigationItem link='/Photo'>גלריה</NavigationItem>
-            <NavigationItem link='/Calendar'>לוח שנה</NavigationItem>
-            <NavigationItem link='/Pedigree'>אילן יוחסין</NavigationItem>
-            <NavigationItem link={`/group/${this.props.groupId}`}>בית</NavigationItem>
-            <NavigationItem onClick={this.handleClick}>התנתק</NavigationItem> 
-          </ul>
+            <ul className={classes.NavigationItems}>
+              <NavigationItem link='/Photo'>גלריה</NavigationItem>
+              <NavigationItem link='/Calendar'>לוח שנה</NavigationItem>
+              <NavigationItem link='/Pedigree'>אילן יוחסין</NavigationItem>
+              <NavigationItem link={`/group/${this.props.groupId}`}>בית</NavigationItem>
+              <NavigationItem onClick={this.handleClick}>התנתק</NavigationItem> 
+            </ul>
           
-          :null
+          :
+          null
         }
 </span>
      
