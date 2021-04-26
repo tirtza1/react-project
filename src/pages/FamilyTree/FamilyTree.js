@@ -7,50 +7,57 @@ import './node.css'
 import { useHistory } from 'react-router-dom'
 import Spinner from '../../components/UI/Spinner/Spinner'
 
-/*
-Things to fix:
-- force the person to choose a name and gender
-*/
-
 function FamilyTree(props) {
 
     const [treeData, setTreeData] = React.useState(null);
     const history = useHistory();
 
+    const forceGenderName = () => {
+        swal.fire({
+            icon: 'warning',
+            text: 'יש לבחור מגדר ושם',
+            confirmButtonColor: '#ef9c83',
+            confirmButtonText: 'אישור'
+        })
+    }
+
     //updates the tree
-    const updateTree = () => {
-        console.log('updating tree');
+    const updateTree = async (data) => {
+        console.log('updating tree', data);
         if (treeData !== null && treeData !== 'undefined') {
             props.toggleSpinner();
-            fetch(`http://localhost:3003/pedigree`, {
+            await fetch(`http://localhost:3003/pedigree`, {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({
-                tree: JSON.stringify(treeData),
+                tree: JSON.stringify(treeData || data),
                 group: props.groupId
             })
             })
             .then(response => response.json())
             .then(data => {
-                props.toggleSpinner();
                 console.log('the tree was updated');
+                props.toggleSpinner();
             })
             .catch(err => {
                 console.log('error updating tree');
                 props.toggleSpinner();
             })
-            history.push('/')
-            history.push('/pedigree')
+
+            history.push('/');
+            history.push ('/Pedigree')
         }
     }
 
     //טוען את אילן היוחסין מבסיס הנתונים
     React.useEffect(() => {
+        console.log('getting data from server');
         if (props.groupId) {
             props.toggleSpinner();
             fetch(`http://localhost:3003/pedigree/${props.groupId}`)
             .then(data => data.json())
             .then(tree => {
+                console.log('tree from server: ', tree)
                 if (tree.length === 0) {
                     swalReact({
                         title: 'יצירת אילן יוחסין',
@@ -87,9 +94,6 @@ function FamilyTree(props) {
             confirmButtonColor: '#EF9C83'
           }).then((clicked) => {if (clicked) { history.push('/login')}})
     }, [])
-
-    //שולח את האילן לבסיס הנתונים כל פעם שמתבצע בו שינוי
-    React.useEffect(updateTree, [treeData])
 
     //יצירת האיבר הראשון באילן היוחסין
     const createFirstNode = (name, gender, birth, death, email) => {
@@ -151,7 +155,14 @@ function FamilyTree(props) {
     };
 
     const addParent = (node, data, id) => {
-
+        if (data.id === id || data.attributes.spouse && data.attributes.spouse.id === id) {
+            
+        } else swal.fire({
+            icon: 'error',
+            text: 'אין אפשרות להוסיף',
+            confirmButtonText: 'אישור',
+            confirmButtonColor: '#ef9c83'
+        })
     }
 
     const addDescendant = (node, data, id) => {
@@ -238,6 +249,7 @@ function FamilyTree(props) {
 
     //adds a node to data
     const addNode = (id, name, gender, birth, death, email, type) => {
+        if (gender === 'בחר' || name === '') forceGenderName();
         const node = {
             id: Date.now(),
             name: name,
@@ -456,15 +468,15 @@ function FamilyTree(props) {
                     },
                     confirmButtonColor: '#ef9c83'
                 })
-                .then((clicked) => {
+                .then(async (clicked) => {
                     if (clicked === 'catch') {
                         const name = document.getElementById('name').value;
                         const gender = document.getElementById('gender').value;
                         const birth = document.getElementById('birth').value;
                         const death = document.getElementById('death').value;
                         const email = document.getElementById('email').value;
-                        setTreeData(editNode(nodeDatum.id, name, gender, birth, death, email, treeData));
-                        updateTree();
+                        await setTreeData(editNode(nodeDatum.id, name, gender, birth, death, email, treeData))
+                        updateTree(treeData);
                     }
                 })
             }
