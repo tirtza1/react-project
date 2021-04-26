@@ -177,7 +177,9 @@ class Calendar extends Component {
 
    //מוסיף אירוע ומעדכן אותו בלוח השנה
   AddEventHandle = (event) => {
-    this.setState({eventId:Date.now()}) 
+    let id=Date.now()
+    this.setState({eventId:id}) 
+    console.log(this.state.eventId)
     this.AddEvent(this.state.eventId, this.state.eventName, this.state.fromDate);
     console.log(this.state.CalendarEvent)
     fetch(`http://localhost:3003/calendar/addEvent`, {
