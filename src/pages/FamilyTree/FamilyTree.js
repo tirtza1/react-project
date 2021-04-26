@@ -201,7 +201,7 @@ function FamilyTree(props) {
                 });
                 return;
             } 
-        data.attributes.spouse = node;
+        data.name = data.name + " & " + node.name;
         return data;
         }
         if (data.children === undefined || data.children === null) 
@@ -217,7 +217,7 @@ function FamilyTree(props) {
                     });
                     return;
                 }
-                data.children[i].spouse = node;
+                data.children[i].name = data.children[i].name + " & " + node.name;
                 return data;
             } else {
                 addSpouse(node, data.children[i], id);
