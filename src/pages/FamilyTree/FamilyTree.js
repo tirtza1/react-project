@@ -210,7 +210,7 @@ function FamilyTree(props) {
             return data;
         for (let i = 0; i < data.children.length; i++) {
             if (data.children[i].id === id) {
-                if (data.children[i].attributes.spouse.length) {
+                if (data.children[i].attributes.spouse && data.children[i].attributes.spouse.length) {
                     swal.fire({
                         icon: 'error',
                         text: 'אין אפשרות להוסיף',
