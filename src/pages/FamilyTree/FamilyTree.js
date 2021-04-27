@@ -6,6 +6,7 @@ import classes from './Pedigree.module.css'
 import './node.css'
 import { useHistory } from 'react-router-dom'
 import Spinner from '../../components/UI/Spinner/Spinner'
+import './FamilyTree.css'
 
 function FamilyTree(props) {
 
@@ -586,22 +587,28 @@ function FamilyTree(props) {
     }
     if (props.displaySpinner)
     return <Spinner/> 
-    else return (
-        <div className={classes.DivPedigree}>
+    else return ( 
+        <div>
             <button onClick={onchangeOrientation}>שנה כיוון</button>
-            {
-                treeData ?
-                <Tree
-                    data={treeData}
-                    orientation={orientation}
-                    pathFunc='step'
-                    zoom='1'
-                    zoomable={true}
-                    onNodeClick={onNodeClick}
-                    collapsible={false}
-                />
-                : null
-            }
+                <div className={classes.DivPedigree}>
+                
+                    {
+                        treeData ?
+                        <Tree
+                            data={treeData}
+                            orientation={orientation}
+                            pathFunc='step'
+                            zoom='1'
+                            zoomable={true}
+                            onNodeClick={onNodeClick}
+                            collapsible={false}
+                            rootNodeClassName="node__root"
+                            branchNodeClassName="node__branch"
+                            leafNodeClassName="node__leaf"
+                        />
+                        : null
+                    }
+            </div>
         </div>
     );
 }
