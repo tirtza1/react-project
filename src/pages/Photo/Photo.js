@@ -129,6 +129,7 @@ class Photo extends React.Component{
         else {
             swal.fire({
                 icon: 'info',
+                iconColor:'#EF9C83',
                 title: 'יש להתחבר על מנת לראות את גלרית התמונות',
                 confirmButtonText: 'להתחברות',
                 confirmButtonColor: '#EF9C83'

@@ -10,6 +10,7 @@ import Spinner from '../../components/UI/Spinner/Spinner'
 function FamilyTree(props) {
 
     const [treeData, setTreeData] = React.useState(null);
+    const [orientation, setOrientation] = React.useState('vertical');
     const history = useHistory();
 
     const forceGenderName = () => {
@@ -89,6 +90,7 @@ function FamilyTree(props) {
             .catch(err => console.log('get tree data err at useEffect: ', err))
         } else swal.fire({
             icon: 'info',
+            iconColor:'#EF9C83',
             title: 'יש להתחבר על מנת לראות את אילן היוחסין',
             confirmButtonText: 'להתחברות',
             confirmButtonColor: '#EF9C83'
@@ -576,16 +578,22 @@ function FamilyTree(props) {
             }
         })  
     };
-
+    const onchangeOrientation=()=>{
+        if(orientation==='vertical')
+           setOrientation('horizontal')
+           else
+           setOrientation('vertical')
+    }
     if (props.displaySpinner)
     return <Spinner/> 
     else return (
-        <div style={{ width: '300vw', height: '200vh' }}>
+        <div className={classes.DivPedigree}>
+            <button onClick={onchangeOrientation}>שנה כיוון</button>
             {
                 treeData ?
                 <Tree
                     data={treeData}
-                    orientation='vertical'
+                    orientation={orientation}
                     pathFunc='step'
                     zoom='1'
                     zoomable={true}

@@ -72,6 +72,7 @@ class Calendar extends Component {
       .catch(err => {console.log(err);this.props.toggleSpinner();})
     } else swal.fire({
       icon: 'info',
+      iconColor:'#EF9C83',
       title: 'יש להתחבר על מנת לראות את לוח השנה',
       confirmButtonText: 'בסדר',
       confirmButtonColor: '#EF9C83'
@@ -99,17 +100,29 @@ class Calendar extends Component {
   //מוחק אירוע כשלוחצים עליו
   handleEventClick= (eventClickInfo) => { 
     console.log(eventClickInfo)
-    if(window.confirm("האם את/ה רוצה למחוק את האירוע?")) {
-      const id = eventClickInfo.event.id;
-      let updatedEvents = [...this.state.CalendarEvent]
-      for(var i = 0; i < updatedEvents.length; i ++) {
-        if(updatedEvents[i].id == id) {
-          updatedEvents.splice(i, 1);
-          break;
+    swal.fire({
+      icon: 'info',
+      iconColor: '#EF9C83',
+      title: '?האם ברצונך למחוק את האירוע',
+      showCancelButton: true,
+      cancelButtonColor: '#EF9C83',
+      cancelButtonText:'ביטול',
+      confirmButtonText: 'מחק',
+      confirmButtonColor: '#EF9C83'
+    })
+    .then((clicked) => {
+      if (clicked.isConfirmed) {
+        const id = eventClickInfo.event.id;
+        let updatedEvents = [...this.state.CalendarEvent]
+        for(var i = 0; i < updatedEvents.length; i ++) {
+          if(updatedEvents[i].id == id) {
+            updatedEvents.splice(i, 1);
+            break;
+          }
         }
+        this.setState({CalendarEvent: updatedEvents});
       }
-      this.setState({CalendarEvent: updatedEvents});
-    }
+     })
     fetch(`http://localhost:3003/calendar/removeEvent`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
@@ -178,15 +191,16 @@ class Calendar extends Component {
    //מוסיף אירוע ומעדכן אותו בלוח השנה
   AddEventHandle = (event) => {
     let id=Date.now()
-    this.setState({eventId:id}) 
-    console.log(this.state.eventId)
-    this.AddEvent(this.state.eventId, this.state.eventName, this.state.fromDate);
+    
+    console.log(id)
+    console.log('AddEventHandle')
+    this.AddEvent(id, this.state.eventName, this.state.fromDate);
     console.log(this.state.CalendarEvent)
     fetch(`http://localhost:3003/calendar/addEvent`, {
       method: 'POST',
       headers: {'Content-Type': 'application/json'},
       body: JSON.stringify({
-        EventId:this.state.eventId,
+        EventId:id,
         name: this.state.eventName,
         group: this.props.groupId,
         date: this.state.fromDate
@@ -202,7 +216,14 @@ class Calendar extends Component {
 
   checkValidity = () => {
     if(this.state.eventName==='')
-      alert("שם אירוע זהו שדה חובה")
+    {  swal.fire({
+        icon: 'info',
+        iconColor:'#EF9C83',
+        title: 'שם אירוע זהו שדה חובה',
+        confirmButtonText: 'בסדר',
+        confirmButtonColor:'#EF9C83'
+        })
+   }
     else 
       this.AddEventHandle()
   }

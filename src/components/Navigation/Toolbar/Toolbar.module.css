@@ -8,6 +8,7 @@
     display: flex;
     justify-content: space-between;
     align-items: center;
+    text-align: center;
     box-sizing: border-box;
     z-index: 90;
    color:white ;

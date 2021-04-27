@@ -46,7 +46,7 @@ class GroupHome extends React.Component{
         }).then((clicked) => {
             if (clicked.isConfirmed) {
                 const email_to = clicked.value;
-                const subject = this.state.GroupName + ' הוזמנת להצטרף לקבוצה ';
+                const subject =  ' הוזמנת להצטרף לקבוצת '+ this.state.GroupName ;
                 const message = 'שלום וברכה' + '\n' + 'הנך מוזמן להצטרף לקבוצה משפחתית ב' + 'Family Link'+ '\n' + ' הכנס לקישור הבא: ' + 'http://localhost:3000/Register'+ '\n' + ' צור משתמש עם קוד הקבוצה הזה: ' + this.props.groupId;
                 fetch('http://localhost:3003/sendInvetation', {
                     method: 'POST',
